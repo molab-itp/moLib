@@ -25,7 +25,7 @@ function dbase_report_status(props) {
 globalThis.dbase_report_status = dbase_report_status;
 
 function createStatusElement() {
-  if (!document) return;
+  if (!globalThis.window) return;
   if (!my.statusElement) {
     my.statusElement = document.createElement('div');
     document.body.appendChild(my.statusElement);
