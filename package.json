@@ -24,6 +24,6 @@
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-terser": "^0.4.4",
     "firebase": "^10.13.2",
-    "rollup": "^2.79.1"
+    "rollup": "^4.22.4"
   }
 }
