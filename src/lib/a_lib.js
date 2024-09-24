@@ -1,6 +1,6 @@
 //
 
-console.log('in a_main.js');
+// console.log('in a_main.js');
 
 import './dbase/a_dbase.js';
 import './Pane.js';
