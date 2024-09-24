@@ -8,15 +8,15 @@
 // console.log('fireb_fstorage');
 
 import {
-  deleteObject, //
+  deleteObject,
   getDownloadURL,
   getStorage,
   list,
   listAll,
   ref,
-  uploadBytes,
-} from 'firebase/storage';
-// 'https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js';
+  uploadBytes, //
+} from 'firebase/storage'; //@prod
+// 'https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js'; //@dev
 
 export const fstorage = {
   deleteObject,

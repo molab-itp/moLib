@@ -12,11 +12,16 @@
 
 // console.log('fireb_config');
 
-import { initializeApp } from 'firebase/app';
-// } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
+import {
+  initializeApp, //
+} from 'firebase/app'; //@prod
+// } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'; //@dev
 
-import { getAuth, signInAnonymously } from 'firebase/auth';
-// } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
+import {
+  getAuth,
+  signInAnonymously, //
+} from 'firebase/auth'; //@prod
+// } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js'; //@dev
 
 // Your web app's Firebase configuration
 

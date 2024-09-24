@@ -14,6 +14,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export function init(my) {
   //
   my.root_path = join(__dirname, '..');
+  my.mode_files = ['./lib/fireb_'];
+  my.mode_dev = 0;
   my.buildnum_files = ['../README.md', './README.md', './demo/', './lib/'];
   my.buildnum_path = 'gen/build_ver.txt';
   my.a_src = 'src';
@@ -26,10 +28,15 @@ export function init(my) {
     if (val == '--root') {
       index++;
       my.root_path = process.argv[index];
+    } else if (val == '--mode_files') {
+      index++;
+      my.a_mode_files = process.argv[index];
     } else if (val == '--prod') {
+      my.mode_dev = 0;
       my.writeFlag = 1;
       my.incrementFlag = 1;
     } else if (val == '--dev') {
+      my.mode_dev = 1;
       my.writeFlag = 1;
       my.incrementFlag = 0;
     } else if (val == '--quiet') {
@@ -55,5 +62,15 @@ export function init(my) {
       return item;
     });
     // console.log('buildnum_files', my.buildnum_files);
+  }
+
+  if (my.a_mode_files) {
+    my.mode_files = my.a_mode_files.split(',').map((item) => {
+      if (!item.startsWith('./')) {
+        item = './' + item;
+      }
+      return item;
+    });
+    console.log('mode_files', my.mode_files);
   }
 }
