@@ -1,5 +1,12 @@
 //
 
+if (globalThis.window) {
+  window.addEventListener('resize', () => {
+    console.log('report_status resize');
+    dbase_report_status({});
+  });
+}
+
 function dbase_report_status(props) {
   if (!my.statusElement) {
     createStatusElement();
@@ -76,13 +83,6 @@ function footerText() {
     <h3>${my.appTitle} ${my.group}</h2>
   </div>
 `;
-}
-
-if (globalThis.window) {
-  window.addEventListener('resize', () => {
-    console.log('report_status resize');
-    dbase_report_status({});
-  });
 }
 
 function createQRCode() {
