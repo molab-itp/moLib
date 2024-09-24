@@ -1,5 +1,5 @@
 npm notice
-npm notice 📦  itp-molib2@0.1.6
+npm notice 📦  itp-molib2@0.1.7
 npm notice Tarball Contents
 npm notice 447B README.md
 npm notice 389.1kB dist/moLib.cjs.js
@@ -11,12 +11,12 @@ npm notice 1.8MB dist/moLib.umd.js.map
 npm notice 777B package.json
 npm notice Tarball Details
 npm notice name: itp-molib2
-npm notice version: 0.1.6
-npm notice filename: itp-molib2-0.1.6.tgz
+npm notice version: 0.1.7
+npm notice filename: itp-molib2-0.1.7.tgz
 npm notice package size: 1.5 MB
 npm notice unpacked size: 6.7 MB
-npm notice shasum: f3d77c2017d6e852345238f288a0e823951c257a
-npm notice integrity: sha512-0oCJIOgKkGUWS[...]x9L0da/rRWfhA==
+npm notice shasum: d215bf695c9906ae4c223e853ac32ad91af65e76
+npm notice integrity: sha512-dnQNeYjyY3OeA[...]BC/r+2uh15mwQ==
 npm notice total files: 8
 npm notice
 npm notice Publishing to https://registry.npmjs.org/ with tag latest and default access

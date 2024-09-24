@@ -37,7 +37,10 @@ function dbase_site_updates(updates, keys) {
   let date_s = new Date().toISOString();
   let count = increment(1);
   let name_s = my.nameDevice || '';
-  let userAgent = navigator.userAgent;
+  let userAgent = 'unknown';
+  if (globalThis.navigator) {
+    userAgent = globalThis.navigator.userAgent;
+  }
 
   if (!updates) updates = {};
   if (!keys) {
