@@ -148,7 +148,7 @@ function process_mode_tag(my) {
       skipCount++;
       continue;
     }
-    console.log('process_mode_tag afile', afile);
+    // console.log('process_mode_tag afile', afile);
     const fpath = join(src_path, afile);
     let str = readFileSync(fpath, 'utf8');
     if (!str) {
@@ -158,7 +158,7 @@ function process_mode_tag(my) {
 
     let nstr = str.replace(comment, '//$1');
     nstr = nstr.replace(uncomment, '$1');
-    console.log('str == nstr', str == nstr);
+    // console.log('str == nstr', str == nstr);
 
     if (my.writeFlag) {
       // writeBuildFile(src_path, afile, str);
