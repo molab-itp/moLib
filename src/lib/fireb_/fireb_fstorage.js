@@ -16,7 +16,7 @@ import {
   ref,
   uploadBytes, //
 } from 'firebase/storage'; //@prod
-// 'https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js'; //@dev
+// } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js'; //@dev
 
 export const fstorage = {
   deleteObject,

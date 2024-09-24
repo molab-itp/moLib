@@ -41,6 +41,7 @@ export function build_ver_run(my) {
 
   mlog('incrementFlag', my.incrementFlag);
   mlog('writeFlag', my.writeFlag);
+  mlog('mode_dev', my.mode_dev);
 
   process_mode_tag(my);
 
@@ -110,28 +111,6 @@ function writeSourceFile(src_path, afile, str) {
 //   writeFileSync(buildpath, str);
 // }
 
-// >> https://chatgpt.com/c/66f27c60-3b3c-8002-b8c5-09b695f63676
-// regular expression to insert characters '//'
-// at the begining of a line that end with characters '@//prod'
-// only if line does not begin with '//'
-
-// >> https://chatgpt.com/c/66f27c60-3b3c-8002-b8c5-09b695f63676
-// regular expression to remove characters '//'
-// at the begining of a line that end with characters '@//prod'
-
-// function comment_endtag(str, tag) {
-//   let re = new RegExp(`^(?!\\/\\/)(.*@\\/\\/${tag})\$`, 'gm');
-//   return str.replace(re, '$1');
-// }
-
-// function uncomment_endtag(str, tag) {
-//   let re = new RegExp(`^\\/\\/(.*@\\/\\/${tag})\$`, 'gm');
-//   return str.replace(re, '$1');
-// }
-
-// comment_endtag(input, 'prod')
-// uncomment_endtag(input, 'prod')
-
 function process_mode_tag(my) {
   //
   let { src_path, mode_files } = my;
@@ -140,8 +119,8 @@ function process_mode_tag(my) {
   let uncomment_prod = uncomment_endtag_re('prod');
   let comment_dev = comment_endtag_re('dev');
   let uncomment_dev = uncomment_endtag_re('dev');
-  let uncomment;
   let comment;
+  let uncomment;
   if (my.mode_dev) {
     // --dev
     comment = comment_prod;
@@ -169,7 +148,7 @@ function process_mode_tag(my) {
       skipCount++;
       continue;
     }
-    // console.log('build_ver_run afile', afile);
+    console.log('process_mode_tag afile', afile);
     const fpath = join(src_path, afile);
     let str = readFileSync(fpath, 'utf8');
     if (!str) {
@@ -177,12 +156,13 @@ function process_mode_tag(my) {
       continue;
     }
 
-    str = str.replace(comment, '//$1');
-    str = str.replace(uncomment, '$1');
+    let nstr = str.replace(comment, '//$1');
+    nstr = nstr.replace(uncomment, '$1');
+    console.log('str == nstr', str == nstr);
 
     if (my.writeFlag) {
       // writeBuildFile(src_path, afile, str);
-      writeSourceFile(src_path, afile, str);
+      writeSourceFile(src_path, afile, nstr);
       writeCount++;
     }
   }
@@ -194,7 +174,7 @@ function process_mode_tag(my) {
 // only if line does not begin with '//'
 //
 function comment_endtag_re(tag) {
-  return new RegExp(`^(?!\\/\\/)(.*@\\/\\/${tag})\$`, 'gm');
+  return new RegExp(`^(?!\\/\\/)(.*\\/\\/@${tag})\$`, 'gm');
 }
 
 // >> https://chatgpt.com/c/66f27c60-3b3c-8002-b8c5-09b695f63676
@@ -202,5 +182,5 @@ function comment_endtag_re(tag) {
 // at the begining of a line that end with characters '@//${tag}'
 //
 function uncomment_endtag_re(tag) {
-  return new RegExp(`^\\/\\/(.*@\\/\\/${tag})\$`, 'gm');
+  return new RegExp(`^\\/\\/(.*\\/\\/@${tag})\$`, 'gm');
 }
