@@ -78,7 +78,7 @@ function footerText() {
 `;
 }
 
-if (window) {
+if (globalThis.window) {
   window.addEventListener('resize', () => {
     console.log('report_status resize');
     dbase_report_status({});
@@ -87,7 +87,7 @@ if (window) {
 
 function createQRCode() {
   // console.log('createQRCode document', document, 'my.qrcodeElement', my.qrcodeElement);
-  if (!document) return;
+  if (!globalThis.window) return;
   if (my.footerElement) {
     my.footerElement.style.display = 'block';
     my.qrcodeElement.style.display = 'block';
