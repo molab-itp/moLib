@@ -13,6 +13,10 @@
 
 ```
 
+# dev build
+# can use <script type="module" src="../../moLib/src/lib/a_lib.js"></script>
+#
+bin/build.sh --dev
 
 # publish lib to npm
 #
