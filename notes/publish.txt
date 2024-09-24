@@ -1,5 +1,5 @@
 npm notice
-npm notice 📦  itp-molib@0.1.1
+npm notice 📦  itp-molib2@0.0.1
 npm notice Tarball Contents
 npm notice 447B README.md
 npm notice 389.1kB dist/moLib.cjs.js
@@ -8,21 +8,15 @@ npm notice 389.1kB dist/moLib.esm.js
 npm notice 1.8MB dist/moLib.esm.js.map
 npm notice 394.8kB dist/moLib.umd.js
 npm notice 1.8MB dist/moLib.umd.js.map
-npm notice 776B package.json
+npm notice 777B package.json
 npm notice Tarball Details
-npm notice name: itp-molib
-npm notice version: 0.1.1
-npm notice filename: itp-molib-0.1.1.tgz
+npm notice name: itp-molib2
+npm notice version: 0.0.1
+npm notice filename: itp-molib2-0.0.1.tgz
 npm notice package size: 1.5 MB
 npm notice unpacked size: 6.7 MB
-npm notice shasum: bdf3b2e0e85c2f11120a3a94a389479f5f2efcdb
-npm notice integrity: sha512-u/OszoH5UMMRb[...]cWwnSQSkz6IEQ==
+npm notice shasum: ff4669410496ba434de39c5b391bb98f27010a1c
+npm notice integrity: sha512-It1+Qc4iIMRq6[...]4V4DWktk+XZRw==
 npm notice total files: 8
 npm notice
 npm notice Publishing to https://registry.npmjs.org/ with tag latest and default access
-npm error code E403
-npm error 403 403 Forbidden - PUT https://registry.npmjs.org/itp-molib - itp-molib cannot be republished until 24 hours have passed.
-npm error 403 In most cases, you or one of your dependencies are requesting
-npm error 403 a package version that is forbidden by your security policy, or
-npm error 403 on a server you do not have access to.
-npm error A complete log of this run can be found in: /Users/jht2/.npm/_logs/2024-09-24T01_06_56_037Z-debug-0.log
