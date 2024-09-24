@@ -1,15 +1,15 @@
 //
 
-import './app_init.js';
-import './app_observe.js';
-import './devices_observe.js';
-import './devices_update.js';
-import './fstorage_upload.js';
-import './report_status.js';
-import './site_event.js';
-import './site_observe.js';
-import './update_props.js';
-import './updateTimeGap.js';
-import '../Anim.js';
-import '../fireb_/fireb_config.js';
-import '../get_url_params.js';
+import './app_init.js?v=4';
+import './app_observe.js?v=4';
+import './devices_observe.js?v=4';
+import './devices_update.js?v=4';
+import './fstorage_upload.js?v=4';
+import './report_status.j?v=4s';
+import './site_event.js?v=4';
+import './site_observe.js?v=4';
+import './update_props.js?v=4';
+import './updateTimeGap.js?v=4';
+import '../Anim.js?v=4';
+import '../fireb_/fireb_config.js?v=4';
+import '../get_url_params.js?v=4';

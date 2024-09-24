@@ -83,8 +83,8 @@ function init(config) {
   return nconfig;
 }
 
-import { fbase } from './fireb_fbase.js';
-import { fstorage } from './fireb_fstorage.js';
+import { fbase } from './fireb_fbase.js?v=4';
+import { fstorage } from './fireb_fstorage.js?v=4';
 
 // export api for non-module script
 const fireb_ = {
