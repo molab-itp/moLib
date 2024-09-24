@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+  padding: 0;
+  /* background-color: #fff; */
+  background-color: #000;
+  /* overflow: hidden; */
+}
+
+a {
+  color: #fff;
+}
+
+#id_player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 65%;
+}
+
+#id_qrcode {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#id_dashboard {
+  z-index: 1;
+  position: absolute;
+  color: #fff;
+  background-color: #0000;
+}
+
+#id_message_pane {
+  z-index: 3;
+  position: absolute;
+  color: #fff;
+  background-color: #0000;
+  max-width: 80%;
+}
+
+#id_bottom_message_pane {
+  z-index: 3;
+  position: absolute;
+  color: #fff;
+  background-color: #0000;
+  max-width: 80%;
+}
+
+/* make the buttons bigger on small screens */
+@media only screen and (max-width: 600px) {
+  #id_dashboard {
+    font-size: 5vw;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  body,
+  button,
+  select,
+  input {
+    font-size: 5vw;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+* {
+  font-family: monospace;
+}

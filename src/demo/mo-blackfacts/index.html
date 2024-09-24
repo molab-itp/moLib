@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <meta charset="utf-8" /> -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge" /> -->
+    <!-- <meta name="author" content="BlackFacts.com" /> -->
+    <!--  -->
+    <!-- BlackFacts Video Player 2023-12-26 downloaded by JHT -->
+    <!-- source: https://blackfacts.com/kiosk?delay=2000&playlist=today -->
+    <!--  -->
+    <title>mo-blackfacts ?v=4</title>
+    <!-- <script src="dateFacts.js"></script> -->
+    <!-- <script src="player.js?v=4"></script> -->
+    <!-- <script src="https://www.youtube.com/iframe_api"></script> -->
+    <link rel="stylesheet" type="text/css" href="style.css?v=4" />
+    <style></style>
+  </head>
+  <body>
+    <div id="id_dashboard">
+      <div>
+        <h1 id="id_title"">POWER TO THE PEOPLE!</h1>
+        <h3>
+        An experimental interactive multi-screen experience <br />
+        by <a href="https://jht1493.net" target="jht">John Henry Thompson</a> <br />
+        remixing <a href="https://blackfacts.com" target="blackfacts"> blackfacts.com</a>
+        powered by <a href="https://github.com/molab-itp/p5moLibrary" target="moLibrary">  p5moLibrary</a>
+        <br />
+        <br />
+        Control the big screen with these buttons:
+        </h3>
+      </div>
+
+      <button id="id_button_previous">Previous</button>
+      <button id="id_button_next">Next</button>
+      <br />
+      <button id="id_button_first">First</button>
+      <button id="id_button_random">Random</button>
+      <br />
+      <button id="id_button_play">Play</button>
+      <button id="id_button_pause">Pause</button>
+      <br />
+      <button id="id_button_rewind">Rewind</button>
+      <button id="id_button_resume">Resume</button>
+      <br />
+      <button id="id_button_toggle_buttons">Hide 365</button>
+      <button id="id_button_library">Library</button>
+      <br />
+      <button id="id_button_echo_delay_0">Delay 0</button>
+      <button id="id_button_echo_delay_n">Delay n</button>
+
+      <br />
+
+      <!-- <input type="checkbox" id="id_checkbox_play_next" name="play_next" />
+      <label for="id_checkbox_play_next">Next</label> -->
+
+      <!-- <input type="checkbox" id="id_checkbox_play_clip" name="play_clip" /> -->
+      <!-- <label for="id_checkbox_play_clip">Clip</label> -->
+
+      <!-- <input type="checkbox" id="id_checkbox_qrcode" name="qrcode" /> -->
+      <!-- <label for="id_checkbox_qrcode">QRCode</label> -->
+
+      <span id="id_lapse_report"></span>
+      <br />
+
+      <h2 id="id_blackfacts_num"></h2>
+      <div id="id_index_button_container" class="hidden"></div>
+    </div>
+
+    <div id="id_message_pane">
+      <h2 id="id_message_text"></h2>
+    </div>
+
+    <div id="id_player"></div>
+
+
+    <div id="id_bottom_message_pane">
+      <h2 id="id_bottom_message_text"></h2>
+      <h1> POWER TO THE PEOPLE!</h1> 
+      <h2>scan the qrcode to control this screen  </h2>
+      <span id="id_group_report"></span>
+    </div>
+
+    <div id="id_qrcode"><img src="../../qrcode/mo-blackfacts-qrcode.png" width="300" id="id_qrcode_src" /></div>
+
+    <!-- <div id="id_button_host"></div> -->
+
+  </body>
+
+  <script src="dateFacts.js"></script>
+  <script src="player.js?v=4"></script>
+
+  <!-- <script type="module" src="../../lib/a_lib.js"></script> -->
+
+  <script type="module" src="../../lib/fireb_/fireb_config.js?v=4"></script>
+  <script type="module" src="../../lib/dbase/a_dbase.js?v=4"></script>
+  <script type="module" src="../../lib/Anim.js?v=4"></script>
+
+  <script src="my_init.js?v=4"></script>
+  <script src="action.js?v=4"></script>
+  <script src="frame.js?v=4"></script>
+  <script src="init_ui.js?v=4"></script>
+  <script src="index.js?v=4"></script>
+</html>

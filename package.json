@@ -1,0 +1,29 @@
+{
+  "name": "itp-molib",
+  "version": "0.0.2",
+  "description": "Library for cloud storage enhanced multi-device experiences",
+  "homepage": "https://github.com/molab-itp/moLib#readme",
+  "repository": {
+    "url": "git+https://github.com/molab-itp/moLib.git"
+  },
+  "mainX": "dist/moLib.cjs.js",
+  "module": "dist/moLib.esm.js",
+  "unpkg": "dist/moLib.umd.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "firebase": "^10.13.2",
+    "rollup": "^2.79.1"
+  }
+}
