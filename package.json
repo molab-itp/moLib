@@ -6,7 +6,8 @@
   "repository": {
     "url": "git+https://github.com/molab-itp/moLib.git"
   },
-  "mainX": "dist/moLib.cjs.js",
+  "type": "module",
+  "main": "dist/moLib.cjs.js",
   "module": "dist/moLib.esm.js",
   "unpkg": "dist/moLib.umd.js",
   "files": [
