@@ -13,13 +13,15 @@
 
 ```
 
+
+# publish lib to npm
+#
+bin/lib-release.sh
+
 # deploy to github pages
 #
 bin/git-release.sh
 
-#
-# update ../moRelease
-bin/lib-release.sh
 
 
 ```
