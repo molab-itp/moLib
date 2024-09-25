@@ -70,7 +70,9 @@ function qrcode_url() {
 }
 
 function init_qrcode_url() {
-  my.qrcodeElement.src = qrcode_url();
+  if (my.qrcodeElement) {
+    my.qrcodeElement.src = qrcode_url();
+  }
 }
 globalThis.init_qrcode_url = init_qrcode_url;
 
