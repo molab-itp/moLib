@@ -4,7 +4,7 @@
 // dbase.remote
 
 //
-function dbase_app_init({ completed }) {
+async function dbase_app_init() {
   //
   let config = fireb_.init(my.fireb_config);
   console.log('configVersion', config.configVersion);
@@ -12,27 +12,27 @@ function dbase_app_init({ completed }) {
   console.log('configLabel', config.configLabel);
   console.log('room', my.roomName);
 
-  // createStatusElement();
   dbase_report_status({ msg: 'Starting...' });
 
   let { signInAnonymously, auth } = fireb_;
-  signInAnonymously(auth)
-    .then(() => {
-      my.uid = auth.currentUser.uid;
-      console.log('dbase_app_init my.uid', my.uid);
 
-      dbase_report_status({});
+  await signInAnonymously(auth);
+  // .then(() => {
+  my.uid = auth.currentUser.uid;
+  console.log('dbase_app_init my.uid', my.uid);
 
-      dbase_site_observe();
+  dbase_report_status({});
 
-      // Send initial ping
-      dbase_update_props({}, { count: 1 });
+  dbase_site_observe();
 
-      if (completed) completed();
-    })
-    .catch((error) => {
-      console.log('dbase_app_init error', error);
-    });
+  // Send initial ping
+  dbase_update_props({}, { count: 1 });
+
+  // if (completed) completed();
+  // })
+  // .catch((error) => {
+  //   console.log('dbase_app_init error', error);
+  // });
 }
 globalThis.dbase_app_init = dbase_app_init;
 
