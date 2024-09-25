@@ -11,7 +11,7 @@ function my_init() {
   my.blackfacts_index = -1;
   my.stepCount = 0;
   my.animTime = 7;
-  my.nameDevice = 'device?v=5';
+  my.nameDevice = 'device?v=6';
   my.pingTime = 1;
 
   // my.isRemote = window.innerHeight > window.innerWidth;
