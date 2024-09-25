@@ -5,7 +5,7 @@
 
 # [repo](https://github.com/molab-itp/moLib)
 
-# [github.io src](https://molab-itp.github.io/moLib/src?v=8)
+# [github.io src](https://molab-itp.github.io/moLib/src?v=9)
 
 # [moSalon usage examples](https://github.com/molab-itp/moSalon)
 
