@@ -1,9 +1,9 @@
 #!/bin/bash
 cd ${0%/*}
+cd ..
 
 # Produce a release build
 
-cd ..
 quiet=--quiet
 
 # deploy to github pages
@@ -13,7 +13,7 @@ quiet=--quiet
 # switch back to branch next
 #
 
-bin/build.sh --prod $quiet
+bin/build.sh --prod $quiet --lib 1
 
 git add . 
 git commit $quiet -m "`cat src/gen/build_ver.txt`"

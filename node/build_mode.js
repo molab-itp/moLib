@@ -3,7 +3,8 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 
 import { enum_files } from './enum_files.js';
-import { mlog, writeSourceFile } from './build_ver.js';
+import { writeSourceFile } from './build_ver.js';
+import { mlog } from './build.js';
 
 // Select import for build mode
 //

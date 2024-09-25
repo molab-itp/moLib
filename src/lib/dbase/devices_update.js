@@ -158,8 +158,11 @@ function dbase_issue_action(prop) {
 }
 globalThis.dbase_issue_action = dbase_issue_action;
 
+//
+// simpler version of dbase_devices_issue_actions
+//
 // dbase_if_action(item.action_rewind, 'action_rewind', my.rewind_action)
-// node/lib/dbase.js
+// use: node/lib/dbase.js | moSalon/vote
 //
 function dbase_if_action({ item, prop, actionFunc }) {
   let count = item[prop];

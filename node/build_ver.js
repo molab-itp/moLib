@@ -1,30 +1,13 @@
 // import pkg from 'fs-extra';
 // const { readFileSync, existsSync, writeFileSync } = pkg;
 // import { readFileSync, existsSync, writeFileSync } from 'fs-extra/esm';
-import { readFileSync, existsSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 import { enum_files } from './enum_files.js';
-import { build_mode } from './build_mode.js';
+import { mlog } from './build.js';
 
-function get_build_vers(my) {
-  let buildnum_path = join(my.src_path, my.buildnum_path);
-  let str = '0';
-  if (existsSync(buildnum_path)) {
-    str = readFileSync(buildnum_path, 'utf8');
-  } else {
-    mlog('read failed buildnum_path', buildnum_path);
-  }
-  my.current = parseFloat(str);
-  my.next = my.current + 1;
-}
-
-let my_;
-
-export function mlog(...args) {
-  if (my_.quietFlag) return;
-  console.log(...args);
-}
+// let my_;
 
 // build_ver_run(buildnum_path, build_ver, src_path, buildnum_files);
 // build_ver_run(my);
@@ -32,19 +15,8 @@ export function mlog(...args) {
 // export function build_ver_run(src_path, buildnum_path, build_ver, buildnum_files) {
 export function build_ver_run(my) {
   //
-  my_ = my;
+  // my_ = my;
   let { src_path, buildnum_path, buildnum_files } = my;
-
-  get_build_vers(my);
-  if (!my.incrementFlag) {
-    my.next = my.current;
-  }
-
-  mlog('incrementFlag', my.incrementFlag);
-  mlog('writeFlag', my.writeFlag);
-  mlog('mode_dev', my.mode_dev);
-
-  build_mode(my);
 
   // const ver_from_str = '\\?v=1';
   const ver_from_str = '\\?v=\\d+';

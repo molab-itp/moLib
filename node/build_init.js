@@ -14,13 +14,15 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export function init(my) {
   //
   my.root_path = join(__dirname, '..');
-  my.mode_files = ['./lib/fireb_'];
+  // my.mode_files = ['./lib/fireb_'];
+  my.mode_files = [];
   my.mode_dev = 0;
   my.buildnum_files = ['../README.md', './README.md', './demo/', './lib/'];
   my.buildnum_path = 'gen/build_ver.txt';
   my.a_src = 'src';
   my.incrementFlag = 0;
   my.writeFlag = 0;
+  my.libFlag = 0;
 
   for (let index = 0; index < process.argv.length; index++) {
     // console.log(index, process.argv[index]);
@@ -31,6 +33,12 @@ export function init(my) {
     } else if (val == '--mode_files') {
       index++;
       my.a_mode_files = process.argv[index];
+    } else if (val == '--lib') {
+      index++;
+      my.libFlag = parseFloat(process.argv[index]);
+      if (my.libFlag) {
+        my.a_mode_files = './lib/fireb_'; // !!@ adjust for --lib
+      }
     } else if (val == '--prod') {
       my.mode_dev = 0;
       my.writeFlag = 1;

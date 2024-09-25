@@ -5,7 +5,7 @@
 
 # [repo](https://github.com/molab-itp/moLib)
 
-# [github.io src](https://molab-itp.github.io/moLib/src?v=6)
+# [github.io src](https://molab-itp.github.io/moLib/src?v=7)
 
 # [moSalon usage examples](https://github.com/molab-itp/moSalon)
 
@@ -16,7 +16,10 @@
 # dev build
 # can use <script type="module" src="../../moLib/src/lib/a_lib.js"></script>
 #
-bin/build.sh --dev
+bin/build.sh --dev --lib 1
+#
+# prod build
+bin/build.sh --prod --lib 1
 
 # publish lib to npm
 #

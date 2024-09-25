@@ -22,6 +22,7 @@ export function enum_files(root_path, files) {
     if (afile.substring(0, 1) == '.' && !afile.substring(0, 2) == './') continue;
     const fpath = join(root_path, afile);
     // console.log('fpath', fpath);
+    // !!@ fileExists fpath
     if (!lstatSync(fpath).isDirectory()) {
       // Add simple files to nfiles array
       nfiles.push(afile);
