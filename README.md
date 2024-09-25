@@ -1,6 +1,6 @@
 # [moLib](https://github.com/molab-itp/moLib)
 
-- a Library for cloud storage enhanced multi-device experiences from handheld to large screens
+- a Library for multi-device experiences from handheld small screens to large screens using cloud storage
 - compatible with p5js
 
 # [repo](https://github.com/molab-itp/moLib)
