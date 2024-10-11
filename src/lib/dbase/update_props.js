@@ -63,6 +63,7 @@ function dbase_update_props(props, options) {
   }
   // ui_log('dbase_update_props updates', updates);
 
+  // refPath = `${my.dbase_rootPath}/${my.roomName}/${my.mo_app}`
   update(refPath, updates);
 
   dbase_site_event_update();

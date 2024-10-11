@@ -1,5 +1,5 @@
 //
-function dbase_app_observe({ observed_key, removed_key, observed_item }, options) {
+function dbase_app_observe({ observed_key, removed_key, observed_item, observed_event }, options) {
   // options = { app, tag }
   let app = my.mo_app;
   let tag = 'dbase_app_observe';
@@ -16,20 +16,22 @@ function dbase_app_observe({ observed_key, removed_key, observed_item }, options
   let refPath = getRefPath(path);
 
   onChildAdded(refPath, (data) => {
-    receivedDeviceKey('Added', data);
+    receivedDeviceKey('add', data);
   });
 
   onChildChanged(refPath, (data) => {
     // console.log('Changed', data);
-    receivedDeviceKey('Changed', data);
+    receivedDeviceKey('change', data);
   });
 
   // for examples/photo-booth no remove seen
   //
   onChildRemoved(refPath, (data) => {
-    receivedDeviceKey('Removed', data, { remove: 1 });
+    receivedDeviceKey('remove', data, { remove: 1 });
   });
 
+  // op = added | changed | removed
+  //
   function receivedDeviceKey(op, data, remove) {
     let msg = tag + ' ' + op;
     let key = data.key;
@@ -39,6 +41,9 @@ function dbase_app_observe({ observed_key, removed_key, observed_item }, options
     if (remove) {
       if (removed_key) {
         removed_key(key, value);
+      }
+      if (observed_event) {
+        observed_event(op, key, value);
       }
       return;
     }
@@ -53,6 +58,9 @@ function dbase_app_observe({ observed_key, removed_key, observed_item }, options
           observed_item(value);
         }
       }
+    }
+    if (observed_event) {
+      observed_event(op, key, value);
     }
   }
 
