@@ -3,7 +3,7 @@ function dbase_site_observe() {
   //
   // Setup listener for changes to firebase db device
   let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = fireb_.fbase;
-  let path = `${my.dbase_rootPath}/${my.mo_app}/a_device/${my.uid}`;
+  let path = `${my.dbase_rootPath}/${my.mo_app}/a_device`;
   let refPath = getRefPath(path);
 
   if (!my.fireb_devices) {
@@ -73,17 +73,44 @@ globalThis.dbase_fireb_device = dbase_fireb_device;
 // Only count devices that dont contain '-electron' in the name_s field
 //
 function count_client_devices() {
-  Object.keys(my.fireb_devices).length;
+  // Object.keys(my.fireb_devices).length;
   let count = 0;
   Object.entries(my.fireb_devices).map((ent) => {
     let dev = ent[1];
     // console.log('dev', dev);
-    if (dev.dbase.name_s.indexOf('-electron') < 0) {
+    if (dev?.dbase?.name_s?.indexOf('-electron') < 0) {
       count++;
     }
   });
   return count;
 }
+
+// Object.entries(my.fireb_devices)
+// [
+//   [
+//       "DK1Lcj16BFhDPgdvGGkVP9FS3Xy2",
+//       {
+//           "uid": "DK1Lcj16BFhDPgdvGGkVP9FS3Xy2",
+//           "index": 0,
+//           "dbase": {
+//               "date_s": "2024-10-12T16:56:00.229Z",
+//               "name_s": "facemesh",
+//               "time": 0,
+//               "time_s": "",
+//               "update_count": 1,
+//               "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+//               "visit": [
+//                   {
+//                       "date_s": "2024-10-12T16:56:00.229Z",
+//                       "time": 0,
+//                       "time_s": ""
+//                   }
+//               ],
+//               "visit_count": 1
+//           }
+//       }
+//   ]
+// ]
 
 //
 //

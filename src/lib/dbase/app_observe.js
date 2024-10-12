@@ -9,7 +9,7 @@ function dbase_app_observe({ observed_key, removed_key, observed_item, observed_
   }
   // Setup listener for changes to firebase db device
   let path = `${my.dbase_rootPath}/${mo_app}/${my.mo_room}`;
-  if (options.path) {
+  if (options?.path) {
     path += '/' + options.path;
   }
   if (observed_item) {
@@ -115,3 +115,13 @@ function dbase_group_observe(props, options) {
   }
 }
 globalThis.dbase_group_observe = dbase_group_observe;
+
+function dbase_add_key(apath) {
+  let { getRefPath, push } = fireb_.fbase;
+  let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}/${apath}`;
+  let refPath = getRefPath(path);
+  return push(refPath);
+}
+globalThis.dbase_add_key = dbase_add_key;
+
+// https://firebase.google.com/docs/database/web/lists-of-data#append_to_a_list_of_data
