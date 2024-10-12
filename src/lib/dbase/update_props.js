@@ -25,14 +25,11 @@ function dbase_update_props(props, options) {
     return;
   }
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
-  if (options.path) {
+  if (options.path && !group) {
     path += '/' + options.path;
   }
   let { getRefPath, update, increment } = fireb_.fbase;
   let refPath = getRefPath(path);
-
-  let a_group = options.a_group;
-  if (!a_group) a_group = 'a_group';
 
   let groups = options.group;
   if (!groups) groups = 's0';
@@ -59,7 +56,10 @@ function dbase_update_props(props, options) {
   for (let group of groups) {
     for (let prop in groupProps) {
       let value = groupProps[prop];
-      let dpath = `${a_group}/${group}/${prop}`;
+      if (options.path) {
+        prop = options.path + '/' + prop;
+      }
+      let dpath = `a_group/${group}/${prop}`;
       updates[dpath] = value;
     }
   }
