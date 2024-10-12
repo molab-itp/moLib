@@ -6,8 +6,8 @@ function my_init() {
   // my.fireb_config = 'jhtitp';
   my.dbase_rootPath = 'm0-@r-@w-';
   my.mo_app = 'mo-blackfacts';
-  my.roomName = 'room0';
-  // my.roomName = 'room1';
+  my.mo_room = 'room0';
+  // my.mo_room = 'room1';
   my.blackfacts_index = -1;
   my.stepCount = 0;
   my.animTime = 7;
@@ -35,6 +35,6 @@ function my_init() {
     id_title.innerHTML += ' (' + my.group + ')';
   }
   if (params.room) {
-    my.roomName = params.room;
+    my.mo_room = params.room;
   }
 }

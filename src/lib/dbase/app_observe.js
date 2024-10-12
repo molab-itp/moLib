@@ -1,14 +1,17 @@
 //
 function dbase_app_observe({ observed_key, removed_key, observed_item, observed_event }, options) {
-  // options = { app, tag }
-  let app = my.mo_app;
+  // options = { app, tag, path }
+  let mo_app = my.mo_app;
   let tag = 'dbase_app_observe';
   if (options) {
-    app = options.app || app;
+    mo_app = options.app || mo_app;
     tag = options.tag || tag;
   }
   // Setup listener for changes to firebase db device
-  let path = `${my.dbase_rootPath}/${my.roomName}/${app}`;
+  let path = `${my.dbase_rootPath}/${mo_app}/${my.mo_room}`;
+  if (options.path) {
+    path += '/' + options.path;
+  }
   if (observed_item) {
     path += '/a_group';
   }

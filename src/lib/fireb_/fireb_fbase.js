@@ -15,11 +15,12 @@ import {
   onChildChanged,
   onChildRemoved,
   onValue,
+  push,
   ref,
   set,
   update, //
-//} from 'firebase/database'; //@prod
-  } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js'; //@dev
+  //} from 'firebase/database'; //@prod
+} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js'; //@dev
 
 function getRefPath(path) {
   return ref(getDatabase(), path);
@@ -35,6 +36,7 @@ export const fbase = {
   onChildChanged,
   onChildRemoved,
   onValue,
+  push,
   ref,
   set,
   update,

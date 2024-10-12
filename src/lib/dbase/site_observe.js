@@ -3,7 +3,7 @@ function dbase_site_observe() {
   //
   // Setup listener for changes to firebase db device
   let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = fireb_.fbase;
-  let path = `${my.dbase_rootPath}/${my.roomName}/device`;
+  let path = `${my.dbase_rootPath}/${my.mo_app}/a_device/${my.uid}`;
   let refPath = getRefPath(path);
 
   if (!my.fireb_devices) {
@@ -90,7 +90,7 @@ function count_client_devices() {
 function dbase_site_remove() {
   //
   let { getRefPath, set } = fireb_.fbase;
-  let path = `${my.dbase_rootPath}/${my.roomName}/device/${my.uid}`;
+  let path = `${my.dbase_rootPath}/${my.mo_app}/a_device/${my.uid}`;
   let refPath = getRefPath(path);
   set(refPath, {})
     .then(() => {
