@@ -48,13 +48,13 @@ function app_init_completed() {
 }
 
 function update_blackfacts_index_dbase(index) {
-  ui_log('update_blackfacts_index_dbase index', index, 'my.group', my.group);
+  ui_log('update_blackfacts_index_dbase index', index, 'my.mo_group', my.mo_group);
   dbase_update_item({ index });
 }
 
 function pingAction() {
   let portrait = my.isRemote ? 1 : 0;
-  let group = my.group;
+  let group = my.mo_group;
   dbase_site_updates({ portrait, group });
 }
 

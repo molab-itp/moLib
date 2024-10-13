@@ -63,7 +63,7 @@ function qrcode_url() {
     url = my.qrcode_url();
   } else {
     // let url = `https://molab-itp.github.io/p5moExamples/examples/let-america-be/qrcode/s0.png`;
-    url = `https://molab-itp.github.io/moSalon/src/let-america-be/qrcode/${my.group}.png`;
+    url = `https://molab-itp.github.io/moSalon/src/let-america-be/qrcode/${my.mo_group}.png`;
   }
   console.log('qrcode_url', url);
   return url;
@@ -82,7 +82,7 @@ function footerText() {
     <h1>POWER TO THE PEOPLE!</h1> 
     <h3>scan the qrcode to control this screen  </h2>
     <br/>
-    <h3>${my.appTitle} ${my.group}</h2>
+    <h3>${my.appTitle} ${my.mo_group} ${my.version}</h2>
   </div>
 `;
 }

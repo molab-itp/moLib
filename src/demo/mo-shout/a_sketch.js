@@ -36,12 +36,12 @@ function my_setup() {
 
   my.isRemote = !params.qrcode;
   if (params.group) {
-    my.group = params.group;
+    my.mo_group = params.group;
   }
-  if (!my.group) {
-    my.group = 's0';
+  if (!my.mo_group) {
+    my.mo_group = 's0';
   }
-  console.log('my_init my.group', my.group);
+  console.log('my_init my.mo_group', my.mo_group);
 
   position_qrcode();
 

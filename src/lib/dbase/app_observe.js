@@ -7,7 +7,7 @@ function dbase_app_observe({ observed_key, removed_key, observed_item, observed_
     options = {};
   } else if (typeof options === 'string') {
     options = { path: options };
-    options.group = my.group || 's0';
+    options.group = my.mo_group || 's0';
   }
   tag = options.tag || tag;
   // Setup listener for changes to firebase db device
@@ -71,11 +71,11 @@ function dbase_app_observe({ observed_key, removed_key, observed_item, observed_
   }
 
   function group_key() {
-    let group = my && my.group;
+    let group = my && my.mo_group;
     if (!group) group = 's0';
     // broadcast group when has comma separated values
     if (group.indexOf(',') > -1) {
-      // my.group=s1,s2,... --> group=s0
+      // my.mo_group=s1,s2,... --> group=s0
       // Special group 's0' recieves all updates
       group = 's0';
     }
@@ -86,11 +86,11 @@ globalThis.dbase_app_observe = dbase_app_observe;
 
 // issue dbase_update_props to group
 function dbase_update_item(item, path) {
-  // let group = my && my.group;
+  // let group = my && my.mo_group;
   // if (!group) group = 's0';
   // // broadcast group when has comma separated values
   // if (group.indexOf(',') > -1) {
-  //   // my.group=s1,s2,... --> group=s0,s1,s2,...
+  //   // my.mo_group=s1,s2,... --> group=s0,s1,s2,...
   //   // Special group 's0' recieves all updates
   //   group = 's0,' + group;
   // }
@@ -103,11 +103,11 @@ function dbase_update_item(item, path) {
 globalThis.dbase_update_item = dbase_update_item;
 
 function dbase_default_options(path) {
-  let group = my && my.group;
+  let group = my && my.mo_group;
   if (!group) group = 's0';
   // broadcast group when has comma separated values
   if (group.indexOf(',') > -1) {
-    // my.group=s1,s2,... --> group=s0,s1,s2,...
+    // my.mo_group=s1,s2,... --> group=s0,s1,s2,...
     // Special group 's0' recieves all updates
     group = 's0,' + group;
   }
@@ -119,9 +119,9 @@ function dbase_default_options(path) {
 }
 globalThis.dbase_default_options = dbase_default_options;
 
-// issue dbase_update_props to group if my.group present
+// issue dbase_update_props to group if my.mo_group present
 function dbase_group_update(item) {
-  let group = my && my.group;
+  let group = my && my.mo_group;
   if (group) {
     dbase_update_item(item);
   } else {
@@ -131,7 +131,7 @@ function dbase_group_update(item) {
 globalThis.dbase_group_update = dbase_group_update;
 
 function dbase_group_observe(props, options) {
-  let group = my && my.group;
+  let group = my && my.mo_group;
   if (group) {
     dbase_app_observe(props, options);
   } else {

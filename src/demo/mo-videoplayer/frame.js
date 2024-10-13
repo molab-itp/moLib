@@ -92,12 +92,12 @@ function video_action_check() {
       my.video_played_count_prior = my.video_played_count;
       let time = player.getCurrentTime();
       dbase_update_item({ time });
-      dbase_issue_actions({ play_video_action: 1 }, { group: my.group });
+      dbase_issue_actions({ play_video_action: 1 }, { group: my.mo_group });
     }
   }
   if (
     !my.isRemote && //
-    dbase_actions_issued(my.uid, { play_video_action: 1 }, { group: my.group })
+    dbase_actions_issued(my.uid, { play_video_action: 1 }, { group: my.mo_group })
   ) {
     console.log('frame dbase_actions_issued player.playVideo ', player_ready());
     if (player_ready()) {

@@ -41,12 +41,12 @@ function dashboard_action(event) {
 }
 
 function echo_delay_0_action() {
-  let group = my.group;
+  let group = my.mo_group;
   dbase_update_props({ echo_delay: 0 }, { group: group });
 }
 
 function echo_delay_n_action() {
-  let groups = my.group;
+  let groups = my.mo_group;
   if (!groups) groups = '';
   groups = groups.split(',');
   let delayStep = 2;

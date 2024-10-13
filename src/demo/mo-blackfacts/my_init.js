@@ -22,17 +22,17 @@ function my_init() {
   my.idevice = params.idevice;
   console.log('my_init my.idevice', my.idevice);
   if (my.idevice) {
-    my.group = 's' + my.idevice;
+    my.mo_group = 's' + my.idevice;
   }
   if (params.group) {
-    my.group = params.group;
+    my.mo_group = params.group;
   }
-  if (!my.group) {
-    my.group = 's0';
+  if (!my.mo_group) {
+    my.mo_group = 's0';
   }
-  console.log('my_init my.group', my.group);
-  if (my.group) {
-    id_title.innerHTML += ' (' + my.group + ')';
+  console.log('my_init my.mo_group', my.mo_group);
+  if (my.mo_group) {
+    id_title.innerHTML += ' (' + my.mo_group + ')';
   }
   if (params.room) {
     my.mo_room = params.room;

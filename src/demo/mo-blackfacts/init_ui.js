@@ -19,8 +19,8 @@ function init_ui() {
     }
     show_qrcode_top_right();
   }
-  if (my.group) {
-    id_group_report.innerHTML = my.group;
+  if (my.mo_group) {
+    id_group_report.innerHTML = my.mo_group;
   }
   if (my.isRemote) {
     toggle_365_panes();
