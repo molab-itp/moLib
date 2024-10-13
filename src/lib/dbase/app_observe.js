@@ -60,13 +60,10 @@ function dbase_app_observe({ observed_key, removed_key, observed_item, observed_
       observed_key(key, value);
     }
     if (observed_item) {
-      // let group = group_key();
-      // if (group == key) {
       my.a_group_item = value;
       if (value) {
         observed_item({ [key]: value });
       }
-      // }
     }
     if (observed_event) {
       observed_event(op, key, value);
@@ -114,7 +111,7 @@ function dbase_default_options(path) {
     // Special group 's0' recieves all updates
     group = 's0,' + group;
   }
-  let options = { group: group, a_group: 'a_group' };
+  let options = { group: group };
   if (path) {
     options.path = path;
   }
@@ -162,6 +159,23 @@ async function dbase_add_key(apath, value) {
   return nref.key;
 }
 globalThis.dbase_add_key = dbase_add_key;
+
+async function dbase_remove_key(apath, key) {
+  console.log('dbase_remove_key apath', apath, 'key', key);
+  let options = dbase_default_options(apath);
+  let group = options.group;
+  let prop = options.path;
+
+  let { getRefPath, set } = fireb_.fbase;
+  let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
+  path += `/a_group/${group}/${prop}/${key}`;
+
+  console.log('dbase_remove_key path', path);
+  let refPath = getRefPath(path);
+
+  return set(refPath, null);
+}
+globalThis.dbase_remove_key = dbase_remove_key;
 
 // https://firebase.google.com/docs/database/web/lists-of-data#append_to_a_list_of_data
 // push
