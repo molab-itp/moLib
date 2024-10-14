@@ -20,7 +20,7 @@ function dbase_update_props(props, options) {
     groupProps = props;
     deviceProps = {};
   }
-  // ui_log('dbase_update_props props', props, 'deviceProps', deviceProps);
+  ui_log('dbase_update_props my.uid', my.uid);
   if (!my.uid) {
     return;
   }
@@ -34,6 +34,9 @@ function dbase_update_props(props, options) {
   let groups = options.group;
   if (!groups) groups = 's0';
   groups = groups.split(',');
+
+  ui_log('dbase_update_props props', props, 'deviceProps', deviceProps);
+  ui_log('dbase_update_props groups', groups);
 
   let updates = {};
 

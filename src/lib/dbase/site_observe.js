@@ -6,6 +6,8 @@ function dbase_site_observe() {
   let path = `${my.dbase_rootPath}/${my.mo_app}/a_device`;
   let refPath = getRefPath(path);
 
+  ui_log('dbase_site_observe path', path);
+
   if (!my.fireb_devices) {
     my.fireb_devices = {};
   }

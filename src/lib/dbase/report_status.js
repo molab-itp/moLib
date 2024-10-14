@@ -8,6 +8,7 @@ if (globalThis.window) {
 }
 
 function dbase_report_status(props) {
+  ui_log('dbase_report_status props', props);
   if (!my.statusElement) {
     createStatusElement();
     if (!my.statusElement) return;

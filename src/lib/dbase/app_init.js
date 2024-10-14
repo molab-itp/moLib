@@ -27,12 +27,6 @@ async function dbase_app_init() {
 
   // Send initial ping
   dbase_update_props({}, { count: 1 });
-
-  // if (completed) completed();
-  // })
-  // .catch((error) => {
-  //   console.log('dbase_app_init error', error);
-  // });
 }
 globalThis.dbase_app_init = dbase_app_init;
 
