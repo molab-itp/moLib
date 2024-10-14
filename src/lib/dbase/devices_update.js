@@ -152,9 +152,9 @@ globalThis.dbase_devices_issue_actions = dbase_devices_issue_actions;
 //
 // dbase_issue_action is complement by dbase_if_action
 //
-function dbase_issue_action(prop) {
+function dbase_issue_action(prop, path) {
   console.log('dbase_issue_action', prop);
-  dbase_update_item({ [prop]: dbase_increment(1) });
+  dbase_update_item({ [prop]: dbase_increment(1) }, path);
 }
 globalThis.dbase_issue_action = dbase_issue_action;
 

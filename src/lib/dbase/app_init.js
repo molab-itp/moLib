@@ -4,8 +4,10 @@
 // dbase.remote
 
 //
-async function dbase_app_init() {
+async function dbase_app_init(my) {
   //
+  globalThis.my = my;
+
   let config = fireb_.init(my.fireb_config);
   console.log('configVersion', config.configVersion);
   console.log('config.projectId', config.projectId);

@@ -15,7 +15,7 @@ function dbase_site_event_visit() {
 globalThis.dbase_site_event_visit = dbase_site_event_visit;
 
 function dbase_site_event_update() {
-  ui_log('dbase_site_event_update');
+  // ui_log('dbase_site_event_update');
   dbase_site_event({ event: 'update', count: 'update_count' });
 }
 globalThis.dbase_site_event_update = dbase_site_event_update;
@@ -25,7 +25,7 @@ function dbase_site_event(keys) {
 }
 
 function dbase_site_updates(updates, keys) {
-  ui_log('dbase_site_updates updates', updates, 'keys', keys);
+  // ui_log('dbase_site_updates updates', updates, 'keys', keys);
 
   // console.log('dbase_site_event my.uid', my.uid);
   // ui_log('dbase_site_event my.uid', my.uid);
