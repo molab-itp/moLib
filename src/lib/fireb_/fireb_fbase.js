@@ -19,7 +19,7 @@ import {
   ref,
   set,
   update, //
-  // } from 'firebase/database'; //@prod
+} from 'firebase/database'; //@prod
 //} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js'; //@dev
 
 function getRefPath(path) {
