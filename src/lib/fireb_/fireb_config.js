@@ -14,13 +14,13 @@
 
 import {
   initializeApp, //
-  // } from 'firebase/app'; //@prod
+} from 'firebase/app'; //@prod
 //} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'; //@dev
 
 import {
   getAuth,
   signInAnonymously, //
-  // } from 'firebase/auth'; //@prod
+} from 'firebase/auth'; //@prod
 //} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js'; //@dev
 
 // Your web app's Firebase configuration
@@ -78,7 +78,7 @@ function init(config) {
   // if config object not found, default to firebaseConfig_jht9629
   nconfig = nconfig || firebaseConfig_jht9629;
   nconfig.configLabel = configLabel;
-  nconfig.configVersion = '?v=21.1.20';
+  nconfig.configVersion = '?v=22.1.20';
   // console.log('fireb_config config', config);
   // console.log('fireb_config config.projectId', config.projectId);
   fireb_.app = initializeApp(nconfig);
