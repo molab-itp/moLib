@@ -25,8 +25,7 @@ function dbase_site_event(keys) {
 }
 
 function dbase_site_updates(updates, keys) {
-  // ui_log('dbase_site_updates updates', updates, 'keys', keys);
-
+  ui_logv('dbase_site_updates updates', updates, 'keys', keys);
   // console.log('dbase_site_event my.uid', my.uid);
   // ui_log('dbase_site_event my.uid', my.uid);
   if (!my.uid) {

@@ -19,8 +19,8 @@ function dbase_app_observe({ observed_key, removed_key, observed_item, observed_
     path += `/${options.path}`;
     tagPath = options.path;
   }
-  // ui_log('dbase_app_observe options', options);
-  // ui_log('dbase_app_observe path', path);
+  ui_logv('dbase_app_observe options', options);
+  ui_logv('dbase_app_observe path', path);
   let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = fireb_.fbase;
   let refPath = getRefPath(path);
 

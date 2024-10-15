@@ -27,6 +27,8 @@ function ui_log(...args) {
 }
 globalThis.ui_log = ui_log;
 
+globalThis.ui_logv = () => {};
+
 function ui_log_add(lines, str) {
   lines.push(str);
   if (lines.length > my.logLinesMax) {

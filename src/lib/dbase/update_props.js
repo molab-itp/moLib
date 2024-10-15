@@ -20,7 +20,7 @@ function dbase_update_props(props, options) {
     groupProps = props;
     deviceProps = {};
   }
-  // ui_log('dbase_update_props my.uid', my.uid);
+  ui_logv('dbase_update_props my.uid', my.uid);
   if (!my.uid) {
     return;
   }
@@ -35,8 +35,8 @@ function dbase_update_props(props, options) {
   if (!groups) groups = 's0';
   groups = groups.split(',');
 
-  // ui_log('dbase_update_props props', props, 'deviceProps', deviceProps);
-  // ui_log('dbase_update_props groups', groups);
+  ui_logv('dbase_update_props props', props, 'deviceProps', deviceProps);
+  ui_logv('dbase_update_props groups', groups);
 
   let updates = {};
 
@@ -66,7 +66,7 @@ function dbase_update_props(props, options) {
       updates[dpath] = value;
     }
   }
-  // ui_log('dbase_update_props updates', updates);
+  ui_logv('dbase_update_props updates', updates);
 
   // refPath = [SITE-URL]/${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}
   update(refPath, updates);

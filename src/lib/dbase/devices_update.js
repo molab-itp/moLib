@@ -10,7 +10,7 @@ function dbase_devices_update(deviceProps) {
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
   let { getRefPath, update } = fireb_.fbase;
   let refPath = getRefPath(path);
-  // ui_log('dbase_update_props', path);
+  ui_logv('dbase_update_props', path);
 
   let updates = {};
   for (let uid in my.a_device_values) {
