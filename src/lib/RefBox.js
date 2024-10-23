@@ -48,7 +48,7 @@ export class RefBox {
     console.log('restore_localStorage');
     let refBox;
     let str = localStorage.getItem(this.storageLabel);
-    if (!str) {
+    if (!str || this.reloadLocal) {
       console.log('restore_localStorage no str', this.storageLabel);
       return;
     }
