@@ -109,12 +109,13 @@ export class Pane {
     let sy = this.panY;
     let bf = this.backBuffer;
     bf.clear();
-    bf.image(backgImg, 0, 0, cm.dWidth, cm.dHeight, sx, sy, cm.sWidth, cm.sHeight);
+    bf.image(backgImg, 0, 0, cm.cWidth, cm.cHeight, sx, sy, cm.zWidth, cm.zHeight);
     image(bf, dx, dy, bf.width, bf.height, 0, 0, bf.width, bf.height);
   }
 
   // image(img, x, y, [width], [height])
-  // image(img, dx, dy, dWidth, dHeight, sx, sy, [sWidth], [sHeight], [fit], [xAlign], [yAlign])
+  // image(img, dx, dy, dWidth, dHeight, sx, sy, [sWidth], [zHeight], [fit], [xAlign], [yAlign])
+  // destination, source
 
   set zoomIndex(newValue) {
     this._zoomIndex = newValue;
@@ -187,7 +188,7 @@ export class Pane {
     this.panX = 0;
     this.panY = 0;
     this.zoomIndex = this.z0;
-    this.zoomRatio = 1 / this.zoomIndex;
+    // this.zoomRatio = 1 / this.zoomIndex;
     if (!this.backBuffer) {
       this.backBuffer = createGraphics(this.width, this.height);
     }
@@ -195,11 +196,9 @@ export class Pane {
 
   pan_center() {
     this.zoomIndex = this.z0;
-
     let cm = this.canvasMap();
-
-    this.panX = floor((cm.ww - cm.sWidth) * 0.5);
-    this.panY = floor((cm.hh - cm.sHeight) * 0.5);
+    this.panX = floor((cm.ww - cm.zWidth) * 0.5);
+    this.panY = floor((cm.hh - cm.zHeight) * 0.5);
   }
 
   mousePressed() {
@@ -221,21 +220,19 @@ export class Pane {
 
   updateRefEntry(mouseXYs) {
     let ent = this.refEntry();
-
     if (mouseXYs.length >= 2) {
       this.updateEnt(ent, mouseXYs);
     } else {
       ent.regions[this.regionIndex].z = this.zoomIndex;
     }
-
     this.refBox.save_localStorage();
   }
 
   updateEnt(ent, mouseXYs) {
     // map from image to screen coordinates
     let cm = this.canvasMap();
-    let rw = cm.sWidth / cm.dWidth;
-    let rh = cm.sHeight / cm.dHeight;
+    let rw = cm.zWidth / cm.cWidth;
+    let rh = cm.zHeight / cm.cHeight;
     let regions = [];
     for (let ment of mouseXYs) {
       let x = floor((ment.x - this.x0) * rw) + this.panX;
@@ -265,9 +262,9 @@ export class Pane {
     let rg = this.region();
     this.zoomIndex = rg.z;
     let cm = this.canvasMap();
-    this.panX = floor(rg.x + (rg.w - cm.sWidth) * 0.5);
-    // this.panY = floor(rg.y + (rg.h - cm.sHeight) * 0.5);
-    // this.panY = floor(rg.y - (rg.h - cm.sHeightClipped) * 0.5);
+    this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
+    // this.panY = floor(rg.y + (rg.h - cm.zHeight) * 0.5);
+    // this.panY = floor(rg.y - (rg.h - cm.zHeightClipped) * 0.5);
     this.panY = floor(rg.y);
   }
 
@@ -275,8 +272,8 @@ export class Pane {
     // map from screen to image coordinates
 
     let cm = this.canvasMap();
-    let wr = cm.dWidth / cm.sWidth;
-    let hr = cm.dHeight / cm.sHeight;
+    let wr = cm.cWidth / cm.zWidth;
+    let hr = cm.cHeight / cm.zHeight;
 
     // solve for ment.x
     // let x = floor((ment.x - this.x0) * rw) + this.panX;
@@ -290,27 +287,20 @@ export class Pane {
     return { x, y, w, h };
   }
 
-  // { dWidth, dHeight, sWidth, sHeight, ww, hh };
+  // { cWidth, cHeight, zWidth, zHeight, ww, hh };
   canvasMap() {
     let backgImg = this.backgImg;
     let ww = backgImg.width;
     let hh = backgImg.height;
     let rr = hh / ww;
 
-    let dWidth = this.width;
-    let dHeight = floor(dWidth * rr);
+    let cWidth = this.width;
+    let cHeight = floor(cWidth * rr);
 
-    let sWidth = floor(ww * this.zoomRatio);
-    let sHeight = floor(hh * this.zoomRatio);
-    let sHeightClipped = sHeight;
-    if (dHeight > this.height) {
-      // console.log('canvasMap dHeight > this.height **');
-      let hr = dHeight / sHeight;
-      sHeightClipped = this.height * hr;
-    }
-    // canvasMap dHeight > this.height
-    // canvasMap dWidth < this.width
-    return { dWidth, dHeight, sWidth, sHeight, ww, hh, sHeightClipped };
+    let zWidth = floor(ww * this.zoomRatio);
+    let zHeight = floor(hh * this.zoomRatio);
+
+    return { cWidth, cHeight, zWidth, zHeight, ww, hh };
   }
 }
 
