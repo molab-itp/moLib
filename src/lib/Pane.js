@@ -92,8 +92,8 @@ export class Pane {
     let y0 = 0;
     let width = 0;
     let height = 0;
-    let stroke = color(234, 171, 126); // color('yellow');
-    let strokeWeight = 2;
+    let stroke = this.focsRect_stroke || color(234, 171, 126); // color('yellow');
+    let strokeWeight = this.focsRect_strokeWeight || 2;
     let shadowBlur = 15;
     let shadowColor = color(234, 171, 126); // color('white');
     this.focusRect = new Rect({ x0, y0, width, height, stroke, strokeWeight, shadowBlur, shadowColor });
@@ -151,17 +151,6 @@ export class Pane {
     return rg;
   }
 
-  focus_pan() {
-    let rg = this.region();
-    this.zoomIndex = rg.z;
-    let cm = this.canvasMap();
-    this.panX = floor(rg.x + (rg.w - cm.sWidth) * 0.5);
-    // this.panY = floor(rg.y + (rg.h - cm.sHeight) * 0.5);
-    this.panY = floor(rg.y);
-    // this.panX = floor(rg.x + (rg.w - cm.ww) * 0.5);
-    // this.panY = floor(rg.y + (rg.h - cm.hh) * 0.5);
-  }
-
   focus_focusRect() {
     let rg = this.region();
     let crg = this.rgToCanvas(rg);
@@ -213,42 +202,6 @@ export class Pane {
     this.panY = floor((cm.hh - cm.sHeight) * 0.5);
   }
 
-  // { dWidth, dHeight, sWidth, sHeight, ww, hh };
-  canvasMap() {
-    let backgImg = this.backgImg;
-    let ww = backgImg.width;
-    let hh = backgImg.height;
-    let rr = hh / ww;
-
-    let dWidth = this.width;
-    let dHeight = floor(dWidth * rr);
-    if (dHeight < this.height) {
-      // console.log('canvasMap dHeight < this.height');
-      dHeight = this.height;
-      dWidth = floor(dHeight / rr);
-    } else {
-      // console.log('canvasMap dHeight > this.height **');
-      // height clipped **
-    }
-
-    let sWidth = floor(ww * this.zoomRatio);
-    let sHeight = floor(hh * this.zoomRatio);
-    if (dWidth > this.width) {
-      // console.log('canvasMap dWidth > this.width');
-      let dr = this.width / dWidth;
-      dWidth = this.width;
-      sWidth = floor(sWidth * dr);
-    } else {
-      // console.log('canvasMap dWidth < this.width **');
-      // width NOT clipped **
-    }
-
-    // canvasMap dHeight > this.height
-    // canvasMap dWidth < this.width
-
-    return { dWidth, dHeight, sWidth, sHeight, ww, hh };
-  }
-
   mousePressed() {
     // console.log('Pane mousePressed', this.label);
     this.panX0 = mouseX;
@@ -276,25 +229,6 @@ export class Pane {
     }
 
     this.refBox.save_localStorage();
-  }
-
-  rgToCanvas(rg) {
-    // map from screen to image coordinates
-
-    let cm = this.canvasMap();
-    let wr = cm.dWidth / cm.sWidth;
-    let hr = cm.dHeight / cm.sHeight;
-
-    // solve for ment.x
-    // let x = floor((ment.x - this.x0) * rw) + this.panX;
-    // let y = floor((ment.y - this.y0) * rh) + this.panY;
-
-    let x = floor((rg.x - this.panX) * wr + this.x0);
-    let y = floor((rg.y - this.panY) * hr + this.y0);
-    let w = floor(rg.w * wr);
-    let h = floor(rg.h * hr);
-
-    return { x, y, w, h };
   }
 
   updateEnt(ent, mouseXYs) {
@@ -325,6 +259,58 @@ export class Pane {
     let h = regions[1].y - y;
     let z = this.zoomIndex;
     ent.regions[this.regionIndex] = { x, y, w, h, z };
+  }
+
+  focus_pan() {
+    let rg = this.region();
+    this.zoomIndex = rg.z;
+    let cm = this.canvasMap();
+    this.panX = floor(rg.x + (rg.w - cm.sWidth) * 0.5);
+    // this.panY = floor(rg.y + (rg.h - cm.sHeight) * 0.5);
+    // this.panY = floor(rg.y - (rg.h - cm.sHeightClipped) * 0.5);
+    this.panY = floor(rg.y);
+  }
+
+  rgToCanvas(rg) {
+    // map from screen to image coordinates
+
+    let cm = this.canvasMap();
+    let wr = cm.dWidth / cm.sWidth;
+    let hr = cm.dHeight / cm.sHeight;
+
+    // solve for ment.x
+    // let x = floor((ment.x - this.x0) * rw) + this.panX;
+    // let y = floor((ment.y - this.y0) * rh) + this.panY;
+
+    let x = floor((rg.x - this.panX) * wr + this.x0);
+    let y = floor((rg.y - this.panY) * hr + this.y0);
+    let w = floor(rg.w * wr);
+    let h = floor(rg.h * hr);
+
+    return { x, y, w, h };
+  }
+
+  // { dWidth, dHeight, sWidth, sHeight, ww, hh };
+  canvasMap() {
+    let backgImg = this.backgImg;
+    let ww = backgImg.width;
+    let hh = backgImg.height;
+    let rr = hh / ww;
+
+    let dWidth = this.width;
+    let dHeight = floor(dWidth * rr);
+
+    let sWidth = floor(ww * this.zoomRatio);
+    let sHeight = floor(hh * this.zoomRatio);
+    let sHeightClipped = sHeight;
+    if (dHeight > this.height) {
+      // console.log('canvasMap dHeight > this.height **');
+      let hr = dHeight / sHeight;
+      sHeightClipped = this.height * hr;
+    }
+    // canvasMap dHeight > this.height
+    // canvasMap dWidth < this.width
+    return { dWidth, dHeight, sWidth, sHeight, ww, hh, sHeightClipped };
   }
 }
 

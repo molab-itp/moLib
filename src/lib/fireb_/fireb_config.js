@@ -14,14 +14,14 @@
 
 import {
   initializeApp, //
-} from 'firebase/app'; //@prod
-//} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'; //@dev
+//} from 'firebase/app'; //@prod
+} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'; //@dev
 
 import {
   getAuth,
   signInAnonymously, //
-} from 'firebase/auth'; //@prod
-//} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js'; //@dev
+//} from 'firebase/auth'; //@prod
+} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js'; //@dev
 
 // Your web app's Firebase configuration
 
