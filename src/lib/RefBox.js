@@ -23,6 +23,10 @@ export class RefBox {
     this.restore_localStorage();
   }
 
+  restore_refBox(refBox) {
+    Object.assign(this, refBox);
+    // this.patchRefbox();
+  }
   refEntry() {
     let refIndex = this.refIndex;
     let ent = this.refs[refIndex];
@@ -72,6 +76,11 @@ export class RefBox {
     // console.log('save_localStorage ', n, this.refs[n - 1].label);
     let ii = this.refIndex;
     console.log('save_localStorage ', ii + 1, this.refs[ii].label);
+
+    if (my.mo_app) {
+      console.log('save_localStorage my.mo_app', my.mo_app);
+      dbase_update_item({ refBox }, 'item');
+    }
   }
 }
 

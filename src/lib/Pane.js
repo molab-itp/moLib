@@ -17,7 +17,7 @@ export class Pane {
 
     this.pan_init();
 
-    console.log('Pane initCentered', this.initCentered);
+    // console.log('Pane initCentered', this.initCentered);
     if (this.initCentered) {
       this.pan_center();
     }
@@ -107,6 +107,7 @@ export class Pane {
     let dy = this.y0;
     let sx = this.panX;
     let sy = this.panY;
+    // Use backBuffer to clip render to width and height
     let bf = this.backBuffer;
     bf.clear();
     bf.image(backgImg, 0, 0, cm.cWidth, cm.cHeight, sx, sy, cm.zWidth, cm.zHeight);
@@ -136,9 +137,13 @@ export class Pane {
 
   refEntry() {
     if (!this.refBox) {
-      return { label: '', i: 0, regions: [{ x: 0, y: 0, w: this.width, h: this.height, z: 1 }] };
+      return this.default_region();
     }
     return this.refBox.refEntry();
+  }
+
+  default_region() {
+    return { label: '', i: 0, regions: [{ x: 0, y: 0, w: this.width, h: this.height, z: 1 }] };
   }
 
   get label() {
@@ -149,6 +154,10 @@ export class Pane {
     let ent = this.refEntry();
     let rg = ent.regions[this.regionIndex];
     // console.log(this.label, 'rg', JSON.stringify(rg));
+    if (!rg) {
+      // console.log('Pane render MISSING regionIndex', this.regionIndex);
+      return this.default_region();
+    }
     return rg;
   }
 
@@ -171,14 +180,14 @@ export class Pane {
     let oRatio = this.zoomRatio;
     this.zoomIndex = newValue;
 
-    let ww = this.backgImg.width;
-    let hh = this.backgImg.height;
+    let iWidth = this.backgImg.width;
+    let iHeight = this.backgImg.height;
 
-    let oW = floor(ww * oRatio * 0.5);
-    let oH = floor(hh * oRatio * 0.5);
+    let oW = floor(iWidth * oRatio * 0.5);
+    let oH = floor(iHeight * oRatio * 0.5);
 
-    let nW = floor(ww * this.zoomRatio * 0.5);
-    let nH = floor(hh * this.zoomRatio * 0.5);
+    let nW = floor(iWidth * this.zoomRatio * 0.5);
+    let nH = floor(iHeight * this.zoomRatio * 0.5);
 
     this.panX = this.panX + oW - nW;
     this.panY = this.panY + oH - nH;
@@ -197,8 +206,8 @@ export class Pane {
   pan_center() {
     this.zoomIndex = this.z0;
     let cm = this.canvasMap();
-    this.panX = floor((cm.ww - cm.zWidth) * 0.5);
-    this.panY = floor((cm.hh - cm.zHeight) * 0.5);
+    this.panX = floor((cm.iWidth - cm.zWidth) * 0.5);
+    this.panY = floor((cm.iHeight - cm.zHeight) * 0.5);
   }
 
   mousePressed() {
@@ -218,46 +227,6 @@ export class Pane {
     // console.log('Pane mouseReleased', this.label);
   }
 
-  updateRefEntry(mouseXYs) {
-    let ent = this.refEntry();
-    if (mouseXYs.length >= 2) {
-      this.updateEnt(ent, mouseXYs);
-    } else {
-      ent.regions[this.regionIndex].z = this.zoomIndex;
-    }
-    this.refBox.save_localStorage();
-  }
-
-  updateEnt(ent, mouseXYs) {
-    // map from image to screen coordinates
-    let cm = this.canvasMap();
-    let rw = cm.zWidth / cm.cWidth;
-    let rh = cm.zHeight / cm.cHeight;
-    let regions = [];
-    for (let ment of mouseXYs) {
-      let x = floor((ment.x - this.x0) * rw) + this.panX;
-      let y = floor((ment.y - this.y0) * rh) + this.panY;
-      regions.push({ x, y });
-    }
-    console.log('updateEnt regions', regions);
-    if (regions[0].x > regions[1].x) {
-      let temp = regions[1].x;
-      regions[1].x = regions[0].x;
-      regions[0].x = temp;
-    }
-    if (regions[0].y > regions[1].y) {
-      let temp = regions[1].y;
-      regions[1].y = regions[0].y;
-      regions[0].y = temp;
-    }
-    let x = regions[0].x;
-    let y = regions[0].y;
-    let w = regions[1].x - x;
-    let h = regions[1].y - y;
-    let z = this.zoomIndex;
-    ent.regions[this.regionIndex] = { x, y, w, h, z };
-  }
-
   focus_pan() {
     let rg = this.region();
     this.zoomIndex = rg.z;
@@ -266,6 +235,84 @@ export class Pane {
     // this.panY = floor(rg.y + (rg.h - cm.zHeight) * 0.5);
     // this.panY = floor(rg.y - (rg.h - cm.zHeightClipped) * 0.5);
     this.panY = floor(rg.y);
+  }
+
+  copyRefEntry(index, props) {
+    let ent = this.refEntry();
+    let rg = ent.regions[this.regionIndex];
+    let rgFrom = ent.regions[index];
+
+    console.log('copyRefEntry rg', rg, 'props', props);
+    console.log('copyRefEntry rgFrom', rgFrom);
+
+    Object.assign(rg, rgFrom, props);
+    this.refBox.save_localStorage();
+  }
+
+  // props = { z: 4 }
+  updateRefEntry(canvasPts, props) {
+    // console.log('updateRefEntry canvasPts', canvasPts, 'props', props);
+    let ent = this.refEntry();
+    if (canvasPts.length >= 2) {
+      this.updateEnt(ent, canvasPts);
+    } else {
+      let rg = ent.regions[this.regionIndex];
+      rg.z = this.zoomIndex;
+    }
+    if (props) {
+      let rg = ent.regions[this.regionIndex];
+      Object.assign(rg, props);
+    }
+    this.refBox.save_localStorage();
+  }
+
+  mapToImage(canvasPts) {
+    let cm = this.canvasMap();
+    let rw = cm.zWidth / cm.cWidth;
+    let rh = cm.zHeight / cm.cHeight;
+    let points = [];
+    // Map from canvas/screen coordindates to image
+    for (let ment of canvasPts) {
+      let x = floor((ment.x - this.x0) * rw) + this.panX;
+      let y = floor((ment.y - this.y0) * rh) + this.panY;
+      points.push({ x, y });
+    }
+    console.log('mapToImage points', points);
+    return points;
+  }
+
+  updateEnt(ent, canvasPts) {
+    // map from image to screen coordinates
+    let cm = this.canvasMap();
+    let rw = cm.zWidth / cm.cWidth;
+    let rh = cm.zHeight / cm.cHeight;
+    let points = [];
+    // Map from canvas/screen coordindates to image
+    for (let ment of canvasPts) {
+      let x = floor((ment.x - this.x0) * rw) + this.panX;
+      let y = floor((ment.y - this.y0) * rh) + this.panY;
+      points.push({ x, y });
+    }
+    console.log('updateEnt points', points);
+    if (points[0].x > points[1].x) {
+      let temp = points[1].x;
+      points[1].x = points[0].x;
+      points[0].x = temp;
+    }
+    if (points[0].y > points[1].y) {
+      let temp = points[1].y;
+      points[1].y = points[0].y;
+      points[0].y = temp;
+    }
+    let x = points[0].x;
+    let y = points[0].y;
+    let w = points[1].x - x;
+    let h = points[1].y - y;
+    let z = this.zoomIndex;
+    if (w == 0 || h == 0) {
+      alert('updateEnt: zero canvasPts. Must click and drag to create rect');
+    }
+    ent.regions[this.regionIndex] = { x, y, w, h, z };
   }
 
   rgToCanvas(rg) {
@@ -279,6 +326,8 @@ export class Pane {
     // let x = floor((ment.x - this.x0) * rw) + this.panX;
     // let y = floor((ment.y - this.y0) * rh) + this.panY;
 
+    // Map from image coordinates to canvas
+    //
     let x = floor((rg.x - this.panX) * wr + this.x0);
     let y = floor((rg.y - this.panY) * hr + this.y0);
     let w = floor(rg.w * wr);
@@ -287,20 +336,20 @@ export class Pane {
     return { x, y, w, h };
   }
 
-  // { cWidth, cHeight, zWidth, zHeight, ww, hh };
+  // { cWidth, cHeight, zWidth, zHeight, iWidth, iHeight };
   canvasMap() {
     let backgImg = this.backgImg;
-    let ww = backgImg.width;
-    let hh = backgImg.height;
-    let rr = hh / ww;
+    let iWidth = backgImg.width;
+    let iHeight = backgImg.height;
+    let rr = iHeight / iWidth;
 
     let cWidth = this.width;
     let cHeight = floor(cWidth * rr);
 
-    let zWidth = floor(ww * this.zoomRatio);
-    let zHeight = floor(hh * this.zoomRatio);
+    let zWidth = floor(iWidth * this.zoomRatio);
+    let zHeight = floor(iHeight * this.zoomRatio);
 
-    return { cWidth, cHeight, zWidth, zHeight, ww, hh };
+    return { cWidth, cHeight, zWidth, zHeight, iWidth, iHeight };
   }
 }
 
