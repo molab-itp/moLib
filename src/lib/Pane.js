@@ -62,6 +62,7 @@ export class Pane {
     let cm = this.canvasMap();
     this.panX = rg.x;
     this.panY = rg.y;
+    console.log('focus_pan_cut panX', this.panX, this.panY);
   }
 
   focus_animated() {
@@ -191,6 +192,7 @@ export class Pane {
 
     this.panX = this.panX + oW - nW;
     this.panY = this.panY + oH - nH;
+    console.log('pan_updateZoom panX', this.panX, this.panY);
   }
 
   pan_init() {
@@ -208,20 +210,35 @@ export class Pane {
     let cm = this.canvasMap();
     this.panX = floor((cm.iWidth - cm.zWidth) * 0.5);
     this.panY = floor((cm.iHeight - cm.zHeight) * 0.5);
+    console.log('pan_center panX', this.panX, this.panY);
   }
 
   mousePressed() {
     // console.log('Pane mousePressed', this.label);
-    this.panX0 = mouseX;
-    this.panY0 = mouseY;
+    this.mouse0 = { x: mouseX, y: mouseY };
+    // console.log('mousePressed im', this.im);
   }
 
   mouseDragged() {
-    this.panX += this.panX0 - mouseX;
-    this.panY += this.panY0 - mouseY;
-    this.panX0 = mouseX;
-    this.panY0 = mouseY;
+    let im = this.mouse0;
+    let nm = { x: mouseX, y: mouseY };
+    let df = { x: nm.x - im.x, y: nm.y - im.y };
+
+    let cm = this.canvasMap();
+
+    this.panX -= df.x * cm.scale;
+    this.panY -= df.y * cm.scale;
+
+    // console.log('mouseDragged df', df.x);
+    // console.log('mouseDragged panX', this.panX, this.panY);
+    this.mouse0 = nm;
   }
+
+  // pointToImage(pt) {
+  //   let canvasPts = [pt];
+  //   let pts = this.mapToImage(canvasPts);
+  //   return { x: pts[0].x, y: pts[0].y };
+  // }
 
   mouseReleased() {
     // console.log('Pane mouseReleased', this.label);
@@ -232,6 +249,7 @@ export class Pane {
     this.zoomIndex = rg.z;
     let cm = this.canvasMap();
     this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
+    console.log('focus_pan panX', this.panX, this.panY);
     // this.panY = floor(rg.y + (rg.h - cm.zHeight) * 0.5);
     // this.panY = floor(rg.y - (rg.h - cm.zHeightClipped) * 0.5);
     this.panY = floor(rg.y);
@@ -242,8 +260,8 @@ export class Pane {
     let rg = ent.regions[this.regionIndex];
     let rgFrom = ent.regions[index];
 
-    console.log('copyRefEntry rg', rg, 'props', props);
-    console.log('copyRefEntry rgFrom', rgFrom);
+    // console.log('copyRefEntry rg', rg, 'props', props);
+    // console.log('copyRefEntry rgFrom', rgFrom);
 
     Object.assign(rg, rgFrom, props);
     this.refBox.save_localStorage();
@@ -267,17 +285,19 @@ export class Pane {
   }
 
   mapToImage(canvasPts) {
+    // console.log('mapToImage canvasPts', canvasPts);
     let cm = this.canvasMap();
     let rw = cm.zWidth / cm.cWidth;
     let rh = cm.zHeight / cm.cHeight;
     let points = [];
     // Map from canvas/screen coordindates to image
+    // console.log('mapToImage x0', this.x0, this.y0, this.panX, this.panY);
     for (let ment of canvasPts) {
       let x = floor((ment.x - this.x0) * rw) + this.panX;
       let y = floor((ment.y - this.y0) * rh) + this.panY;
       points.push({ x, y });
     }
-    console.log('mapToImage points', points);
+    // console.log('mapToImage points', points);
     return points;
   }
 
@@ -349,7 +369,9 @@ export class Pane {
     let zWidth = floor(iWidth * this.zoomRatio);
     let zHeight = floor(iHeight * this.zoomRatio);
 
-    return { cWidth, cHeight, zWidth, zHeight, iWidth, iHeight };
+    let scale = zWidth / cWidth;
+
+    return { cWidth, cHeight, zWidth, zHeight, iWidth, iHeight, scale };
   }
 }
 
