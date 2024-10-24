@@ -49,22 +49,6 @@ export class Pane {
     this.focus_focusRect();
   }
 
-  focus_animated_cut() {
-    this.anim.initValues({ panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
-    this.focus_pan_cut();
-    this.focus_focusRect();
-    this.anim.addChange(1, { panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
-  }
-
-  focus_pan_cut() {
-    let rg = this.region();
-    this.zoomIndex = rg.z;
-    let cm = this.canvasMap();
-    this.panX = rg.x;
-    this.panY = rg.y;
-    console.log('focus_pan_cut panX', this.panX, this.panY);
-  }
-
   focus_animated() {
     this.anim.initValues({ panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
     if (this.regionIndex == 1) {
@@ -82,6 +66,34 @@ export class Pane {
       this.focus_focusRect();
       this.anim.addChange(1.0, { panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
     }
+  }
+
+  focus_pan() {
+    let rg = this.region();
+    this.zoomIndex = rg.z;
+    let cm = this.canvasMap();
+    this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
+    console.log('focus_pan panX', this.panX, this.panY);
+    // this.panY = floor(rg.y + (rg.h - cm.zHeight) * 0.5);
+    // this.panY = floor(rg.y - (rg.h - cm.zHeightClipped) * 0.5);
+    this.panY = floor(rg.y);
+  }
+
+  focus_pan_cut() {
+    let rg = this.region();
+    this.zoomIndex = rg.z;
+    let cm = this.canvasMap();
+    this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
+    // this.panX = rg.x;
+    this.panY = rg.y;
+    console.log('focus_pan_cut panX', this.panX, this.panY);
+  }
+
+  focus_animated_cut() {
+    this.anim.initValues({ panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
+    this.focus_pan_cut();
+    this.focus_focusRect();
+    this.anim.addChange(1, { panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
   }
 
   anim_init() {
@@ -234,25 +246,8 @@ export class Pane {
     this.mouse0 = nm;
   }
 
-  // pointToImage(pt) {
-  //   let canvasPts = [pt];
-  //   let pts = this.mapToImage(canvasPts);
-  //   return { x: pts[0].x, y: pts[0].y };
-  // }
-
   mouseReleased() {
     // console.log('Pane mouseReleased', this.label);
-  }
-
-  focus_pan() {
-    let rg = this.region();
-    this.zoomIndex = rg.z;
-    let cm = this.canvasMap();
-    this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
-    console.log('focus_pan panX', this.panX, this.panY);
-    // this.panY = floor(rg.y + (rg.h - cm.zHeight) * 0.5);
-    // this.panY = floor(rg.y - (rg.h - cm.zHeightClipped) * 0.5);
-    this.panY = floor(rg.y);
   }
 
   copyRefEntry(index, props) {
