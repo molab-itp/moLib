@@ -23,7 +23,7 @@ bin/build.sh --prod --lib 1
 
 # publish lib to npm
 #
-bin/lib-release.sh
+bin/lib-publish.sh
 
 # deploy to github pages
 #
