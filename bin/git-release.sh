@@ -10,7 +10,6 @@ quiet=--quiet
 #
 # update build number
 # merge branch main in to branch release
-# switch back to branch next
 #
 
 bin/build.sh --prod $quiet --lib 1
@@ -19,12 +18,12 @@ git add .
 git commit $quiet -m "`cat src/gen/build_ver.txt`"
 git push $quiet
 
-# in release
+# into release
 git checkout release $quiet
 git merge main $quiet -m "`cat src/gen/build_ver.txt`"
 git push $quiet
 
-# in main
+# into main
 git checkout main $quiet
 
 echo
