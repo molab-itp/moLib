@@ -3,6 +3,10 @@
 if (globalThis.window) {
   window.addEventListener('resize', () => {
     console.log('report_status resize');
+    if (!globalThis.my) {
+      console.log('report_status no my');
+      return;
+    }
     dbase_report_status({});
   });
 }
