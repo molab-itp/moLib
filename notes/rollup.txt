@@ -1,0 +1,136 @@
+rollup.txt
+
+https://rollupjs.org/introduction/
+
+https://rollupjs.org/tutorial/#installing-rollup-locally
+
+npm install rollup --save-dev
+
+npx rollup --config
+
+{
+	"scripts": {
+		"build": "rollup --config"
+	}
+}
+
+
+https://github.com/rollup/rollup-starter-lib
+
+
+https://github.com/rollup/rollup-starter-app
+
+
+https://unpkg.com/
+
+
+https://yeoman.io/
+https://yeoman.io/generators/
+
+
+# --
+
+# build full and .min
+
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import { terser } from "rollup-plugin-terser";
+
+export default {
+  input: 'src/index.js',  // Input source file
+  output: [
+    {
+      file: 'dist/bundle.js',    // Unminified full version
+      format: 'cjs',             // CommonJS output format
+      sourcemap: true            // Source map for easier debugging
+    },
+    {
+      file: 'dist/bundle.min.js', // Minified version
+      format: 'cjs',              // CommonJS format
+      sourcemap: true,            // Source map for minified version
+      plugins: [terser()]         // Apply terser for minification
+    }
+  ],
+  plugins: [
+    resolve(),   // To resolve node_modules
+    commonjs(),  // To convert CommonJS modules
+  ]
+};
+
+# --
+
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import { terser } from "rollup-plugin-terser";
+
+export default [
+  {
+    input: 'src/module-a/index.js',
+    output: {
+      file: 'dist/module-a/bundle.js',
+      format: 'cjs',  // CommonJS format
+      sourcemap: true,  // Optional: generates source maps
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),  // Optional: for minifying the output
+    ],
+  },
+  {
+    input: 'src/module-b/index.js',
+    output: {
+      file: 'dist/module-b/bundle.js',
+      format: 'esm',  // ES module format
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),
+    ],
+  },
+  {
+    input: 'src/module-c/index.js',
+    output: {
+      file: 'dist/module-c/bundle.js',
+      format: 'iife',  // IIFE format for browser
+      name: 'ModuleC',  // Global variable name for IIFE build
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),
+    ],
+  },
+];
+
+# --
+
+
+How to Pass Command Line Arguments to rollup.config.js:
+
+npx rollup -c --environment BUILD:production,MINIFY:true
+
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import { terser } from "rollup-plugin-terser";
+
+// Read environment variables passed from the command line
+const isProduction = process.env.BUILD === 'production';
+const shouldMinify = process.env.MINIFY === 'true';
+
+export default {
+  input: 'src/index.js',
+  output: {
+    file: isProduction ? 'dist/bundle.min.js' : 'dist/bundle.js',
+    format: 'cjs',
+    sourcemap: true
+  },
+  plugins: [
+    resolve(),
+    commonjs(),
+    shouldMinify ? terser() : null, // Apply terser only if MINIFY is true
+  ].filter(Boolean)  // Filter out null plugins
+};
