@@ -89,11 +89,14 @@ export class Pane {
     console.log('focus_pan_cut panX', this.panX, this.panY);
   }
 
-  focus_animated_cut() {
+  focus_animated_cut(cut_time) {
+    if (!cut_time) {
+      cut_time = 1;
+    }
     this.anim.initValues({ panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
     this.focus_pan_cut();
     this.focus_focusRect();
-    this.anim.addChange(1, { panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
+    this.anim.addChange(cut_time, { panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
   }
 
   anim_init() {

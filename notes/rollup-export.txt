@@ -1,0 +1,19 @@
+
+
+https://adostes.medium.com/authoring-a-javascript-library-that-works-everywhere-using-rollup-f1b4b527b2a9
+Authoring a JavaScript library that works everywhere using Rollup
+
+
+https://rollupjs.org/guide/en/
+
+
+# --
+
+/Users/jht2/Documents/projects/dice_face_aa/rollup-test/my-library
+
+npm run build
+
+npm run dev
+
+npm pack
+

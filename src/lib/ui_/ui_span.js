@@ -125,3 +125,42 @@ function ui_fresh_element(element) {
     my.ui_container.child(element);
   }
 }
+
+// !!@ to lib ui_toggleFullScreen
+//
+function ui_toggleFullScreen() {
+  if (!document.documentElement.requestFullscreen) {
+    console.log('NO document.documentElement.requestFullscreen');
+    // !!@ on mobile requestFullscreen not supported
+    // clear ui anyway
+    ui_remove_all();
+    return;
+  }
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+    ui_remove_all();
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+}
+globalThis.ui_toggleFullScreen = ui_toggleFullScreen;
+
+// !!@ to lib ui_remove_all
+//
+function ui_remove_all(except) {
+  if (!except) {
+    except = my.ui_remove_all_except;
+  }
+  if (!except) {
+    except = { id_gallery: 1 };
+  }
+  for (let prop in my.ui_uids) {
+    // !!@ param needed
+    if (except && except[prop]) continue;
+    let item = my.ui_uids[prop];
+    item.remove();
+  }
+  my.ui_uids = {};
+}

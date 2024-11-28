@@ -1,0 +1,131 @@
+rollup-chatg.txt
+
+https://chatgpt.com/c/66ef4c06-e708-8002-b5fb-14bf21f07d40
+detail instructions on using rollup to create javascript npm library
+
+
+mkdir my-library
+cd my-library
+npm init -y
+
+npm install --save-dev rollup @rollup/plugin-node-resolve @rollup/plugin-commonjs rollup-plugin-terser
+npm install --save-dev rollup @rollup/plugin-node-resolve @rollup/plugin-commonjs 
+npm install --save-dev @rollup/plugin-terser
+
+npm install --save-dev firebase
+
+npm warn deprecated rollup-plugin-terser@7.0.2: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
+
+https://www.npmjs.com/package/@rollup/plugin-terser
+
+// src/index.js:
+
+export function add(a, b) {
+    return a + b;
+}
+
+export function subtract(a, b) {
+    return a - b;
+}
+
+// rollup.config.js
+
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import { terser } from 'rollup-plugin-terser';
+
+export default {
+    input: 'src/index.js', // Entry point of your library
+    output: [
+        {
+            file: 'dist/my-library.cjs.js',
+            format: 'cjs', // CommonJS for Node.js
+            sourcemap: true,
+        },
+        {
+            file: 'dist/my-library.esm.js',
+            format: 'es', // ES Module for modern bundlers
+            sourcemap: true,
+        },
+        {
+            file: 'dist/my-library.umd.js',
+            format: 'umd', // UMD for browsers and Node.js
+            name: 'MyLibrary', // Global variable name when used in browsers
+            sourcemap: true,
+        },
+    ],
+    plugins: [
+        resolve(), // Resolve dependencies from node_modules
+        commonjs(), // Convert CommonJS modules to ES6
+        terser() // Minify the output for production
+    ]
+};
+
+// package.json
+
+"scripts": {
+  "build": "rollup -c"
+}
+
+
+// Prepare package.json for Distribution
+
+{
+  "name": "my-library",
+  "version": "1.0.0",
+  "description": "A sample JavaScript library",
+  "main": "dist/my-library.cjs.js",
+  "module": "dist/my-library.esm.js",
+  "unpkg": "dist/my-library.umd.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "keywords": ["javascript", "library", "rollup"],
+  "author": "Your Name",
+  "license": "MIT"
+}
+
+// 7. Build the Library
+
+npm run build
+
+// 8. Publish the Library to npm
+
+npm login
+
+npm publish
+
+// 9. Usage of the Library
+
+npm install my-library
+
+import { add, subtract } from 'my-library';
+
+console.log(add(2, 3)); // 5
+console.log(subtract(5, 3)); // 2
+
+npm notice
+npm notice 📦  jht-itp-library@0.0.1
+npm notice Tarball Contents
+npm notice 193B dist/my-library.cjs.js
+npm notice 311B dist/my-library.cjs.js.map
+npm notice 129B dist/my-library.esm.js
+npm notice 337B dist/my-library.esm.js.map
+npm notice 406B dist/my-library.umd.js
+npm notice 310B dist/my-library.umd.js.map
+npm notice 578B package.json
+npm notice Tarball Details
+npm notice name: jht-itp-library
+npm notice version: 0.0.1
+npm notice filename: jht-itp-library-0.0.1.tgz
+npm notice package size: 1.0 kB
+npm notice unpacked size: 2.3 kB
+npm notice shasum: 5e1b55caa5ce781f5af8123e3a172fae136d25e0
+npm notice integrity: sha512-OxeClkfqG088N[...]eqs/U2/olCkSA==
+npm notice total files: 7
+npm notice
+npm notice Publishing to https://registry.npmjs.org/ with tag latest and default access
++ jht-itp-library@0.0.1
