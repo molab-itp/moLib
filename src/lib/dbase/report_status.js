@@ -17,8 +17,9 @@ function dbase_report_status(props) {
     createStatusElement();
     if (!my.statusElement) return;
   }
-  if (my.showQRCode && my.showQRCode()) {
-    createQRCode();
+  let options = {};
+  if (my.showQRCode && my.showQRCode(options)) {
+    createQRCode(options);
   } else if (my.footerElement) {
     my.footerElement.style.display = 'none';
     my.qrcodeElement.style.display = 'none';
@@ -92,7 +93,7 @@ function footerText() {
 `;
 }
 
-function createQRCode() {
+function createQRCode(options) {
   // console.log('createQRCode document', document, 'my.qrcodeElement', my.qrcodeElement);
   if (!globalThis.window) return;
   if (my.footerElement) {
@@ -100,34 +101,32 @@ function createQRCode() {
     my.qrcodeElement.style.display = 'block';
     return;
   }
-
-  my.footerElement = document.createElement('div');
-  document.body.appendChild(my.footerElement);
-
-  my.footerElement.style.position = 'fixed';
-  my.footerElement.style.bottom = '0';
-  my.footerElement.style.left = '0';
-  my.footerElement.style.zIndex = 999;
-  my.footerElement.style.width = '100%';
-  my.footerElement.style.height = my.footerHeight; // '192px';
-  my.footerElement.style.backgroundColor = 'black';
-  my.footerElement.style.color = 'white';
-  my.footerElement.innerHTML = footerText(); // 'HELLO';
-
+  if (my.qrcodeElement) {
+    return;
+  }
+  if (options && !options.hide_footer) {
+    my.footerElement = document.createElement('div');
+    document.body.appendChild(my.footerElement);
+    my.footerElement.style.position = 'fixed';
+    my.footerElement.style.bottom = '0';
+    my.footerElement.style.left = '0';
+    my.footerElement.style.zIndex = 999;
+    my.footerElement.style.width = '100%';
+    my.footerElement.style.height = my.footerHeight; // '192px';
+    my.footerElement.style.backgroundColor = 'black';
+    my.footerElement.style.color = 'white';
+    my.footerElement.innerHTML = footerText(); // 'HELLO';
+  }
   // let w = Math.floor(window.innerWidth * 0.25);
   // let x = window.innerWidth - w;
-
   my.qrcodeElement = document.createElement('img');
+  document.body.appendChild(my.qrcodeElement);
   my.qrcodeElement.style.position = 'fixed';
   my.qrcodeElement.style.bottom = '0';
   my.qrcodeElement.style.right = '0';
   my.qrcodeElement.style.zIndex = 1000;
   my.qrcodeElement.style.width = my.qrCodeWidth; // `${Math.floor(100 * my.qrCodeWidth)}%`;
-
   my.qrcodeElement.src = qrcode_url();
-
-  document.body.appendChild(my.qrcodeElement);
-  // my.footerElemnt.appendChild(my.qrcodeElement);
 
   console.log('createQRCode my.qrcodeElement', my.qrcodeElement);
 }
