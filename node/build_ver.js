@@ -49,9 +49,8 @@ export function build_ver_run(my) {
       continue;
     }
 
-    str = str.replace(ver_replace, ver_to_str);
-
-    if (my.writeFlag) {
+    let nstr = str.replace(ver_replace, ver_to_str);
+    if (nstr != str && my.writeFlag) {
       // writeBuildFile(src_path, afile, str);
       writeSourceFile(src_path, afile, str);
       writeCount++;
