@@ -51,8 +51,8 @@ export function build_ver_run(my) {
 
     let nstr = str.replace(ver_replace, ver_to_str);
     if (nstr != str && my.writeFlag) {
-      // writeBuildFile(src_path, afile, str);
-      writeSourceFile(src_path, afile, str);
+      // writeBuildFile(src_path, afile, nstr);
+      writeSourceFile(src_path, afile, nstr);
       writeCount++;
     }
   }
