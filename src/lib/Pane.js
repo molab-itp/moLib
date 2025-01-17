@@ -1,7 +1,7 @@
 //
 
 export class Pane {
-  // { backgImg, x0, y0, z0, width, height, initCentered, refBox, regionIndex }
+  // { backImage, x0, y0, z0, width, height, initCentered, refBox, regionIndex }
   constructor(props) {
     //
     Object.assign(this, props);
@@ -30,7 +30,7 @@ export class Pane {
   render() {
     // must step values before render
     this.anim.stepValues();
-    this.render_backgImg();
+    this.render_backImage();
     if (this.anim.running) {
       // animation is running, don't touch props
       // this.focus_pan();
@@ -131,9 +131,9 @@ export class Pane {
     this.focusRect = new Rect({ x0, y0, width, height, stroke, strokeWeight, shadowBlur, shadowColor });
   }
 
-  render_backgImg() {
+  render_backImage() {
     let cm = this.canvasMap();
-    let backgImg = this.backgImg;
+    let backImage = this.backImage;
     // zoom background image to the full width of the canvas
     let dx = this.x0;
     let dy = this.y0;
@@ -142,7 +142,7 @@ export class Pane {
     // Use backBuffer to clip render to width and height
     let bf = this.backBuffer;
     bf.clear();
-    bf.image(backgImg, 0, 0, cm.cWidth, cm.cHeight, sx, sy, cm.zWidth, cm.zHeight);
+    bf.image(backImage, 0, 0, cm.cWidth, cm.cHeight, sx, sy, cm.zWidth, cm.zHeight);
     image(bf, dx, dy, bf.width, bf.height, 0, 0, bf.width, bf.height);
   }
 
@@ -212,8 +212,8 @@ export class Pane {
     let oRatio = this.zoomRatio;
     this.zoomIndex = newValue;
 
-    let iWidth = this.backgImg.width;
-    let iHeight = this.backgImg.height;
+    let iWidth = this.backImage.width;
+    let iHeight = this.backImage.height;
 
     let oW = floor(iWidth * oRatio * 0.5);
     let oH = floor(iHeight * oRatio * 0.5);
@@ -372,9 +372,9 @@ export class Pane {
 
   // { cWidth, cHeight, zWidth, zHeight, iWidth, iHeight };
   canvasMap() {
-    let backgImg = this.backgImg;
-    let iWidth = backgImg.width;
-    let iHeight = backgImg.height;
+    let backImage = this.backImage;
+    let iWidth = backImage.width;
+    let iHeight = backImage.height;
     let rr = iHeight / iWidth;
 
     let cWidth = this.width;

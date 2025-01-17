@@ -13,8 +13,8 @@ export class RefBox {
 
     if (!this.storageLabel) {
       // width and height needed if no storageLabel
-      // this.width = this.backgImg.width;
-      // this.height = this.backgImg.height;
+      // this.width = this.backImage.width;
+      // this.height = this.backImage.height;
       this.storageLabel = 'refBox1';
       this.refIndex = 0;
       this.refs = [];
