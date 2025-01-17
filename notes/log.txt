@@ -1,0 +1,15 @@
+log.txt
+
+2025-01-17 06:54:18
+
+# --
+
+  my.pane1.copyRefEntry(0, { z: 4 });
+
+refIndexSync()
+
+restore_refBox
+
+  save_localStorage() {
+
+
