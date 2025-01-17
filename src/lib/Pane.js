@@ -81,6 +81,7 @@ export class Pane {
     console.log('focus_pan cm.zWidth zHeight', cm.zWidth, cm.zHeight);
     console.log('focus_pan rg.y , rg.x, rg.w - cm.zWidth', rg.x, rg.w - cm.zWidth);
     this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
+    if (this.panX < 0) this.panX = 0;
     console.log('focus_pan rg.y , (rg.h - cm.zHeight)', rg.y, rg.h - cm.zHeight);
     let vizHeight = this.height * this.zoomRatio;
     this.panY = floor(rg.y - (vizHeight - rg.h) * 0.5);
@@ -96,6 +97,7 @@ export class Pane {
     this.zoomIndex = rg.z;
     let cm = this.canvasMap();
     this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
+    if (this.panX < 0) this.panX = 0;
     // this.panX = rg.x;
     this.panY = rg.y;
     console.log('\nfocus_pan_cut panX', this.panX, this.panY);
