@@ -64,7 +64,6 @@ export class RefBox {
       return;
     }
     Object.assign(this, refBox);
-    // this.patchRefbox();
   }
 
   save_localStorage() {
@@ -81,6 +80,20 @@ export class RefBox {
       console.log('save_localStorage my.mo_app', my.mo_app);
       dbase_update_item({ refBox }, 'item');
     }
+  }
+
+  patchRefbox() {
+    let refBox = this;
+    let count = 0;
+    for (let index = 0; index < refBox.refs.length; index++) {
+      let ent = refBox.refs[index];
+      if (ent.regions[1].z !== 1 && ent.regions[1].z !== 5) {
+        ent.regions[1].z = 5;
+        count++;
+      }
+    }
+    console.log('patchRefbox count', count);
+    this.save_localStorage();
   }
 }
 
