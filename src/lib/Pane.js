@@ -34,8 +34,10 @@ export class Pane {
     if (this.anim.running) {
       // animation is running, don't touch props
       // this.focus_pan();
-    } else if (this.refBox) {
-      // when not animating show focus rect
+    }
+    // Disabled: when not animating show focus rect
+    // } else
+    if (this.refBox) {
       this.focus_focusRect();
       this.focusRect.render();
     }
