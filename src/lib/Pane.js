@@ -72,11 +72,23 @@ export class Pane {
     let rg = this.region();
     this.zoomIndex = rg.z;
     let cm = this.canvasMap();
+    let crg = this.rgToCanvas(rg);
+
+    // Centering on Y does not work
+    // set to top Y for now
+    console.log('\nfocus_pan rg', rg);
+    console.log('focus_pan crg', crg);
+    console.log('focus_pan cm.zWidth zHeight', cm.zWidth, cm.zHeight);
+    console.log('focus_pan rg.y , rg.x, rg.w - cm.zWidth', rg.x, rg.w - cm.zWidth);
     this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
-    console.log('focus_pan panX', this.panX, this.panY);
-    // this.panY = floor(rg.y + (rg.h - cm.zHeight) * 0.5);
-    // this.panY = floor(rg.y - (rg.h - cm.zHeightClipped) * 0.5);
+    console.log('focus_pan rg.y , (rg.h - cm.zHeight)', rg.y, rg.h - cm.zHeight);
+    let vizHeight = this.height * this.zoomRatio;
+    this.panY = floor(rg.y - (vizHeight - rg.h) * 0.5);
+    console.log('focus_pan panX panY', this.panX, this.panY);
+    // this.panX = floor(rg.x);
     this.panY = floor(rg.y);
+    console.log('focus_pan panX panY', this.panX, this.panY);
+    // this.panY = floor(rg.y - (rg.h - cm.zHeightClipped) * 0.5);
   }
 
   focus_pan_cut() {
@@ -86,7 +98,7 @@ export class Pane {
     this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
     // this.panX = rg.x;
     this.panY = rg.y;
-    console.log('focus_pan_cut panX', this.panX, this.panY);
+    console.log('\nfocus_pan_cut panX', this.panX, this.panY);
   }
 
   focus_animated_cut(cut_time) {
