@@ -3,3 +3,9 @@ vite.txt
 
 https://vite.dev/guide/#trying-vite-online
 
+  cd hello-app
+  npm install
+  npm run dev
+
+cd hello-app 
+npm run build
