@@ -2,6 +2,35 @@ log.txt
 
 [] need dev firebase area
 
+# --
+
+npm create vite@latest
+
+  cd react-counter
+  npm install
+  npm run dev
+
+# --
+
+hello-app/vite.config.js
+    // target: 'esnext',
+ >> no effect
+
+https://preactjs.com/guide/v10/getting-started
+
+setupCounter(id_counter2);
+
+id_counter2
+!!@ fails
+
+# --
+
+npm run dev
+
+npm run preview
+
+npm run build
+
 npm run build --base=moSalon/dist
 
 npm run build --base=./
@@ -17,9 +46,7 @@ export default defineConfig({
   },
 })
 
-
 https://vite.dev/guide/build#relative-base
-
 
 https://jht1493.net/moSalon/dist
 https://jht1493.net/moSalon/dist1

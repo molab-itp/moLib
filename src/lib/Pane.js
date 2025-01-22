@@ -78,19 +78,19 @@ export class Pane {
 
     // Centering on Y does not work
     // set to top Y for now
-    console.log('\nfocus_pan rg', rg);
-    console.log('focus_pan crg', crg);
-    console.log('focus_pan cm.zWidth zHeight', cm.zWidth, cm.zHeight);
-    console.log('focus_pan rg.y , rg.x, rg.w - cm.zWidth', rg.x, rg.w - cm.zWidth);
+    // console.log('\nfocus_pan rg', rg);
+    // console.log('focus_pan crg', crg);
+    // console.log('focus_pan cm.zWidth zHeight', cm.zWidth, cm.zHeight);
+    // console.log('focus_pan rg.y , rg.x, rg.w - cm.zWidth', rg.x, rg.w - cm.zWidth);
     this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
     if (this.panX < 0) this.panX = 0;
-    console.log('focus_pan rg.y , (rg.h - cm.zHeight)', rg.y, rg.h - cm.zHeight);
+    // console.log('focus_pan rg.y , (rg.h - cm.zHeight)', rg.y, rg.h - cm.zHeight);
     let vizHeight = this.height * this.zoomRatio;
     this.panY = floor(rg.y - (vizHeight - rg.h) * 0.5);
-    console.log('focus_pan panX panY', this.panX, this.panY);
+    // console.log('focus_pan panX panY', this.panX, this.panY);
     // this.panX = floor(rg.x);
     this.panY = floor(rg.y);
-    console.log('focus_pan panX panY', this.panX, this.panY);
+    // console.log('focus_pan panX panY', this.panX, this.panY);
     // this.panY = floor(rg.y - (rg.h - cm.zHeightClipped) * 0.5);
   }
 
