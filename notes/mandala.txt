@@ -1,0 +1,43 @@
+mandala.txt
+
+# --
+
+setup my.backImage width 3033 3445
+
+src/taizokai-mandala
+src/assets/Taizokai.jpg
+
+https://en.wikipedia.org/wiki/Mandala#/media/File:Borobudur_Mandala.svg
+Borobudur ground plan taking the form of a Mandala
+Gunawan Kartapranata - Own work using: The Restoration of Borobudur, p. 30 & 37
+
+The plan of Borobudur took form of a Mandala, a model of universe in
+Hindu-Buddhist cosmology. It consists of three ascending realms, Kãmadhãtu (the
+realm of desire), Rüpadhãtu (the realm of form), and Arüpadhãtu (the realm of
+formlessness).
+
+https://commons.wikimedia.org/wiki/User:Gunkarta
+"title of the file" by Gunawan Kartapranata is licensed under CC BY-SA 4.0
+
+
+https://en.wikipedia.org/wiki/Mandala#/media/File:Taizokai.jpg
+The Womb Realm mandala. The center square represents the young stage of
+Vairocana. He is surrounded by eight Buddhas and bodhisattvas (clockwise from
+top: Ratnasambhava, Samantabhadra, Saṅkusumitarāja, Manjushri, Amitābha,
+Avalokiteśvara, Amoghasiddhi and Maitreya)
+
+http://www.kaladarshan.arts.ohio-state.edu/ --DEAD LINK--
+Womb Realm (garbhakosa-dhatu or taizōkai) mandala. Shingon tantric buddhist school, 
+Heian period (794-1185), Tō-ji, Kyōto, Japan. National Treasure
+
+https://en.wikipedia.org/wiki/Bardo_Thodol
+
+The Bardo Thodol (Tibetan: བར་དོ་ཐོས་གྲོལ, Wylie: bar do thos grol, 'Liberation
+through hearing during the intermediate state'), commonly known in the West as
+The Tibetan Book of the Dead,
+
+https://commons.wikimedia.org/wiki/File:Taizokai.jpg
+
+
+window.location.href
+'http://127.0.0.1:5502/src/manju-mandala/index.html'
