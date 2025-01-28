@@ -61,7 +61,7 @@ function dbase_app_observe({ observed_key, removed_key, observed_item, observed_
     }
     if (observed_item) {
       my.a_group_item = value;
-      if (value) {
+      if (value != undefined) {
         observed_item({ [key]: value });
       }
     }
