@@ -2,9 +2,6 @@
 
 console.log('in test/index.js');
 
-my_setup();
-setup_dbase();
-
 //
 function my_setup() {
   //
@@ -31,7 +28,7 @@ async function setup_dbase() {
 // Control the level of logging for debugging
 
 function ui_log(...args) {
-  // console.log(...args);
+  console.log(...args);
 }
 globalThis.ui_log = ui_log;
 
@@ -39,3 +36,6 @@ function ui_logv(...args) {
   // console.log(...args);
 }
 globalThis.ui_logv = ui_logv;
+
+my_setup();
+setup_dbase();

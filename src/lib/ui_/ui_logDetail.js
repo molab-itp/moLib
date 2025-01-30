@@ -115,6 +115,7 @@ function no_p5js_ui_log_stubs() {
   globalThis.ui_error = ui_error;
 }
 
+console.log('if globalThis.createDiv');
 if (!globalThis.createDiv) {
   no_p5js_ui_log_stubs();
 }

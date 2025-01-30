@@ -4,10 +4,10 @@ function dbase_devices_observe({ observed_key, removed_key, observed_item, all }
   //
   if (!my.a_device_values) my.a_device_values = {};
 
-  // 'mo-paint/a_device'
+  // 'mo-paint/a_device' --> a_app
   dbase_app_observe(
     { observed_key: my_observed_key, removed_key: my_removed_key }, //
-    { app: my.mo_app + '/a_device' }
+    { app: my.mo_app + '/a_app' }
   );
 
   // dbase_app_observe --> dbase_observe_devices

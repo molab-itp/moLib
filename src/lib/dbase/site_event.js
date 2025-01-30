@@ -31,7 +31,7 @@ function dbase_site_updates(updates, keys) {
   if (!my.uid) {
     return;
   }
-  let path = `${my.dbase_rootPath}/${my.mo_app}/a_device/${my.uid}`;
+  let path = `${my.dbase_rootPath}/${my.mo_app}/a_app/${my.uid}`;
   let { getRefPath, update, increment } = fireb_.fbase;
   let refPath = getRefPath(path);
   // ui_log('dbase_site_event', path);
