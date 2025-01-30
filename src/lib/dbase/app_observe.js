@@ -1,4 +1,8 @@
 //
+// black-enter/black_setup_dbase.js
+// dbase_app_observe({ observed_item }, 'meta');
+// dbase_app_observe({ observed_event }, 'comment_store');
+//
 function dbase_app_observe({ observed_key, removed_key, observed_item, observed_event }, options) {
   // options = { app, tag, path }
   let tag = 'dbase_app_observe';
@@ -86,19 +90,8 @@ globalThis.dbase_app_observe = dbase_app_observe;
 
 // issue dbase_update_props to group
 function dbase_update_item(item, path) {
-  // let group = my && my.mo_group;
-  // if (!group) group = 's0';
-  // // broadcast group when has comma separated values
-  // if (group.indexOf(',') > -1) {
-  //   // my.mo_group=s1,s2,... --> group=s0,s1,s2,...
-  //   // Special group 's0' recieves all updates
-  //   group = 's0,' + group;
-  // }
-  // let options = { group: group };
-  // if (path) {
-  //   options.path = path;
-  // }
-  dbase_update_props(item, dbase_default_options(path));
+  let options = dbase_default_options(path);
+  dbase_update_props(item, options);
 }
 globalThis.dbase_update_item = dbase_update_item;
 
