@@ -1,26 +1,26 @@
 
-> itp-molib@0.1.34 build
+> itp-molib@0.2.1 build
 > rollup -c
 
 npm notice
-npm notice 📦  itp-molib@0.1.34
+npm notice 📦  itp-molib@0.2.1
 npm notice Tarball Contents
 npm notice 864B README.md
 npm notice 394.0kB dist/moLib.cjs.js
 npm notice 1.8MB dist/moLib.cjs.js.map
-npm notice 393.9kB dist/moLib.esm.js
+npm notice 394.0kB dist/moLib.esm.js
 npm notice 1.8MB dist/moLib.esm.js.map
 npm notice 399.6kB dist/moLib.umd.js
 npm notice 1.8MB dist/moLib.umd.js.map
-npm notice 776B package.json
+npm notice 775B package.json
 npm notice Tarball Details
 npm notice name: itp-molib
-npm notice version: 0.1.34
-npm notice filename: itp-molib-0.1.34.tgz
+npm notice version: 0.2.1
+npm notice filename: itp-molib-0.2.1.tgz
 npm notice package size: 1.5 MB
 npm notice unpacked size: 6.6 MB
-npm notice shasum: 580d4d6fe12b5cce9403244aefeacc19d636ce61
-npm notice integrity: sha512-lr7nwZCzZMT6h[...]qoiUgK7rfSD9Q==
+npm notice shasum: 6c2e1fc3bc79137850547c2f876a0dc4248b68b9
+npm notice integrity: sha512-dux0c3gH97CRd[...]v2nTyZuMgqB2A==
 npm notice total files: 8
 npm notice
 npm notice Publishing to https://registry.npmjs.org/ with tag latest and default access
