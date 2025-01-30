@@ -79,6 +79,6 @@ export function init(my) {
       }
       return item;
     });
-    console.log('mode_files', my.mode_files);
+    // console.log('mode_files', my.mode_files);
   }
 }
