@@ -116,11 +116,11 @@ function dbase_remove_room() {
   set(refPath, {})
     .then(() => {
       // Data saved successfully!
-      console.log('dbase_remove_room OK');
+      ui_log('dbase_remove_room OK');
     })
     .catch((error) => {
       // The write failed...
-      console.log('dbase_remove_room error', error);
+      ui_log('dbase_remove_room error', error);
     });
 }
 globalThis.dbase_remove_room = dbase_remove_room;
@@ -134,11 +134,11 @@ function dbase_remove_mo_app() {
   set(refPath, {})
     .then(() => {
       // Data saved successfully!
-      console.log('dbase_remove_mo_app OK');
+      ui_log('dbase_remove_mo_app OK');
     })
     .catch((error) => {
       // The write failed...
-      console.log('dbase_remove_mo_app error', error);
+      ui_log('dbase_remove_mo_app error', error);
     });
 }
 globalThis.dbase_remove_mo_app = dbase_remove_mo_app;

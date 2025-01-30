@@ -130,7 +130,7 @@ export class Anim {
   //     this.target[prop] = this._endValues[prop];
   //   }
   //   this.running = 0;
-  //   console.log('finish changeIndex', this.changeIndex, 'running', this.running);
+  //   ui_log('finish changeIndex', this.changeIndex, 'running', this.running);
   // }
 }
 

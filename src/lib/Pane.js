@@ -102,7 +102,7 @@ export class Pane {
     if (this.panX < 0) this.panX = 0;
     // this.panX = rg.x;
     this.panY = rg.y;
-    console.log('\nfocus_pan_cut panX', this.panX, this.panY);
+    ui_log('\nfocus_pan_cut panX', this.panX, this.panY);
   }
 
   focus_animated_cut(cut_time) {
@@ -223,7 +223,7 @@ export class Pane {
 
     this.panX = this.panX + oW - nW;
     this.panY = this.panY + oH - nH;
-    console.log('pan_updateZoom panX', this.panX, this.panY);
+    ui_log('pan_updateZoom panX', this.panX, this.panY);
   }
 
   pan_init() {
@@ -241,7 +241,7 @@ export class Pane {
     let cm = this.canvasMap();
     this.panX = floor((cm.iWidth - cm.zWidth) * 0.5);
     this.panY = floor((cm.iHeight - cm.zHeight) * 0.5);
-    console.log('pan_center panX', this.panX, this.panY);
+    ui_log('pan_center panX', this.panX, this.panY);
   }
 
   mousePressed() {
@@ -327,7 +327,7 @@ export class Pane {
       let y = floor((ment.y - this.y0) * rh) + this.panY;
       points.push({ x, y });
     }
-    console.log('updateEnt points', points);
+    ui_log('updateEnt points', points);
     if (points[0].x > points[1].x) {
       let temp = points[1].x;
       points[1].x = points[0].x;

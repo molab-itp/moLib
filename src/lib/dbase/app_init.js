@@ -9,10 +9,10 @@ async function dbase_app_init(my) {
   globalThis.my = my;
 
   let config = fireb_.init(my.fireb_config);
-  console.log('configVersion', config.configVersion);
-  console.log('config.projectId', config.projectId);
-  console.log('configLabel', config.configLabel);
-  console.log('room', my.mo_room);
+  ui_log('configVersion', config.configVersion);
+  ui_log('config.projectId', config.projectId);
+  ui_log('configLabel', config.configLabel);
+  ui_log('room', my.mo_room);
 
   ui_logv('dbase_app_init globalThis', globalThis);
   ui_logv('dbase_app_init my.mo_app', my.mo_app, 'my.mo_room', my.mo_room, 'my.mo_group', my.mo_group);
@@ -24,7 +24,7 @@ async function dbase_app_init(my) {
   await signInAnonymously(auth);
   // .then(() => {
   my.uid = auth.currentUser.uid;
-  console.log('dbase_app_init my.uid', my.uid);
+  ui_log('dbase_app_init my.uid', my.uid);
 
   dbase_report_status({});
 
@@ -59,7 +59,7 @@ function dbase_site_devices(show) {
       // console.log('');
     }
     lines.push('dbase_site_devices n ' + arr.length);
-    console.log(lines.join('\n'));
+    ui_log(lines.join('\n'));
   }
   // [ {
   //    index

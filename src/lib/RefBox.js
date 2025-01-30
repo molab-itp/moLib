@@ -49,18 +49,18 @@ export class RefBox {
   }
 
   restore_localStorage() {
-    console.log('restore_localStorage');
+    ui_log('restore_localStorage');
     let refBox;
     let str = localStorage.getItem(this.storageLabel);
     if (!str || this.reloadLocal) {
-      console.log('restore_localStorage no str', this.storageLabel);
+      ui_log('restore_localStorage no str', this.storageLabel);
       return;
     }
-    console.log('restore_localStorage storageLabel', this.storageLabel, 'str.length', str.length);
+    ui_log('restore_localStorage storageLabel', this.storageLabel, 'str.length', str.length);
     try {
       refBox = JSON.parse(str);
     } catch (err) {
-      console.log('restore_localStorage parse err', err);
+      ui_log('restore_localStorage parse err', err);
       return;
     }
     Object.assign(this, refBox);
@@ -70,14 +70,14 @@ export class RefBox {
     let refBox = this;
     let str = JSON.stringify(refBox);
     localStorage.setItem(this.storageLabel, str);
-    console.log('save_localStorage storageLabel', this.storageLabel, 'str.length', str.length);
+    ui_log('save_localStorage storageLabel', this.storageLabel, 'str.length', str.length);
     // let n = this.refs.length;
     // console.log('save_localStorage ', n, this.refs[n - 1].label);
     let ii = this.refIndex;
-    console.log('save_localStorage ', ii + 1, this.refs[ii].label);
+    ui_log('save_localStorage ', ii + 1, this.refs[ii].label);
 
     if (my.mo_app) {
-      console.log('save_localStorage my.mo_app', my.mo_app);
+      ui_log('save_localStorage my.mo_app', my.mo_app);
       dbase_update_item({ refBox }, 'item');
     }
   }
@@ -92,7 +92,7 @@ export class RefBox {
         count++;
       }
     }
-    console.log('patchRefbox count', count);
+    ui_log('patchRefbox count', count);
     this.save_localStorage();
   }
 }
@@ -109,7 +109,7 @@ export class RefBox {
 //     }
 //   }
 //   if (last) {
-//     console.log('patchRefbox splice last', last);
+//     ui_log('patchRefbox splice last', last);
 //     refBox.refs.splice(last, 1);
 //   }
 //   refBox.label = refBox.label;

@@ -2,9 +2,9 @@
 
 if (globalThis.window) {
   window.addEventListener('resize', () => {
-    console.log('report_status resize');
+    ui_log('report_status resize');
     if (!globalThis.my) {
-      console.log('report_status no my');
+      ui_log('report_status no my');
       return;
     }
     dbase_report_status({});
@@ -71,7 +71,7 @@ function qrcode_url() {
     // let url = `https://molab-itp.github.io/p5moExamples/examples/let-america-be/qrcode/s0.png`;
     url = `https://molab-itp.github.io/moSalon/src/let-america-be/qrcode/${my.mo_group}.png`;
   }
-  console.log('qrcode_url', url);
+  ui_log('qrcode_url', url);
   return url;
 }
 
@@ -128,7 +128,7 @@ function createQRCode(options) {
   my.qrcodeElement.style.width = my.qrCodeWidth; // `${Math.floor(100 * my.qrCodeWidth)}%`;
   my.qrcodeElement.src = qrcode_url();
 
-  console.log('createQRCode my.qrcodeElement', my.qrcodeElement);
+  ui_log('createQRCode my.qrcodeElement', my.qrcodeElement);
 }
 
 // function position_qrcode() {

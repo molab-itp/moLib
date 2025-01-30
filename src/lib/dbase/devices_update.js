@@ -4,7 +4,7 @@
 function dbase_devices_update(deviceProps) {
   //
   if (!my.a_device_values) {
-    console.log('dbase_devices_update NO my.a_device_values', my.a_device_values);
+    ui_log('dbase_devices_update NO my.a_device_values', my.a_device_values);
     return;
   }
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
@@ -75,17 +75,17 @@ function dbase_actions_issued(uid, actions, options) {
   if (options.group) {
     source = my.a_group_item;
     if (!source) {
-      console.log('dbase_actions_issued uid', my.uid, 'no a_group_item', my.a_group_item);
+      ui_log('dbase_actions_issued uid', my.uid, 'no a_group_item', my.a_group_item);
       return 0;
     }
   } else {
     if (!my.a_device_values) {
-      console.log('dbase_actions_issued uid', my.uid, 'no a_device_values', my.a_device_values);
+      ui_log('dbase_actions_issued uid', my.uid, 'no a_device_values', my.a_device_values);
       return 0;
     }
     source = my.a_device_values[uid];
     if (!source) {
-      console.log('dbase_actions_issued uid', uid, 'no device source', source);
+      ui_log('dbase_actions_issued uid', uid, 'no device source', source);
       return 0;
     }
   }
@@ -153,7 +153,7 @@ globalThis.dbase_devices_issue_actions = dbase_devices_issue_actions;
 // dbase_issue_action is complement by dbase_if_action
 //
 function dbase_issue_action(prop, path) {
-  console.log('dbase_issue_action', prop);
+  ui_log('dbase_issue_action', prop);
   dbase_update_item({ [prop]: dbase_increment(1) }, path);
 }
 globalThis.dbase_issue_action = dbase_issue_action;
@@ -169,7 +169,7 @@ function dbase_if_action({ item, prop, actionFunc }) {
   if (count != null) {
     if (my[prop] && count != my[prop]) {
       // trigger action
-      console.log('triggering action', prop, 'old count', my[prop], 'new count', count);
+      ui_log('triggering action', prop, 'old count', my[prop], 'new count', count);
       actionFunc();
     }
     my[prop] = count;

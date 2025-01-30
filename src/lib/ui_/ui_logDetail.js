@@ -64,7 +64,7 @@ function ui_log_init() {
 
 function ui_error(...args) {
   // ui_log(...args);
-  console.log(...args);
+  ui_log(...args);
   alert(...args);
 }
 globalThis.ui_error = ui_error;
@@ -74,15 +74,15 @@ globalThis.ui_error = ui_error;
 function ui_toggle_scroll() {
   if (globalThis.scrollY > 0) {
     // scroll down some. jump back to top
-    console.log('ui_toggle_scroll jump to top');
+    ui_log('ui_toggle_scroll jump to top');
     globalThis.scrollBy(0, -1000);
     my.scrolling = 0;
   } else {
     // At top. initiated scrolling
-    console.log('ui_toggle_scroll start');
+    ui_log('ui_toggle_scroll start');
     my.scrolling = 1;
     setTimeout(function () {
-      console.log('ui_toggle_scroll stop');
+      ui_log('ui_toggle_scroll stop');
       my.scrolling = 0;
     }, my.scrollStopSecs * 1000);
   }
@@ -97,3 +97,24 @@ function ui_check_scroll() {
 globalThis.ui_check_scroll = ui_check_scroll;
 
 //
+function no_p5js_ui_log_stubs() {
+  function ui_log(...args) {
+    // console.log(...args);
+  }
+  globalThis.ui_log = ui_log;
+
+  function ui_logv(...args) {
+    // console.log(...args);
+  }
+  globalThis.ui_logv = ui_logv;
+
+  function ui_error(...args) {
+    ui_log(...args);
+    alert(...args);
+  }
+  globalThis.ui_error = ui_error;
+}
+
+if (!globalThis.createDiv) {
+  no_p5js_ui_log_stubs();
+}

@@ -19,9 +19,10 @@ function run() {
   mlog('writeFlag', my.writeFlag);
   mlog('mode_dev', my.mode_dev);
 
-  if (my.libFlag) {
-    build_mode(my);
-  }
+  // retired -- replaced by test / importmap
+  // if (my.libFlag) {
+  //   build_mode(my);
+  // }
   // source files that will have ?v=<buildnumber> updated
   build_ver_run(my);
 }

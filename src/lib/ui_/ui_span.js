@@ -130,7 +130,7 @@ function ui_fresh_element(element) {
 //
 function ui_toggleFullScreen() {
   if (!document.documentElement.requestFullscreen) {
-    console.log('NO document.documentElement.requestFullscreen');
+    ui_log('NO document.documentElement.requestFullscreen');
     // !!@ on mobile requestFullscreen not supported
     // clear ui anyway
     ui_remove_all();

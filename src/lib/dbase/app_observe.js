@@ -134,7 +134,7 @@ function dbase_group_observe(props, options) {
 globalThis.dbase_group_observe = dbase_group_observe;
 
 async function dbase_add_key(apath, value) {
-  console.log('dbase_add_key apath', apath, 'value', value);
+  ui_log('dbase_add_key apath', apath, 'value', value);
   let options = dbase_default_options(apath);
   let group = options.group;
   let prop = options.path;
@@ -143,7 +143,7 @@ async function dbase_add_key(apath, value) {
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
   path += `/a_group/${group}/${prop}`;
 
-  console.log('dbase_add_key path', path);
+  ui_log('dbase_add_key path', path);
   let refPath = getRefPath(path);
   let nref = push(refPath);
 
@@ -154,7 +154,7 @@ async function dbase_add_key(apath, value) {
 globalThis.dbase_add_key = dbase_add_key;
 
 async function dbase_remove_key(apath, key) {
-  console.log('dbase_remove_key apath', apath, 'key', key);
+  ui_log('dbase_remove_key apath', apath, 'key', key);
   let options = dbase_default_options(apath);
   let group = options.group;
   let prop = options.path;
@@ -163,7 +163,7 @@ async function dbase_remove_key(apath, key) {
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
   path += `/a_group/${group}/${prop}/${key}`;
 
-  console.log('dbase_remove_key path', path);
+  ui_log('dbase_remove_key path', path);
   let refPath = getRefPath(path);
 
   return set(refPath, null);
