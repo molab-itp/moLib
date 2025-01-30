@@ -3,7 +3,7 @@ function dbase_site_observe() {
   //
   // Setup listener for changes to firebase db device
   let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = fireb_.fbase;
-  let path = `${my.dbase_rootPath}/${my.mo_app}/a_device`;
+  let path = `${my.dbase_rootPath}/${my.mo_app}/a_app`;
   let refPath = getRefPath(path);
 
   ui_log('dbase_site_observe path', path);

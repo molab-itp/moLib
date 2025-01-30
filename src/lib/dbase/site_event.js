@@ -21,11 +21,16 @@ function dbase_site_event_update() {
 globalThis.dbase_site_event_update = dbase_site_event_update;
 
 function dbase_site_event(keys) {
-  dbase_site_updates({}, keys);
+  dbase_app_update({}, keys);
 }
 
-function dbase_site_updates(updates, keys) {
-  ui_logv('dbase_site_updates updates', updates, 'keys', keys);
+function dbase_info_update(updates) {
+  dbase_app_update({ a_info: updates });
+}
+globalThis.dbase_info_update = dbase_info_update;
+
+function dbase_app_update(updates, keys) {
+  ui_logv('dbase_app_update updates', updates, 'keys', keys);
   // console.log('dbase_site_event my.uid', my.uid);
   // ui_log('dbase_site_event my.uid', my.uid);
   if (!my.uid) {
@@ -59,7 +64,7 @@ function dbase_site_updates(updates, keys) {
   }
   update(refPath, updates);
 }
-globalThis.dbase_site_updates = dbase_site_updates;
+globalThis.dbase_app_update = dbase_app_update;
 
 function dbase_site_events(keys, uid, date_s) {
   // ui_log('dbase_site_events uid', uid, date_s);
