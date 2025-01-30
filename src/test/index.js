@@ -2,6 +2,8 @@
 
 console.log('in test/index.js');
 
+globalThis.my = {};
+
 //
 function my_setup() {
   //
