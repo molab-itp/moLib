@@ -4,16 +4,24 @@ console.log('in index.js');
 
 globalThis.my = {};
 
-//
-function my_setup() {
-  //
+async function test_start() {
+  console.log('in test');
+
   my.fireb_config = 'jht9629';
-  // my.fireb_config = 'jht1493';
   // my.fireb_config = 'jhtitp';
   my.dbase_rootPath = 'm0-@r-@w-';
   my.mo_room = 'm1-test';
   my.mo_app = 'mo-test';
   my.nameDevice = 'mo-test-device';
+  if (!globalThis.window) my.nameDevice += '-node';
+
+  await setup_dbase();
+
+  dbase_update_item({ test_count: dbase_increment(1) }, 'item');
+
+  dbase_update_item({ test_step: 1 }, 'item');
+
+  setup_animationFrame();
 }
 
 async function setup_dbase() {
@@ -36,7 +44,7 @@ function observe_item() {
     }
     if (item.test_step != undefined) {
       my.test_step_changed = my.test_step != item.test_step;
-      console.log('step diff', my.test_step, item.test_step);
+      console.log('test_step diff', my.test_step, item.test_step);
       my.test_step = item.test_step;
     }
   }
@@ -59,24 +67,19 @@ function observe_comment_store() {
   }
 }
 
-// Control the level of logging for debugging
-function ui_log(...args) {
-  console.log(...args);
-}
-function ui_logv(...args) {
-  // console.log(...args);
-}
-
-test_start();
-
 function setup_animationFrame() {
-  window.requestAnimationFrame(animationFrame_callback);
+  if (globalThis.window) {
+    window.requestAnimationFrame(animationFrame_callback);
+  } else {
+    setTimeout(animationFrame_callback, 0);
+  }
 }
 
 function animationFrame_callback(timeStamp) {
   let timeSecs = timeStamp / 1000;
   // console.log('step_animation timeStamp', timeStamp);
-  window.requestAnimationFrame(animationFrame_callback);
+  // window.requestAnimationFrame(animationFrame_callback);
+  setup_animationFrame();
 
   if (my.test_step_changed) {
     my.test_step_changed = 0;
@@ -104,23 +107,14 @@ async function trim_comments() {
   for (let index = 1; index < items.length; index++) {
     let entry = items[index];
     let key = entry[0];
-    console.log('removing key', key);
+    let item = entry[1];
+    if (item.uid != my.uid) {
+      console.log('trim_comments skipping ', item.uid);
+      continue;
+    }
+    console.log('trim_comments removing key', key);
     await dbase_remove_key('comment_store', key);
   }
-}
-
-async function test_start() {
-  console.log('in test');
-
-  my_setup();
-
-  await setup_dbase();
-
-  setup_animationFrame();
-
-  dbase_update_item({ test_count: dbase_increment(1) }, 'item');
-
-  dbase_update_item({ test_step: 1 }, 'item');
 }
 
 async function test_step1() {
@@ -152,3 +146,20 @@ async function test_step1() {
 
   dbase_info_update({ info_count: dbase_increment(1), item2: 'info-item2' });
 }
+
+// id_console_ul
+
+function ui_log(...args) {
+  console.log(...args);
+  let str = args.join(' ') + '<br/>';
+  if (globalThis.id_console_ul) {
+    id_console_ul.innerHTML += str;
+  }
+}
+globalThis.ui_log = ui_log;
+
+function ui_logv(...args) {
+  // console.log(...args);
+}
+
+test_start();

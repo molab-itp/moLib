@@ -27,4 +27,18 @@ export const fstorage = {
   uploadBytes,
 };
 
-//
+/* 
+
+https://firebase.google.com/docs/storage/web/start
+
+// !!@
+// Initialize Cloud Storage and get a reference to the service
+const storage = getStorage(app);
+
+  let { getStorage, ref, uploadBytes } = fireb_.fstorage;
+
+  function getStorageRefPath(path) {
+    ref(getStorage(app), path);
+  }
+
+*/

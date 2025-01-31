@@ -96,7 +96,24 @@ const fireb_ = {
   fbase,
   fstorage,
 };
-
 globalThis.fireb_ = fireb_;
 
+export function fireb_init(my, config) {
+  my.fireb = fireb_;
+  fbase_init(my);
+  fstorage_init(my);
+  return init(my, config);
+}
+
 // https://firebase.google.com/docs/projects/api-keys
+/*
+
+https://firebase.google.com/docs/auth/web/start
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// !!@
+// Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth(app);
+
+*/

@@ -25,10 +25,20 @@ function getRefPath(path) {
   return ref(getDatabase(), path);
 }
 
+export function fbase_init(my) {
+  my.fireb.fbase = fbase;
+  // fbase.getDatabase = function () {
+  //   getDatabase(my.fireb.app);
+  // };
+  fbase.getRefPath = function (path) {
+    return ref(getDatabase(my.fireb.app), path);
+  };
+}
+
 export const fbase = {
   child,
   get,
-  getDatabase,
+  // getDatabase,
   getRefPath,
   increment,
   onChildAdded,
@@ -41,11 +51,11 @@ export const fbase = {
   update,
 };
 
-// !!@
 /* 
 
 https://firebase.google.com/docs/database/web/start?hl=en&authuser=0
 
+// !!@
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(app);
 

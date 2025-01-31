@@ -1,6 +1,9 @@
 # [moLib](https://github.com/molab-itp/moLib)
 
-- a Library for multi-device experiences from handheld small screens to large screens using cloud storage
+- a Library for building
+- multi-device experiences from handheld small screens
+- to large screens
+- using cloud storage
 - compatible with p5js
 
 # [repo](https://github.com/molab-itp/moLib)
@@ -13,13 +16,14 @@
 
 ```
 
-# dev build
-# can use <script type="module" src="../../moLib/src/lib/a_lib.js"></script>
-#
-bin/build.sh --dev --lib 1
-#
-# prod build
-bin/build.sh --prod --lib 1
+# node test
+
+node src/test/main.js
+
+# browser test
+
+src/test/index.html
+
 
 # publish lib to npm
 #

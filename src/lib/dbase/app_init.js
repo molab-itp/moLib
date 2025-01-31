@@ -8,6 +8,8 @@ async function dbase_app_init(my) {
   //
   globalThis.my = my;
 
+  // my.db = new MoDataBase(my);
+
   let config = fireb_.init(my.fireb_config);
   ui_log('configVersion', config.configVersion);
   ui_log('config.projectId', config.projectId);
@@ -22,7 +24,7 @@ async function dbase_app_init(my) {
   let { signInAnonymously, auth } = fireb_;
 
   await signInAnonymously(auth);
-  // .then(() => {
+
   my.uid = auth.currentUser.uid;
   ui_log('dbase_app_init my.uid', my.uid);
 
