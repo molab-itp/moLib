@@ -19,8 +19,7 @@ import {
   ref,
   set,
   update, //
-} from 'firebase/database'; //@prod
-//} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js'; //@dev
+} from 'firebase/database';
 
 function getRefPath(path) {
   return ref(getDatabase(), path);
@@ -41,6 +40,16 @@ export const fbase = {
   set,
   update,
 };
+
+// !!@
+/* 
+
+https://firebase.google.com/docs/database/web/start?hl=en&authuser=0
+
+// Initialize Realtime Database and get a reference to the service
+const database = getDatabase(app);
+
+*/
 
 // -- History
 

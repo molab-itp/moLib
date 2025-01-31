@@ -128,6 +128,10 @@ function createQRCode(options) {
   my.qrcodeElement.style.width = my.qrCodeWidth; // `${Math.floor(100 * my.qrCodeWidth)}%`;
   my.qrcodeElement.src = qrcode_url();
 
+  if (my.qrCodeClickAction) {
+    my.qrcodeElement.addEventListener('click', my.qrCodeClickAction);
+  }
+
   ui_log('createQRCode my.qrcodeElement', my.qrcodeElement);
 }
 

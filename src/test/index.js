@@ -31,15 +31,11 @@ function observe_item() {
   dbase_app_observe({ observed_item }, 'item');
   function observed_item(item) {
     console.log('observed_item item', item);
-    //
-    // if (item.comment_count != undefined) {
-    //   my.comment_count = item.comment_count;
-    // }
     if (item.test_count != undefined) {
       my.test_count = item.test_count;
     }
     if (item.test_step != undefined) {
-      my.step_pending = my.test_step != item.test_step;
+      my.test_step_changed = my.test_step != item.test_step;
       console.log('step diff', my.test_step, item.test_step);
       my.test_step = item.test_step;
     }
@@ -82,23 +78,22 @@ function animationFrame_callback(timeStamp) {
   // console.log('step_animation timeStamp', timeStamp);
   window.requestAnimationFrame(animationFrame_callback);
 
-  if (!my.step_pending) return;
-  my.step_pending = 0;
-
-  console.log('my.test_step', my.test_step);
-
-  switch (my.test_step) {
-    case 1:
-      test_step1();
-      dbase_update_item({ test_step: dbase_increment(1) }, 'item');
-      break;
-    case 2:
-      dbase_update_item({ test_step: dbase_increment(1) }, 'item');
-      break;
-    default:
-      trim_comments();
-      dbase_update_item({ test_step: 0 }, 'item');
-      break;
+  if (my.test_step_changed) {
+    my.test_step_changed = 0;
+    console.log('test_step_changed my.test_step', my.test_step);
+    switch (my.test_step) {
+      case 1:
+        test_step1();
+        dbase_update_item({ test_step: dbase_increment(1) }, 'item');
+        break;
+      case 2:
+        dbase_update_item({ test_step: dbase_increment(1) }, 'item');
+        break;
+      default:
+        trim_comments();
+        dbase_update_item({ test_step: 0 }, 'item');
+        break;
+    }
   }
 }
 
