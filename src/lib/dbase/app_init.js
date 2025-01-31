@@ -3,21 +3,25 @@
 // dbase.date_s;
 // dbase.remote
 
+async function mo_dbase_init(my) {
+  /*
+  let dbase = new MoDataBase(my);
+  return dbase;
+  */
+}
+
 //
 async function dbase_app_init(my) {
   //
   globalThis.my = my;
 
-  // my.db = new MoDataBase(my);
-
   let config = fireb_.init(my.fireb_config);
   ui_log('configVersion', config.configVersion);
   ui_log('config.projectId', config.projectId);
   ui_log('configLabel', config.configLabel);
-  ui_log('room', my.mo_room);
-
-  ui_logv('dbase_app_init globalThis', globalThis);
-  ui_logv('dbase_app_init my.mo_app', my.mo_app, 'my.mo_room', my.mo_room, 'my.mo_group', my.mo_group);
+  ui_log('mo_app', my.mo_app);
+  ui_log('mo_room', my.mo_room);
+  ui_log('mo_group', my.mo_group);
 
   dbase_report_status({ msg: 'Starting...' });
 
