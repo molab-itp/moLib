@@ -14,10 +14,6 @@ function my_setup() {
   my.mo_room = 'm1-test';
   my.mo_app = 'mo-test';
   my.nameDevice = 'mo-test-device';
-
-  // dbase  values
-  my.test_count = 0;
-  my.test_total_count = 0;
 }
 
 async function setup_dbase() {
@@ -35,13 +31,18 @@ function observe_item() {
   dbase_app_observe({ observed_item }, 'item');
   function observed_item(item) {
     console.log('observed_item item', item);
-    if (item.comment_count != undefined) {
-      my.comment_count = item.comment_count;
-    }
+    //
+    // if (item.comment_count != undefined) {
+    //   my.comment_count = item.comment_count;
+    // }
     if (item.test_count != undefined) {
       my.test_count = item.test_count;
     }
-    my.comment_update_pending = 1;
+    if (item.test_step != undefined) {
+      my.step_pending = my.test_step != item.test_step;
+      console.log('step diff', my.test_step, item.test_step);
+      my.test_step = item.test_step;
+    }
   }
 }
 
@@ -57,10 +58,8 @@ function observe_comment_store() {
         break;
       case 'remove':
         delete my.comment_store[key];
-        my.comment_prune_pending = 1;
         break;
     }
-    my.comment_update_pending = 1;
   }
 }
 
@@ -72,7 +71,7 @@ function ui_logv(...args) {
   // console.log(...args);
 }
 
-test();
+test_start();
 
 function setup_animationFrame() {
   window.requestAnimationFrame(animationFrame_callback);
@@ -83,16 +82,30 @@ function animationFrame_callback(timeStamp) {
   // console.log('step_animation timeStamp', timeStamp);
   window.requestAnimationFrame(animationFrame_callback);
 
-  if (my.comment_update_pending) {
-    trim_comments();
-    my.comment_update_pending = 0;
+  if (!my.step_pending) return;
+  my.step_pending = 0;
+
+  console.log('my.test_step', my.test_step);
+
+  switch (my.test_step) {
+    case 1:
+      test_step1();
+      dbase_update_item({ test_step: dbase_increment(1) }, 'item');
+      break;
+    case 2:
+      dbase_update_item({ test_step: dbase_increment(1) }, 'item');
+      break;
+    default:
+      trim_comments();
+      dbase_update_item({ test_step: 0 }, 'item');
+      break;
   }
 }
 
 async function trim_comments() {
   let items = Object.entries(my.comment_store);
   console.log('trim_comments items', items);
-  if (items.length < 3) return;
+  // remove all but the first
   for (let index = 1; index < items.length; index++) {
     let entry = items[index];
     let key = entry[0];
@@ -101,7 +114,7 @@ async function trim_comments() {
   }
 }
 
-async function test() {
+async function test_start() {
   console.log('in test');
 
   my_setup();
@@ -110,17 +123,25 @@ async function test() {
 
   setup_animationFrame();
 
-  dbase_update_item({ comment_count: 1959 }, 'item');
-
-  dbase_update_item({ comment_count: dbase_increment(1) }, 'item');
-
   dbase_update_item({ test_count: dbase_increment(1) }, 'item');
+
+  dbase_update_item({ test_step: 1 }, 'item');
+}
+
+async function test_step1() {
+  //
+  console.log('test_step1');
+
+  dbase_update_item({ num_test: 1959 }, 'item');
+
+  dbase_update_item({ num_test: dbase_increment(1) }, 'item');
 
   let comment = 'love now';
   let name = 'nameX1';
   let uid = my.uid;
   let test_count = my.test_count;
-  let entry = { test_count, name, comment, uid };
+  let date = new Date().toISOString();
+  let entry = { test_count, name, comment, date, uid };
 
   let key = await dbase_add_key('comment_store', entry);
   console.log('added key', key);
@@ -129,8 +150,6 @@ async function test() {
   entry.name = 'nameX2';
   let key2 = await dbase_add_key('comment_store', entry);
   console.log('added key2', key2);
-
-  console.log('my.comment_count', my.comment_count);
 
   dbase_update_props({ test_prop: 'test_prop' });
 
