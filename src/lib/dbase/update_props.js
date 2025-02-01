@@ -12,6 +12,9 @@ import { mo_dbase } from './a_mo_dbase.js';
 // my.dbase.update_props(props, options);
 //
 mo_dbase.prototype.update_props = function (props, options) {
+  // console.log('update_item props', props, 'options', options);
+  // console.log('update_item this.my', this.my);
+  // console.log('update_item this.my.uid', this.my.uid);
   let my = this.my;
   let deviceProps = props;
   let groupProps = {};
@@ -25,7 +28,7 @@ mo_dbase.prototype.update_props = function (props, options) {
     groupProps = props;
     deviceProps = {};
   }
-  ui_verbose('dbase_update_props my.uid', my.uid);
+  // ui_log('update_item my.uid', my.uid);
   if (!my.uid) {
     return;
   }
@@ -33,15 +36,17 @@ mo_dbase.prototype.update_props = function (props, options) {
   if (options.path && !group) {
     path += '/' + options.path;
   }
-  let { getRefPath, update, increment } = fireb_.fbase;
+  let { getRefPath, update, increment } = my.fireb_.fbase;
   let refPath = getRefPath(path);
 
   let groups = options.group;
   if (!groups) groups = 's0';
   groups = groups.split(',');
 
-  ui_verbose('dbase_update_props props', props, 'deviceProps', deviceProps);
-  ui_verbose('dbase_update_props groups', groups);
+  // ui_verbose('dbase_update_props props', props, 'deviceProps', deviceProps);
+  // ui_verbose('dbase_update_props groups', groups);
+  // console.log('dbase_update_props props', props, 'deviceProps', deviceProps);
+  // console.log('dbase_update_props groups', groups);
 
   let updates = {};
 
@@ -99,7 +104,7 @@ mo_dbase.prototype.update_value = function (value, apps) {
     return;
   }
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}/${my.uid}${suffix}`;
-  let { getRefPath, update } = fireb_.fbase;
+  let { getRefPath, update } = my.fireb_.fbase;
   let refPath = getRefPath(path);
 
   update(refPath, value);
@@ -111,7 +116,7 @@ mo_dbase.prototype.update_value = function (value, apps) {
 // my.dbase.increment(value)
 //
 mo_dbase.prototype.increment = function (value) {
-  let { increment } = fireb_.fbase;
+  let { increment } = my.fireb_.fbase;
   return increment(value);
 };
 
@@ -122,7 +127,7 @@ mo_dbase.prototype.remove_room = function () {
   //
   let my = this.my;
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
-  let { getRefPath, set } = fireb_.fbase;
+  let { getRefPath, set } = my.fireb_.fbase;
   let refPath = getRefPath(path);
   set(refPath, {})
     .then(() => {
@@ -141,7 +146,7 @@ mo_dbase.prototype.remove_room = function () {
 mo_dbase.prototype.remove_mo_app = function () {
   //
   let path = `${my.dbase_rootPath}/${my.mo_app}`;
-  let { getRefPath, set } = fireb_.fbase;
+  let { getRefPath, set } = my.fireb_.fbase;
   let refPath = getRefPath(path);
   set(refPath, {})
     .then(() => {

@@ -24,16 +24,17 @@ async function test_start() {
 
   await setup_dbase();
 
-  dbase_update_item({ test_count: dbase_increment(1) }, 'item');
+  my.dbase.update_item({ test_count: my.dbase.increment(1) }, 'item');
 
-  dbase_update_item({ test_step: 1 }, 'item');
+  my.dbase.update_item({ test_step: 1 }, 'item');
 
   setup_animationFrame();
 }
 
 async function setup_dbase() {
   //
-  await dbase_app_init(my);
+  // await my.dbase.app_init(my);
+  my.dbase = await mo_dbase_init(my);
 
   observe_item();
 
@@ -43,7 +44,7 @@ async function setup_dbase() {
 }
 
 function observe_item() {
-  dbase_app_observe({ observed_item }, 'item');
+  my.dbase.app_observe({ observed_item }, 'item');
   function observed_item(item) {
     console.log('observed_item item', item);
     if (item.test_count != undefined) {
@@ -58,7 +59,7 @@ function observe_item() {
 }
 
 function observe_comment_store() {
-  dbase_app_observe({ observed_event }, 'comment_store');
+  my.dbase.app_observe({ observed_event }, 'comment_store');
   my.comment_store = {};
   function observed_event(event, key, item) {
     console.log('observed_event ', event, key, item);
@@ -94,14 +95,14 @@ function animationFrame_callback(timeStamp) {
     switch (my.test_step) {
       case 1:
         test_step1();
-        dbase_update_item({ test_step: dbase_increment(1) }, 'item');
+        my.dbase.update_item({ test_step: my.dbase.increment(1) }, 'item');
         break;
       case 2:
-        dbase_update_item({ test_step: dbase_increment(1) }, 'item');
+        my.dbase.update_item({ test_step: my.dbase.increment(1) }, 'item');
         break;
       default:
         trim_comments();
-        dbase_update_item({ test_step: 0 }, 'item');
+        my.dbase.update_item({ test_step: 0 }, 'item');
         break;
     }
   }
@@ -118,7 +119,7 @@ async function trim_comments() {
       continue;
     }
     console.log('trim_comments removing key', key);
-    await dbase_remove_key('comment_store', key);
+    await my.dbase.remove_key('comment_store', key);
   }
 }
 
@@ -126,9 +127,9 @@ async function test_step1() {
   //
   console.log('test_step1');
 
-  dbase_update_item({ num_test: 1959 }, 'item');
+  my.dbase.update_item({ num_test: 1959 }, 'item');
 
-  dbase_update_item({ num_test: dbase_increment(1) }, 'item');
+  my.dbase.update_item({ num_test: my.dbase.increment(1) }, 'item');
 
   let comment = 'love now';
   let name = 'nameX1';
@@ -137,19 +138,19 @@ async function test_step1() {
   let date = new Date().toISOString();
   let entry = { test_count, name, comment, date, uid };
 
-  let key = await dbase_add_key('comment_store', entry);
+  let key = await my.dbase.add_key('comment_store', entry);
   console.log('added key', key);
 
   entry.comment = new Date().toISOString();
   entry.name = 'nameX2';
-  let key2 = await dbase_add_key('comment_store', entry);
+  let key2 = await my.dbase.add_key('comment_store', entry);
   console.log('added key2', key2);
 
-  dbase_update_props({ test_prop: 'test_prop' });
+  my.dbase.update_props({ test_prop: 'test_prop' });
 
-  dbase_update_props({ test_num: dbase_increment(1) });
+  my.dbase.update_props({ test_num: my.dbase.increment(1) });
 
-  dbase_info_update({ info_count: dbase_increment(1), item2: 'info-item2' });
+  my.dbase.info_update({ info_count: my.dbase.increment(1), item2: 'info-item2' });
 }
 
 // id_console_ul

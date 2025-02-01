@@ -27,7 +27,7 @@ export function fstorage_init(my) {
     ref,
     uploadBytes,
   };
-  let storageRoot = getStorage(my.fireb.app);
+  let storageRoot = getStorage(my.fireb_.app);
   my.fireb_.fstorage.getRefPath = function (path) {
     return ref(storageRoot, path);
   };
@@ -41,7 +41,7 @@ https://firebase.google.com/docs/storage/web/start
 // Initialize Cloud Storage and get a reference to the service
 const storage = getStorage(app);
 
-  let { getStorage, ref, uploadBytes } = fireb_.fstorage;
+  let { getStorage, ref, uploadBytes } = my.fireb_.fstorage;
 
   function getStorageRefPath(path) {
     ref(getStorage(app), path);

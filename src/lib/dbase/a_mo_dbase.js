@@ -1,17 +1,18 @@
 //
 //
 
-import { fireb_init } from '../fireb/fireb_config.js';
+import { fireb_init } from '../fireb_/fireb_init.js';
 
 //
-// my.dbase = mo_dbase_init(my)
+// my.dbase = await mo_dbase_init(my)
 //
 export async function mo_dbase_init(my) {
   let dbase = new mo_dbase(my);
-  dbase.init();
+  await dbase.init();
   return dbase;
 }
 globalThis.mo_dbase_init = mo_dbase_init;
+// explict global needed for browser non-module reference
 
 export class mo_dbase {
   constructor(my) {

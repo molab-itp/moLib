@@ -41,7 +41,7 @@ mo_dbase.prototype.app_update = function (updates, keys) {
     return;
   }
   let path = `${my.dbase_rootPath}/${my.mo_app}/a_app/${my.uid}`;
-  let { getRefPath, update, increment } = fireb_.fbase;
+  let { getRefPath, update, increment } = my.fireb_.fbase;
   let refPath = getRefPath(path);
   // ui_log('dbase_site_event', path);
 

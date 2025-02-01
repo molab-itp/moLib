@@ -31,29 +31,31 @@ mo_dbase.prototype.app_observe = function ({ observed_key, removed_key, observed
     path += `/${options.path}`;
     tagPath = options.path;
   }
-  ui_verbose('dbase_app_observe options', options);
-  ui_verbose('dbase_app_observe path', path);
-  let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = fireb_.fbase;
+  // ui_verbose('dbase_app_observe options', options);
+  // ui_verbose('dbase_app_observe path', path);
+  let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = my.fireb_.fbase;
   let refPath = getRefPath(path);
 
   onChildAdded(refPath, (data) => {
+    // console.log('dbase_app_observe receivedDeviceKey add', data);
     receivedDeviceKey('add', data);
   });
 
   onChildChanged(refPath, (data) => {
-    // console.log('Changed', data);
+    // console.log('dbase_app_observe receivedDeviceKey change', data);
     receivedDeviceKey('change', data);
   });
 
   // for examples/photo-booth no remove seen
   //
   onChildRemoved(refPath, (data) => {
+    // console.log('dbase_app_observe receivedDeviceKey remove', data);
     receivedDeviceKey('remove', data, { remove: 1 });
   });
 
   // op = added | changed | removed
   //
-  function receivedDeviceKey(op, data, remove) {
+  let receivedDeviceKey = (op, data, remove) => {
     let msg = `${tag} ${op} ${tagPath} `;
     let key = data.key;
     let value = data.val();
@@ -72,7 +74,7 @@ mo_dbase.prototype.app_observe = function ({ observed_key, removed_key, observed
       observed_key(key, value);
     }
     if (observed_item) {
-      this.a_group_item = value;
+      my.a_group_item = value;
       if (value != undefined) {
         observed_item({ [key]: value });
       }
@@ -80,7 +82,7 @@ mo_dbase.prototype.app_observe = function ({ observed_key, removed_key, observed
     if (observed_event) {
       observed_event(op, key, value);
     }
-  }
+  };
 };
 
 //
@@ -88,6 +90,7 @@ mo_dbase.prototype.app_observe = function ({ observed_key, removed_key, observed
 // my.dbase.update_item(item, path)
 //
 mo_dbase.prototype.update_item = function (item, path) {
+  console.log('update_item item', item, 'path', path);
   let options = this.default_options(path);
   this.update_props(item, options);
 };
@@ -146,7 +149,7 @@ mo_dbase.prototype.add_key = async function (apath, value) {
   let group = options.group;
   let prop = options.path;
 
-  let { getRefPath, push, set } = fireb_.fbase;
+  let { getRefPath, push, set } = my.fireb_.fbase;
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
   path += `/a_group/${group}/${prop}`;
 
@@ -165,11 +168,11 @@ mo_dbase.prototype.add_key = async function (apath, value) {
 mo_dbase.prototype.remove_key = async function (apath, key) {
   ui_log('dbase_remove_key apath', apath, 'key', key);
   let my = this.my;
-  let options = dbase_default_options(apath);
+  let options = this.default_options(apath);
   let group = options.group;
   let prop = options.path;
 
-  let { getRefPath, set } = fireb_.fbase;
+  let { getRefPath, set } = my.fireb_.fbase;
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
   path += `/a_group/${group}/${prop}/${key}`;
 

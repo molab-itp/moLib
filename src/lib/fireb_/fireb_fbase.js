@@ -26,7 +26,7 @@ export function fbase_init(my) {
     child,
     get,
     // getDatabase,
-    getRefPath,
+    // getRefPath,
     increment,
     onChildAdded,
     onChildChanged,

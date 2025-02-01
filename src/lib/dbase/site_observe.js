@@ -11,7 +11,7 @@ mo_dbase.prototype.site_observe = function () {
   //
   let my = this.my;
   // Setup listener for changes to firebase db device
-  let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = fireb_.fbase;
+  let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = my.fireb_.fbase;
   let path = `${my.dbase_rootPath}/${my.mo_app}/a_app`;
   let refPath = getRefPath(path);
 
@@ -20,8 +20,8 @@ mo_dbase.prototype.site_observe = function () {
   if (!my.fireb_devices) {
     my.fireb_devices = {};
   }
-
   onChildAdded(refPath, (data) => {
+    // console.log('dbase_site_observe Added this', this);
     receivedDeviceKey('dbase_site_observe Added', data);
   });
 
@@ -34,7 +34,11 @@ mo_dbase.prototype.site_observe = function () {
     receivedDeviceKey('dbase_site_observe Removed', data, { remove: 1 });
   });
 
-  function receivedDeviceKey(msg, data, remove) {
+  let receivedDeviceKey = (msg, data, remove) => {
+    // console.log('site_observe receivedDeviceKey this', this);
+    // console.log('site_observe receivedDeviceKey this', this);
+    // console.log('site_observe receivedDeviceKey msg', msg, data, remove);
+
     let key = data.key;
     let val = data.val();
     // ui_log(msg, key, 'n=', Object.keys(val).length);
@@ -47,7 +51,9 @@ mo_dbase.prototype.site_observe = function () {
       return;
     }
     this.fireb_device(key, val);
-  }
+  };
+
+  // console.log('site_observe this', this);
 };
 
 //
@@ -74,7 +80,7 @@ mo_dbase.prototype.fireb_device = function (uid, val) {
   }
   if (fresh && uid == my.uid) {
     // device must be inited to record visit event
-    dbase_site_event_visit();
+    this.site_event_visit();
   }
   let visit_count = device.dbase.visit_count;
   let ndevice = this.count_client_devices();
@@ -129,7 +135,7 @@ mo_dbase.prototype.count_client_devices = function () {
 mo_dbase.prototype.dbase_site_remove = function () {
   //
   let my = this.my;
-  let { getRefPath, set } = fireb_.fbase;
+  let { getRefPath, set } = my.fireb_.fbase;
   let path = `${my.dbase_rootPath}/${my.mo_app}/a_device/${my.uid}`;
   let refPath = getRefPath(path);
   set(refPath, {})

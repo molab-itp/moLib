@@ -17,7 +17,7 @@ mo_dbase.prototype.devices_update = function (deviceProps) {
     return;
   }
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
-  let { getRefPath, update } = fireb_.fbase;
+  let { getRefPath, update } = my.fireb_.fbase;
   let refPath = getRefPath(path);
   ui_verbose('dbase_update_props', path);
 
