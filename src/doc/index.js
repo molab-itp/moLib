@@ -1,9 +1,16 @@
+// index.js
+//
+// documentation and unit testing of moLib
 //
 
 console.log('in index.js');
 
+// global variable my in browser and node
+//
 globalThis.my = {};
 
+// starting point for testing moLib database functions
+//
 async function test_start() {
   console.log('in test');
 

@@ -3,9 +3,11 @@
 // dbase.date_s;
 // dbase.remote
 
+// my.dbase = mo_dbase_init(my)
+//
 async function mo_dbase_init(my) {
   /*
-  let dbase = new MoDataBase(my);
+  let dbase = new mo_dbase(my);
   return dbase;
   */
 }

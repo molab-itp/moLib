@@ -3,6 +3,12 @@
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
+// alternative:
+// import path from 'path';
+// and use path.join, path.dirname
+// to make code more explicit but will cost more in download size
+//
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // --src ./ --files examples,REAEME.md
