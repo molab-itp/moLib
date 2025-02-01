@@ -24,9 +24,9 @@ async function test_start() {
 
   await setup_dbase();
 
-  my.dbase.update_item({ test_count: my.dbase.increment(1) }, 'item');
+  my.dbase.update_item('item', { test_count: my.dbase.increment(1) });
 
-  my.dbase.update_item({ test_step: 1 }, 'item');
+  my.dbase.update_item('item', { test_step: 1 });
 
   setup_animationFrame();
 }
@@ -44,7 +44,7 @@ async function setup_dbase() {
 }
 
 function observe_item() {
-  my.dbase.app_observe({ observed_item }, 'item');
+  my.dbase.app_observe('item', { observed_item });
   function observed_item(item) {
     console.log('observed_item item', item);
     if (item.test_count != undefined) {
@@ -59,7 +59,7 @@ function observe_item() {
 }
 
 function observe_comment_store() {
-  my.dbase.app_observe({ observed_event }, 'comment_store');
+  my.dbase.app_observe('comment_store', { observed_event });
   my.comment_store = {};
   function observed_event(event, key, item) {
     console.log('observed_event ', event, key, item);
@@ -95,14 +95,14 @@ function animationFrame_callback(timeStamp) {
     switch (my.test_step) {
       case 1:
         test_step1();
-        my.dbase.update_item({ test_step: my.dbase.increment(1) }, 'item');
+        my.dbase.update_item('item', { test_step: my.dbase.increment(1) });
         break;
       case 2:
-        my.dbase.update_item({ test_step: my.dbase.increment(1) }, 'item');
+        my.dbase.update_item('item', { test_step: my.dbase.increment(1) });
         break;
       default:
         trim_comments();
-        my.dbase.update_item({ test_step: 0 }, 'item');
+        my.dbase.update_item('item', { test_step: 0 });
         break;
     }
   }
@@ -127,9 +127,9 @@ async function test_step1() {
   //
   console.log('test_step1');
 
-  my.dbase.update_item({ num_test: 1959 }, 'item');
+  my.dbase.update_item('item', { num_test: 1959 });
 
-  my.dbase.update_item({ num_test: my.dbase.increment(1) }, 'item');
+  my.dbase.update_item('item', { num_test: my.dbase.increment(1) });
 
   let comment = 'love now';
   let name = 'nameX1';

@@ -7,10 +7,10 @@ import { mo_dbase } from './a_mo_dbase.js';
 //
 // black-enter/black_setup_dbase.js
 //
-// my.dbase.app_observe({ observed_item }, 'meta');
-// my.dbase.app_observe({ observed_event }, 'comment_store');
+// my.dbase.app_observe('item', { observed_item });
+// my.dbase.app_observe('comment_store', { observed_event } );
 //
-mo_dbase.prototype.app_observe = function ({ observed_key, removed_key, observed_item, observed_event }, options) {
+mo_dbase.prototype.app_observe = function (options, { observed_key, removed_key, observed_item, observed_event }) {
   // options = { app, tag, path }
   let my = this.my;
   let tag = 'dbase_app_observe';
@@ -89,7 +89,7 @@ mo_dbase.prototype.app_observe = function ({ observed_key, removed_key, observed
 // issue dbase_update_props to group
 // my.dbase.update_item(item, path)
 //
-mo_dbase.prototype.update_item = function (item, path) {
+mo_dbase.prototype.update_item = function (path, item) {
   console.log('update_item item', item, 'path', path);
   let options = this.default_options(path);
   this.update_props(item, options);
@@ -128,19 +128,20 @@ mo_dbase.prototype.group_update = function (item) {
 
 //
 // my.dbase.group_observe(props, options)
+//  !!@ Not used ??
 //
 mo_dbase.prototype.group_observe = function (props, options) {
   let my = this.my;
   let group = my && my.mo_group;
   if (group) {
-    this.app_observe(props, options);
+    this.app_observe(options, props);
   } else {
     this.devices_observe(props, options);
   }
 };
 
 //
-// my.dbase.group_observe(props, options)
+// my.dbase.add_key(apath, value)
 //
 mo_dbase.prototype.add_key = async function (apath, value) {
   ui_log('dbase_add_key apath', apath, 'value', value);

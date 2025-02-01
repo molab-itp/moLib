@@ -12,8 +12,8 @@ mo_dbase.prototype.devices_observe = function ({ observed_key, removed_key, obse
   if (!my.a_device_values) my.a_device_values = {};
   // 'mo-paint/a_device' --> a_app
   this.app_observe(
-    { observed_key: my_observed_key, removed_key: my_removed_key }, //
-    { app: my.mo_app + '/a_app' }
+    { app: my.mo_app + '/a_app' },
+    { observed_key: my_observed_key, removed_key: my_removed_key } //
   );
   // dbase_app_observe --> dbase_observe_devices
   //
