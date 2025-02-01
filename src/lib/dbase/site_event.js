@@ -30,7 +30,7 @@ function dbase_info_update(updates) {
 globalThis.dbase_info_update = dbase_info_update;
 
 function dbase_app_update(updates, keys) {
-  ui_logv('dbase_app_update updates', updates, 'keys', keys);
+  ui_verbose('dbase_app_update updates', updates, 'keys', keys);
   // console.log('dbase_site_event my.uid', my.uid);
   // ui_log('dbase_site_event my.uid', my.uid);
   if (!my.uid) {

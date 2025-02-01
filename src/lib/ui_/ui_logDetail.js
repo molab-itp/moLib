@@ -27,7 +27,7 @@ function ui_log(...args) {
 }
 globalThis.ui_log = ui_log;
 
-globalThis.ui_logv = () => {};
+globalThis.ui_verbose = () => {};
 
 function ui_log_add(lines, str) {
   lines.push(str);
@@ -103,10 +103,10 @@ function no_p5js_ui_log_stubs() {
   }
   globalThis.ui_log = ui_log;
 
-  function ui_logv(...args) {
+  function ui_verbose(...args) {
     // console.log(...args);
   }
-  globalThis.ui_logv = ui_logv;
+  globalThis.ui_verbose = ui_verbose;
 
   function ui_error(...args) {
     ui_log(...args);

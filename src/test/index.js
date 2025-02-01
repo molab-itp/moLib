@@ -105,11 +105,9 @@ async function trim_comments() {
   console.log('trim_comments items', items);
   // remove all but the first
   for (let index = 1; index < items.length; index++) {
-    let entry = items[index];
-    let key = entry[0];
-    let item = entry[1];
-    if (item.uid != my.uid) {
-      console.log('trim_comments skipping ', item.uid);
+    let [key, entry] = items[index];
+    if (entry.uid != my.uid) {
+      console.log('trim_comments skipping ', entry.uid);
       continue;
     }
     console.log('trim_comments removing key', key);
@@ -158,7 +156,7 @@ function ui_log(...args) {
 }
 globalThis.ui_log = ui_log;
 
-function ui_logv(...args) {
+function ui_verbose(...args) {
   // console.log(...args);
 }
 

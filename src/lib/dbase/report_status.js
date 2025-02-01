@@ -12,7 +12,7 @@ if (globalThis.window) {
 }
 
 function dbase_report_status(props) {
-  ui_logv('dbase_report_status props', props);
+  ui_verbose('dbase_report_status props', props);
   if (!my.statusElement) {
     createStatusElement();
     if (!my.statusElement) return;
