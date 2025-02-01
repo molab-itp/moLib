@@ -21,35 +21,27 @@ import {
   update, //
 } from 'firebase/database';
 
-function getRefPath(path) {
-  return ref(getDatabase(), path);
-}
-
 export function fbase_init(my) {
-  my.fireb.fbase = fbase;
-  // fbase.getDatabase = function () {
-  //   getDatabase(my.fireb.app);
-  // };
-  fbase.getRefPath = function (path) {
-    return ref(getDatabase(my.fireb.app), path);
+  my.fireb_.fbase = {
+    child,
+    get,
+    // getDatabase,
+    getRefPath,
+    increment,
+    onChildAdded,
+    onChildChanged,
+    onChildRemoved,
+    onValue,
+    push,
+    ref,
+    set,
+    update,
+  };
+  let dbRoot = getDatabase(my.fireb_.app);
+  my.fireb_.fbase.getRefPath = function (path) {
+    return ref(dbRoot, path);
   };
 }
-
-export const fbase = {
-  child,
-  get,
-  // getDatabase,
-  getRefPath,
-  increment,
-  onChildAdded,
-  onChildChanged,
-  onChildRemoved,
-  onValue,
-  push,
-  ref,
-  set,
-  update,
-};
 
 /* 
 

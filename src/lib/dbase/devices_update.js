@@ -1,8 +1,17 @@
 //
+//
+
+import { mo_dbase } from './a_mo_dbase.js';
+// mo_dbase.prototype.
+
+//
 // Send an update to all a_devices
 //
-function dbase_devices_update(deviceProps) {
+// my.dbase.devices_update(deviceProps)
+//
+mo_dbase.prototype.devices_update = function (deviceProps) {
   //
+  let my = this.my;
   if (!my.a_device_values) {
     ui_log('dbase_devices_update NO my.a_device_values', my.a_device_values);
     return;
@@ -22,14 +31,16 @@ function dbase_devices_update(deviceProps) {
   }
 
   update(refPath, updates);
-}
-globalThis.dbase_devices_update = dbase_devices_update;
+};
 
 //
 // throttle update to queue to time
 //
-function dbase_queue_update(props) {
+// my.dbase.queue_update(props)
+//
+mo_dbase.prototype.queue_update = function (props) {
   //
+  let my = this.my;
   if (!my.db_queue) {
     my.db_queue = {};
     my.db_queue_loop = new Anim({ time: 0.25, action: check_queue });
@@ -43,31 +54,34 @@ function dbase_queue_update(props) {
     if (my.db_queue_count_last != my.db_queue_count) {
       my.db_queue_count_last = my.db_queue_count;
 
-      dbase_update_props(my.db_queue);
+      this.update_props(my.db_queue);
 
       my.db_queue = {};
     }
   }
-}
-globalThis.dbase_queue_update = dbase_queue_update;
+};
 
 //
 // Check for pending queue updates
 //
-function dbase_poll() {
+// my.dbase.poll();
+//
+mo_dbase.prototype.poll = function () {
+  let my = this.my;
   if (my.db_queue_loop) {
     my.db_queue_loop.step({ loop: 1 });
   }
-}
-globalThis.dbase_poll = dbase_poll;
+};
 
 //
 // Return non-zero if any actions issued for device uid
 //
-// dbase_actions_issued(uid, { clear_action: 1})
+// my.dbase.actions_issued(uid, { clear_action: 1})
+// my.dbase.actions_issued(uid, actions, options)
 //
-function dbase_actions_issued(uid, actions, options) {
+mo_dbase.prototype.actions_issued = function (uid, actions, options) {
   // console.log('dbase_actions_issued uid', uid, 'actions', actions);
+  let my = this.my;
   options = options || {};
   let actionSeen = 0;
   if (!my.db_last_actions_uid) my.db_last_actions_uid = {};
@@ -108,63 +122,64 @@ function dbase_actions_issued(uid, actions, options) {
     }
   }
   return actionSeen;
-}
-globalThis.dbase_actions_issued = dbase_actions_issued;
+};
 
 //
 // Issue actions to my device
 //
-// dbase_issue_actions( { clear_action: 1 }, { all: 1} )
+// my.dbase.issue_actions( { clear_action: 1 }, { all: 1} )
 //
-function dbase_issue_actions(actions, options) {
+mo_dbase.prototype.issue_actions = function (actions, options) {
   //
   if (!options) options = {};
   let nactions = {};
   for (let act in actions) {
-    nactions[act] = dbase_increment(1);
+    nactions[act] = this.increment(1);
   }
   if (options.all) {
-    dbase_devices_update(nactions);
+    this.devices_update(nactions);
   } else {
-    // dbase_queue_update(nactions);
-    dbase_update_props(nactions, options);
+    this.update_props(nactions, options);
   }
-}
-globalThis.dbase_issue_actions = dbase_issue_actions;
+};
 
 //
 // Issue actions to all a_devices
 //
-function dbase_devices_issue_actions(actions, options) {
+// my.dbase.devices_issue_actions(actions, options)
+//
+mo_dbase.prototype.devices_issue_actions = function (actions, options) {
   //
   if (!options) options = {};
   let nactions = {};
   for (let act in actions) {
-    nactions[act] = dbase_increment(1);
+    nactions[act] = this.increment(1);
   }
-  // dbase_queue_update({ clear_action: dbase_increment(1) });
-  dbase_devices_update(nactions, options);
-}
-globalThis.dbase_devices_issue_actions = dbase_devices_issue_actions;
+  this.devices_update(nactions, options);
+};
 
+//
 // 2024-moSalon/src/let-america-be/index.js
-//   dbase_issue_action('action_next');
+// dbase_issue_action('action_next');
 //
-// dbase_issue_action is complement by dbase_if_action
+// my.dbase.issue_action is complement by dbase_if_action
+// my.dbase.issue_action(prop, path)
 //
-function dbase_issue_action(prop, path) {
+mo_dbase.prototype.issue_action = function (prop, path) {
   ui_log('dbase_issue_action', prop);
-  dbase_update_item({ [prop]: dbase_increment(1) }, path);
-}
-globalThis.dbase_issue_action = dbase_issue_action;
+  this.update_item({ [prop]: my.dbase.increment(1) }, path);
+};
 
 //
-// simpler version of dbase_devices_issue_actions
+// simpler version of my.dbase.devices_issue_actions
 //
-// dbase_if_action(item.action_rewind, 'action_rewind', my.rewind_action)
 // use: node/lib/dbase.js | moSalon/vote
+// my.dbase.if_action(item.action_rewind, 'action_rewind', my.rewind_action)
 //
-function dbase_if_action({ item, prop, actionFunc }) {
+// my.dbase.if_action({ item, prop, actionFunc })
+//
+mo_dbase.prototype.if_action = function ({ item, prop, actionFunc }) {
+  let my = this.my;
   let count = item[prop];
   if (count != null) {
     if (my[prop] && count != my[prop]) {
@@ -174,7 +189,6 @@ function dbase_if_action({ item, prop, actionFunc }) {
     }
     my[prop] = count;
   }
-}
-globalThis.dbase_if_action = dbase_if_action;
+};
 
 //

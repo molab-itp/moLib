@@ -1,17 +1,27 @@
 //
-function dbase_updateTimeGap(events) {
+//
+
+import { mo_dbase } from './a_mo_dbase.js';
+// mo_dbase.prototype.
+
+//
+// my.dbase.updateTimeGap()
+//
+mo_dbase.prototype.updateTimeGap = function (events) {
   for (let index = 1; index < events.length; index++) {
     let nowEnt = events[index - 1];
     let nowTime = new Date(nowEnt.date_s).getTime();
     let pastEnt = events[index];
     let pastTime = new Date(pastEnt.date_s).getTime();
     nowEnt.gap = nowTime - pastTime - nowEnt.time;
-    nowEnt.gap_s = dbase_timeToSeconds(nowEnt.gap);
+    nowEnt.gap_s = this.timeToSeconds(nowEnt.gap);
   }
-}
-globalThis.dbase_updateTimeGap = dbase_updateTimeGap;
+};
 
-function dbase_timeToSeconds(time) {
+//
+// let t = my.dbase.timeToSeconds(time);
+//
+mo_dbase.prototype.timeToSeconds = function (time) {
   let str = '';
   let secs = time / 1000;
   let mins = Math.floor(secs / 60);
@@ -37,5 +47,4 @@ function dbase_timeToSeconds(time) {
     str = days + ' days ' + str;
   }
   return str;
-}
-globalThis.dbase_timeToSeconds = dbase_timeToSeconds;
+};

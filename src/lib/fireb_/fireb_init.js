@@ -62,9 +62,7 @@ let configs = {
   jhtitp: firebaseConfig_jhtitp,
 };
 
-// Initialize Firebase is performed by init function
-
-function init(config) {
+function select_config(config) {
   // config is object or string key into configs
   let configLabel;
   let nconfig = config;
@@ -79,30 +77,26 @@ function init(config) {
   nconfig.configVersion = '?v=50';
   // console.log('fireb_config config', config);
   // console.log('fireb_config config.projectId', config.projectId);
-  fireb_.app = initializeApp(nconfig);
-  fireb_.auth = getAuth();
-  // fireb_.fbase.init();
-  // fireb_.fstorage.init();
+
   return nconfig;
 }
 
-import { fbase } from './fireb_fbase.js';
-import { fstorage } from './fireb_fstorage.js';
-
-// export api for non-module script
-const fireb_ = {
-  init,
-  signInAnonymously,
-  fbase,
-  fstorage,
-};
-globalThis.fireb_ = fireb_;
+import { fbase_init } from './fireb_fbase.js';
+import { fstorage_init } from './fireb_fstorage.js';
 
 export function fireb_init(my, config) {
-  my.fireb = fireb_;
+  let nconfig = select_config(config);
+  let fireb_ = {
+    signInAnonymously,
+  };
+  fireb_.app = initializeApp(nconfig);
+  fireb_.auth = getAuth(fireb_.app);
+  my.fireb_ = fireb_;
+
   fbase_init(my);
   fstorage_init(my);
-  return init(my, config);
+
+  return nconfig;
 }
 
 // https://firebase.google.com/docs/projects/api-keys

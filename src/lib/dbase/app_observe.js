@@ -1,17 +1,25 @@
 //
-// black-enter/black_setup_dbase.js
-// dbase_app_observe({ observed_item }, 'meta');
-// dbase_app_observe({ observed_event }, 'comment_store');
 //
-function dbase_app_observe({ observed_key, removed_key, observed_item, observed_event }, options) {
+
+import { mo_dbase } from './a_mo_dbase.js';
+// mo_dbase.prototype.
+
+//
+// black-enter/black_setup_dbase.js
+//
+// my.dbase.app_observe({ observed_item }, 'meta');
+// my.dbase.app_observe({ observed_event }, 'comment_store');
+//
+mo_dbase.prototype.app_observe = function ({ observed_key, removed_key, observed_item, observed_event }, options) {
   // options = { app, tag, path }
+  let my = this.my;
   let tag = 'dbase_app_observe';
   let tagPath = '';
   if (!options) {
     options = {};
   } else if (typeof options === 'string') {
     options = { path: options };
-    options.group = my.mo_group || 's0';
+    options.group = this.mo_group || 's0';
   }
   tag = options.tag || tag;
   // Setup listener for changes to firebase db device
@@ -64,7 +72,7 @@ function dbase_app_observe({ observed_key, removed_key, observed_item, observed_
       observed_key(key, value);
     }
     if (observed_item) {
-      my.a_group_item = value;
+      this.a_group_item = value;
       if (value != undefined) {
         observed_item({ [key]: value });
       }
@@ -73,30 +81,20 @@ function dbase_app_observe({ observed_key, removed_key, observed_item, observed_
       observed_event(op, key, value);
     }
   }
+};
 
-  function group_key() {
-    let group = my && my.mo_group;
-    if (!group) group = 's0';
-    // broadcast group when has comma separated values
-    if (group.indexOf(',') > -1) {
-      // my.mo_group=s1,s2,... --> group=s0
-      // Special group 's0' recieves all updates
-      group = 's0';
-    }
-    return group;
-  }
-}
-globalThis.dbase_app_observe = dbase_app_observe;
-
+//
 // issue dbase_update_props to group
-function dbase_update_item(item, path) {
-  let options = dbase_default_options(path);
-  dbase_update_props(item, options);
-}
-globalThis.dbase_update_item = dbase_update_item;
+// my.dbase.update_item(item, path)
+//
+mo_dbase.prototype.update_item = function (item, path) {
+  let options = this.default_options(path);
+  this.update_props(item, options);
+};
 
-function dbase_default_options(path) {
-  let group = my && my.mo_group;
+mo_dbase.prototype.default_options = function (path) {
+  let my = this.my;
+  let group = my.mo_group;
   if (!group) group = 's0';
   // broadcast group when has comma separated values
   if (group.indexOf(',') > -1) {
@@ -109,33 +107,42 @@ function dbase_default_options(path) {
     options.path = path;
   }
   return options;
-}
-globalThis.dbase_default_options = dbase_default_options;
+};
 
+//
 // issue dbase_update_props to group if my.mo_group present
-function dbase_group_update(item) {
+// my.dbase.group_update(item)
+//
+mo_dbase.prototype.group_update = function (item) {
+  let my = this.my;
   let group = my && my.mo_group;
   if (group) {
-    dbase_update_item(item);
+    this.update_item(item);
   } else {
-    dbase_update_props(item, { group: group });
+    this.update_props(item, { group: group });
   }
-}
-globalThis.dbase_group_update = dbase_group_update;
+};
 
-function dbase_group_observe(props, options) {
+//
+// my.dbase.group_observe(props, options)
+//
+mo_dbase.prototype.group_observe = function (props, options) {
+  let my = this.my;
   let group = my && my.mo_group;
   if (group) {
-    dbase_app_observe(props, options);
+    this.app_observe(props, options);
   } else {
-    dbase_devices_observe(props, options);
+    this.devices_observe(props, options);
   }
-}
-globalThis.dbase_group_observe = dbase_group_observe;
+};
 
-async function dbase_add_key(apath, value) {
+//
+// my.dbase.group_observe(props, options)
+//
+mo_dbase.prototype.add_key = async function (apath, value) {
   ui_log('dbase_add_key apath', apath, 'value', value);
-  let options = dbase_default_options(apath);
+  let my = this.my;
+  let options = this.default_options(apath);
   let group = options.group;
   let prop = options.path;
 
@@ -150,11 +157,14 @@ async function dbase_add_key(apath, value) {
   set(nref, value);
 
   return nref.key;
-}
-globalThis.dbase_add_key = dbase_add_key;
+};
 
-async function dbase_remove_key(apath, key) {
+//
+// my.dbase.remove_key(apath, key)
+//
+mo_dbase.prototype.remove_key = async function (apath, key) {
   ui_log('dbase_remove_key apath', apath, 'key', key);
+  let my = this.my;
   let options = dbase_default_options(apath);
   let group = options.group;
   let prop = options.path;
@@ -167,8 +177,7 @@ async function dbase_remove_key(apath, key) {
   let refPath = getRefPath(path);
 
   return set(refPath, null);
-}
-globalThis.dbase_remove_key = dbase_remove_key;
+};
 
 // https://firebase.google.com/docs/database/web/lists-of-data#append_to_a_list_of_data
 // push

@@ -1,8 +1,15 @@
 //
+//
 
+import { mo_dbase } from './a_mo_dbase.js';
+// mo_dbase.prototype.
+
+//
+// await my.dbase.fstoreage_render({ url, layer });
+//
 // !!@ DOC fstorage_render({ url, layer })
 //
-function fstoreage_render(args) {
+mo_dbase.prototype.fstoreage_render = function (args) {
   return new Promise(function (resolve, reject) {
     promise_render(args, resolve, reject);
   });
@@ -32,11 +39,14 @@ function fstoreage_render(args) {
     };
     img.src = URL.createObjectURL(blob);
   }
-}
-globalThis.fstoreage_render = fstoreage_render;
+};
 
-async function fstorage_upload({ layer, path, imageQuality }) {
+//
+// my.dbase.fstorage_upload({ layer, path, imageQuality })
+//
+mo_dbase.prototype.fstorage_upload = async function ({ layer, path, imageQuality }) {
   // console.log('fstorage_img_upload');
+  let my = this.my;
   if (!layer || !layer.elt || !layer.elt.toBlob) {
     ui_error('fstorage_upload bad layer', layer);
     return;
@@ -67,12 +77,13 @@ async function fstorage_upload({ layer, path, imageQuality }) {
       );
     });
   }
+  return this.fstorage_upload_blob(blob, imagePath);
+};
 
-  return fstorage_upload_blob(blob, imagePath);
-}
-globalThis.fstorage_upload = fstorage_upload;
-
-async function fstorage_upload_blob(blob, imagePath) {
+//
+// my.dbase.fstorage_upload_blob(blob, imagePath)
+//
+mo_dbase.prototype.fstorage_upload_blob = async function (blob, imagePath) {
   // console.log('fstorage_upload', blob);
   let { getStorage, ref, uploadBytes } = fireb_.fstorage;
   // ui_log('fstorage_upload my.imagePath', my.imagePath);
@@ -80,9 +91,13 @@ async function fstorage_upload_blob(blob, imagePath) {
 
   // 'file' comes from the Blob or File API
   return uploadBytes(storageRef, blob);
-}
+};
 
-async function fstorage_remove({ path }) {
+//
+// my.dbase.fstorage_remove({ path })
+//
+mo_dbase.prototype.fstorage_remove = async function ({ path }) {
+  let my = this.my;
   if (!path) {
     ui_error('fstorage_remove missing path', path);
     return;
@@ -90,13 +105,15 @@ async function fstorage_remove({ path }) {
   let imagePath = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}/${path}`;
 
   let { getStorage, ref, deleteObject } = fireb_.fstorage;
-  const desertRef = ref(getStorage(), imagePath);
+  const deleteRef = ref(getStorage(), imagePath);
 
-  return deleteObject(desertRef);
-}
-globalThis.fstorage_remove = fstorage_remove;
+  return deleteObject(deleteRef);
+};
 
-async function fstorage_download_url({ path }) {
+//
+// my.dbase.fstorage_download_url({ path })
+//
+mo_dbase.prototype.fstorage_download_url = async function ({ path }) {
   // console.log('fstorage_img_download ');
 
   let imagePath = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}/${path}`;
@@ -104,5 +121,4 @@ async function fstorage_download_url({ path }) {
   let { getStorage, ref, getDownloadURL } = fireb_.fstorage;
 
   return getDownloadURL(ref(getStorage(), imagePath));
-}
-globalThis.fstorage_download_url = fstorage_download_url;
+};

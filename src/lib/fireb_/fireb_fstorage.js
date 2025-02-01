@@ -17,15 +17,21 @@ import {
   uploadBytes, //
 } from 'firebase/storage';
 
-export const fstorage = {
-  deleteObject,
-  getDownloadURL,
-  getStorage,
-  list,
-  listAll,
-  ref,
-  uploadBytes,
-};
+export function fstorage_init(my) {
+  my.fireb_.fstorage = {
+    deleteObject,
+    getDownloadURL,
+    // getStorage,
+    list,
+    listAll,
+    ref,
+    uploadBytes,
+  };
+  let storageRoot = getStorage(my.fireb.app);
+  my.fireb_.fstorage.getRefPath = function (path) {
+    return ref(storageRoot, path);
+  };
+}
 
 /* 
 

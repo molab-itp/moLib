@@ -1,13 +1,18 @@
 //
 //
 
-// function dbase_update_props(props, options) {
+import { mo_dbase } from './a_mo_dbase.js';
+// mo_dbase.prototype.
+
 //
 // options.group
 // options.count
 // options.all
 //
-function dbase_update_props(props, options) {
+// my.dbase.update_props(props, options);
+//
+mo_dbase.prototype.update_props = function (props, options) {
+  let my = this.my;
   let deviceProps = props;
   let groupProps = {};
   options = options || {};
@@ -71,14 +76,16 @@ function dbase_update_props(props, options) {
   // refPath = [SITE-URL]/${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}
   update(refPath, updates);
 
-  dbase_site_event_update();
-}
-globalThis.dbase_update_props = dbase_update_props;
+  this.site_event_update();
+};
 
 //
-function dbase_update_value(value, apps) {
+// my.dbase.update_value(value, apps)
+//
+mo_dbase.prototype.update_value = function (value, apps) {
   // apps = { app, tag, suffix }
   //
+  let my = this.my;
   let app = my.mo_app;
   let tag = 'dbase_update_value';
   let suffix = '';
@@ -97,19 +104,23 @@ function dbase_update_value(value, apps) {
 
   update(refPath, value);
 
-  dbase_site_event_update();
-}
-globalThis.dbase_update_value = dbase_update_value;
-
-function dbase_increment(value) {
-  let { increment } = fireb_.fbase;
-  return increment(value);
-}
-globalThis.dbase_increment = dbase_increment;
+  this.site_event_update();
+};
 
 //
-function dbase_remove_room() {
+// my.dbase.increment(value)
+//
+mo_dbase.prototype.increment = function (value) {
+  let { increment } = fireb_.fbase;
+  return increment(value);
+};
+
+//
+// my.dbase.remove_room()
+//
+mo_dbase.prototype.remove_room = function () {
   //
+  let my = this.my;
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
   let { getRefPath, set } = fireb_.fbase;
   let refPath = getRefPath(path);
@@ -122,11 +133,12 @@ function dbase_remove_room() {
       // The write failed...
       ui_log('dbase_remove_room error', error);
     });
-}
-globalThis.dbase_remove_room = dbase_remove_room;
+};
 
 //
-function dbase_remove_mo_app() {
+// my.dbase.remove_mo_app()
+//
+mo_dbase.prototype.remove_mo_app = function () {
   //
   let path = `${my.dbase_rootPath}/${my.mo_app}`;
   let { getRefPath, set } = fireb_.fbase;
@@ -140,5 +152,4 @@ function dbase_remove_mo_app() {
       // The write failed...
       ui_log('dbase_remove_mo_app error', error);
     });
-}
-globalThis.dbase_remove_mo_app = dbase_remove_mo_app;
+};

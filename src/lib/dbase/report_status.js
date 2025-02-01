@@ -1,4 +1,8 @@
 //
+//
+
+import { mo_dbase } from './a_mo_dbase.js';
+// mo_dbase.prototype.
 
 if (globalThis.window) {
   window.addEventListener('resize', () => {
@@ -7,11 +11,12 @@ if (globalThis.window) {
       ui_log('report_status no my');
       return;
     }
-    dbase_report_status({});
+    my.dbase.report_status({});
   });
 }
 
-function dbase_report_status(props) {
+mo_dbase.prototype.report_status = function (props) {
+  let my = this.my;
   ui_verbose('dbase_report_status props', props);
   if (!my.statusElement) {
     createStatusElement();
@@ -34,8 +39,7 @@ function dbase_report_status(props) {
     msg = `${muid} ${uid} (${visit_count}) [${ndevice}]`;
   }
   my.statusElement.textContent = msg;
-}
-globalThis.dbase_report_status = dbase_report_status;
+};
 
 function createStatusElement() {
   if (!globalThis.window) return;
@@ -134,9 +138,3 @@ function createQRCode(options) {
 
   ui_log('createQRCode my.qrcodeElement', my.qrcodeElement);
 }
-
-// function position_qrcode() {
-//   // console.log('position_bottom');
-//   // my.qrcodeElement.width = Math.floor(window.innerWidth * my.qrCodeWidth);
-// }
-// globalThis.position_qrcode = position_qrcode;
