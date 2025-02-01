@@ -1,32 +1,40 @@
+// index.js
+//
+// documentation and unit testing of moLib
 //
 
 console.log('in index.js');
 
+// global variable my in browser and node
+//
 globalThis.my = {};
 
+// starting point for testing moLib database functions
+//
 async function test_start() {
   console.log('in test');
 
   my.fireb_config = 'jht9629';
   // my.fireb_config = 'jhtitp';
   my.dbase_rootPath = 'm0-@r-@w-';
-  my.mo_room = 'm1-test';
   my.mo_app = 'mo-test';
+  my.mo_room = 'm0-test';
   my.nameDevice = 'mo-test-device';
   if (!globalThis.window) my.nameDevice += '-node';
 
   await setup_dbase();
 
-  dbase_update_item({ test_count: dbase_increment(1) }, 'item');
+  my.dbase.update_item('item', { test_count: my.dbase.increment(1) });
 
-  dbase_update_item({ test_step: 1 }, 'item');
+  my.dbase.update_item('item', { test_step: 1 });
 
   setup_animationFrame();
 }
 
 async function setup_dbase() {
   //
-  await dbase_app_init(my);
+  // await my.dbase.app_init(my);
+  my.dbase = await mo_dbase_init(my);
 
   observe_item();
 
@@ -36,7 +44,7 @@ async function setup_dbase() {
 }
 
 function observe_item() {
-  dbase_app_observe({ observed_item }, 'item');
+  my.dbase.app_observe('item', { observed_item });
   function observed_item(item) {
     console.log('observed_item item', item);
     if (item.test_count != undefined) {
@@ -51,7 +59,7 @@ function observe_item() {
 }
 
 function observe_comment_store() {
-  dbase_app_observe({ observed_event }, 'comment_store');
+  my.dbase.app_observe('comment_store', { observed_event });
   my.comment_store = {};
   function observed_event(event, key, item) {
     console.log('observed_event ', event, key, item);
@@ -87,14 +95,14 @@ function animationFrame_callback(timeStamp) {
     switch (my.test_step) {
       case 1:
         test_step1();
-        dbase_update_item({ test_step: dbase_increment(1) }, 'item');
+        my.dbase.update_item('item', { test_step: my.dbase.increment(1) });
         break;
       case 2:
-        dbase_update_item({ test_step: dbase_increment(1) }, 'item');
+        my.dbase.update_item('item', { test_step: my.dbase.increment(1) });
         break;
       default:
         trim_comments();
-        dbase_update_item({ test_step: 0 }, 'item');
+        my.dbase.update_item('item', { test_step: 0 });
         break;
     }
   }
@@ -105,15 +113,13 @@ async function trim_comments() {
   console.log('trim_comments items', items);
   // remove all but the first
   for (let index = 1; index < items.length; index++) {
-    let entry = items[index];
-    let key = entry[0];
-    let item = entry[1];
-    if (item.uid != my.uid) {
-      console.log('trim_comments skipping ', item.uid);
+    let [key, entry] = items[index];
+    if (entry.uid != my.uid) {
+      console.log('trim_comments skipping ', entry.uid);
       continue;
     }
     console.log('trim_comments removing key', key);
-    await dbase_remove_key('comment_store', key);
+    await my.dbase.remove_key('comment_store', key);
   }
 }
 
@@ -121,9 +127,9 @@ async function test_step1() {
   //
   console.log('test_step1');
 
-  dbase_update_item({ num_test: 1959 }, 'item');
+  my.dbase.update_item('item', { num_test: 1959 });
 
-  dbase_update_item({ num_test: dbase_increment(1) }, 'item');
+  my.dbase.update_item('item', { num_test: my.dbase.increment(1) });
 
   let comment = 'love now';
   let name = 'nameX1';
@@ -132,19 +138,19 @@ async function test_step1() {
   let date = new Date().toISOString();
   let entry = { test_count, name, comment, date, uid };
 
-  let key = await dbase_add_key('comment_store', entry);
+  let key = await my.dbase.add_key('comment_store', entry);
   console.log('added key', key);
 
   entry.comment = new Date().toISOString();
   entry.name = 'nameX2';
-  let key2 = await dbase_add_key('comment_store', entry);
+  let key2 = await my.dbase.add_key('comment_store', entry);
   console.log('added key2', key2);
 
-  dbase_update_props({ test_prop: 'test_prop' });
+  my.dbase.update_props({ test_prop: 'test_prop' });
 
-  dbase_update_props({ test_num: dbase_increment(1) });
+  my.dbase.update_props({ test_num: my.dbase.increment(1) });
 
-  dbase_info_update({ info_count: dbase_increment(1), item2: 'info-item2' });
+  my.dbase.info_update({ info_count: my.dbase.increment(1), item2: 'info-item2' });
 }
 
 // id_console_ul
@@ -158,7 +164,7 @@ function ui_log(...args) {
 }
 globalThis.ui_log = ui_log;
 
-function ui_logv(...args) {
+function ui_verbose(...args) {
   // console.log(...args);
 }
 

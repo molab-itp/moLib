@@ -1,8 +1,17 @@
 //
-function dbase_site_observe() {
+//
+
+import { mo_dbase } from './a_mo_dbase.js';
+// mo_dbase.prototype.
+
+//
+// my.dbase.site_observe()
+//
+mo_dbase.prototype.site_observe = function () {
   //
+  let my = this.my;
   // Setup listener for changes to firebase db device
-  let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = fireb_.fbase;
+  let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = my.fireb_.fbase;
   let path = `${my.dbase_rootPath}/${my.mo_app}/a_app`;
   let refPath = getRefPath(path);
 
@@ -11,8 +20,8 @@ function dbase_site_observe() {
   if (!my.fireb_devices) {
     my.fireb_devices = {};
   }
-
   onChildAdded(refPath, (data) => {
+    // console.log('dbase_site_observe Added this', this);
     receivedDeviceKey('dbase_site_observe Added', data);
   });
 
@@ -25,7 +34,11 @@ function dbase_site_observe() {
     receivedDeviceKey('dbase_site_observe Removed', data, { remove: 1 });
   });
 
-  function receivedDeviceKey(msg, data, remove) {
+  let receivedDeviceKey = (msg, data, remove) => {
+    // console.log('site_observe receivedDeviceKey this', this);
+    // console.log('site_observe receivedDeviceKey this', this);
+    // console.log('site_observe receivedDeviceKey msg', msg, data, remove);
+
     let key = data.key;
     let val = data.val();
     // ui_log(msg, key, 'n=', Object.keys(val).length);
@@ -37,17 +50,21 @@ function dbase_site_observe() {
       my.ndevice = Object.keys(my.fireb_devices).length;
       return;
     }
-    dbase_fireb_device(key, val);
-  }
-}
-globalThis.dbase_site_observe = dbase_site_observe;
+    this.fireb_device(key, val);
+  };
+
+  // console.log('site_observe this', this);
+};
 
 //
 // my.fireb_devices
 //  device = { uid, index, dbase }
 //    device.dbase are values from the server
 //
-function dbase_fireb_device(uid, val) {
+// my.dbase.fireb_device(uid,val)
+//
+mo_dbase.prototype.fireb_device = function (uid, val) {
+  let my = this.my;
   let fresh = 0;
   let device = my.fireb_devices[uid];
   if (!device) {
@@ -63,18 +80,17 @@ function dbase_fireb_device(uid, val) {
   }
   if (fresh && uid == my.uid) {
     // device must be inited to record visit event
-    dbase_site_event_visit();
+    this.site_event_visit();
   }
   let visit_count = device.dbase.visit_count;
-  let ndevice = count_client_devices();
-  dbase_report_status({ uid, visit_count, ndevice });
+  let ndevice = this.count_client_devices();
+  this.report_status({ uid, visit_count, ndevice });
   return device;
-}
-globalThis.dbase_fireb_device = dbase_fireb_device;
+};
 
 // Only count devices that dont contain '-electron' in the name_s field
 //
-function count_client_devices() {
+mo_dbase.prototype.count_client_devices = function () {
   // Object.keys(my.fireb_devices).length;
   let count = 0;
   Object.entries(my.fireb_devices).map((ent) => {
@@ -85,7 +101,7 @@ function count_client_devices() {
     }
   });
   return count;
-}
+};
 
 // Object.entries(my.fireb_devices)
 // [
@@ -116,9 +132,10 @@ function count_client_devices() {
 
 //
 //
-function dbase_site_remove() {
+mo_dbase.prototype.dbase_site_remove = function () {
   //
-  let { getRefPath, set } = fireb_.fbase;
+  let my = this.my;
+  let { getRefPath, set } = my.fireb_.fbase;
   let path = `${my.dbase_rootPath}/${my.mo_app}/a_device/${my.uid}`;
   let refPath = getRefPath(path);
   set(refPath, {})
@@ -130,8 +147,7 @@ function dbase_site_remove() {
       // The write failed...
       ui_log('dbase_site_remove error', error);
     });
-}
-globalThis.dbase_site_remove = dbase_site_remove;
+};
 
 //
 //

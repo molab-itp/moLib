@@ -1,4 +1,10 @@
 //
+//
+
+import { mo_dbase } from './a_mo_dbase.js';
+// mo_dbase.prototype.
+
+//
 // device {
 //   "count": 259,
 //   "date_s": "2023-12-22T03:51:03.651Z",
@@ -9,35 +15,33 @@
 // my.uid
 // my.nameDevice
 
-function dbase_site_event_visit() {
-  dbase_site_event({ event: 'visit', count: 'visit_count' });
-}
-globalThis.dbase_site_event_visit = dbase_site_event_visit;
+mo_dbase.prototype.site_event_visit = function () {
+  this.site_event({ event: 'visit', count: 'visit_count' });
+};
 
-function dbase_site_event_update() {
+mo_dbase.prototype.site_event_update = function () {
   // ui_log('dbase_site_event_update');
-  dbase_site_event({ event: 'update', count: 'update_count' });
-}
-globalThis.dbase_site_event_update = dbase_site_event_update;
+  this.site_event({ event: 'update', count: 'update_count' });
+};
 
-function dbase_site_event(keys) {
-  dbase_app_update({}, keys);
-}
+mo_dbase.prototype.site_event = function (keys) {
+  this.app_update({}, keys);
+};
 
-function dbase_info_update(updates) {
-  dbase_app_update({ a_info: updates });
-}
-globalThis.dbase_info_update = dbase_info_update;
+mo_dbase.prototype.info_update = function (updates) {
+  this.app_update({ a_info: updates });
+};
 
-function dbase_app_update(updates, keys) {
-  ui_logv('dbase_app_update updates', updates, 'keys', keys);
+mo_dbase.prototype.app_update = function (updates, keys) {
+  ui_verbose('dbase_app_update updates', updates, 'keys', keys);
   // console.log('dbase_site_event my.uid', my.uid);
   // ui_log('dbase_site_event my.uid', my.uid);
+  let my = this.my;
   if (!my.uid) {
     return;
   }
   let path = `${my.dbase_rootPath}/${my.mo_app}/a_app/${my.uid}`;
-  let { getRefPath, update, increment } = fireb_.fbase;
+  let { getRefPath, update, increment } = my.fireb_.fbase;
   let refPath = getRefPath(path);
   // ui_log('dbase_site_event', path);
 
@@ -56,19 +60,19 @@ function dbase_app_update(updates, keys) {
   Object.assign(updates, { date_s, [keys.count]: count, name_s, userAgent });
 
   // Acivity is only updated if present in recently received server info
-  let events = dbase_site_events(keys, my.uid, date_s);
+  let events = this.site_events(keys, my.uid, date_s);
   if (events) {
     updates[keys.event] = events;
     updates.time = events[0].time;
     updates.time_s = events[0].time_s;
   }
   update(refPath, updates);
-}
-globalThis.dbase_app_update = dbase_app_update;
+};
 
-function dbase_site_events(keys, uid, date_s) {
+mo_dbase.prototype.site_events = function (keys, uid, date_s) {
   // ui_log('dbase_site_events uid', uid, date_s);
-  let events = dbase_app_init_events(keys, uid, date_s);
+  let my = this.my;
+  let events = this.app_init_events(keys, uid, date_s);
   if (!events) return null;
 
   let event = events[0];
@@ -89,17 +93,18 @@ function dbase_site_events(keys, uid, date_s) {
     // Update the first entry with new time and date
     event.date_s = date_s;
     event.time += ndiff;
-    event.time_s = dbase_timeToSeconds(event.time);
+    event.time_s = this.timeToSeconds(event.time);
   }
-  dbase_updateTimeGap(events);
+  this.updateTimeGap(events);
   if (events.length > my.eventLogMax) {
     // Delete the last entry to keep to max number permitted
     events.splice(-1, 1);
   }
   return events;
-}
+};
 
-function dbase_app_init_events(keys, uid, date_s) {
+mo_dbase.prototype.app_init_events = function (keys, uid, date_s) {
+  let my = this.my;
   let time = 0;
   let initActivities = [{ date_s, time }];
   // return null if no server info received yet
@@ -115,16 +120,15 @@ function dbase_app_init_events(keys, uid, date_s) {
   }
 
   return events;
-}
+};
 
-function dbase_site_isActive(device) {
-  let gapTime = dbase_site_eventGapTime(device);
+mo_dbase.prototype.site_isActive = function (device) {
+  let gapTime = this.site_eventGapTime(device);
   // console.log('dbase_site_isActive device.index', device.index, 'gapTime', lapgapTimese, my.eventLogTimeMax);
   return gapTime < my.eventLogTimeMax;
-}
-globalThis.dbase_site_isActive = dbase_site_isActive;
+};
 
-function dbase_site_eventGapTime(device) {
+mo_dbase.prototype.site_eventGapTime = function (device) {
   let events = device.dbase && device.dbase.update;
   if (!events || events.length == 0) {
     return Number.MAX_VALUE;
@@ -133,21 +137,22 @@ function dbase_site_eventGapTime(device) {
   let gapTime = Date.now() - new Date(event.date_s);
   // console.log('dbase_site_eventGapTime device.index', device.index, 'gapTime', gapTime);
   return gapTime;
-}
+};
 
-function dbase_site_device_for_uid(uid) {
+mo_dbase.prototype.site_device_for_uid = function (uid) {
+  let my = this.my;
   let device = my.fireb_devices[uid];
   return device;
-}
-globalThis.dbase_site_device_for_uid = dbase_site_device_for_uid;
+};
 
 //
 // fdevice.dbase.remote
+// let active = my.dbase.device_uid_isActive(uid)
 //
-function device_uid_isActive(uid) {
+mo_dbase.prototype.device_uid_isActive = function (uid) {
   //
+  let my = this.my;
   let fdevice = my.fireb_devices[uid];
   // console.log('device_uid_isActive uid', uid, 'remote', fdevice.dbase.remote);
-  return dbase_site_isActive(fdevice) && fdevice.dbase.remote;
-}
-globalThis.device_uid_isActive = device_uid_isActive;
+  return this.site_isActive(fdevice) && fdevice.dbase.remote;
+};

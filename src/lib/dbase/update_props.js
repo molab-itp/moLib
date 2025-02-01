@@ -1,13 +1,21 @@
 //
 //
 
-// function dbase_update_props(props, options) {
+import { mo_dbase } from './a_mo_dbase.js';
+// mo_dbase.prototype.
+
 //
 // options.group
 // options.count
 // options.all
 //
-function dbase_update_props(props, options) {
+// my.dbase.update_props(props, options);
+//
+mo_dbase.prototype.update_props = function (props, options) {
+  // console.log('update_item props', props, 'options', options);
+  // console.log('update_item this.my', this.my);
+  // console.log('update_item this.my.uid', this.my.uid);
+  let my = this.my;
   let deviceProps = props;
   let groupProps = {};
   options = options || {};
@@ -20,7 +28,7 @@ function dbase_update_props(props, options) {
     groupProps = props;
     deviceProps = {};
   }
-  ui_logv('dbase_update_props my.uid', my.uid);
+  // ui_log('update_item my.uid', my.uid);
   if (!my.uid) {
     return;
   }
@@ -28,15 +36,17 @@ function dbase_update_props(props, options) {
   if (options.path && !group) {
     path += '/' + options.path;
   }
-  let { getRefPath, update, increment } = fireb_.fbase;
+  let { getRefPath, update, increment } = my.fireb_.fbase;
   let refPath = getRefPath(path);
 
   let groups = options.group;
   if (!groups) groups = 's0';
   groups = groups.split(',');
 
-  ui_logv('dbase_update_props props', props, 'deviceProps', deviceProps);
-  ui_logv('dbase_update_props groups', groups);
+  // ui_verbose('dbase_update_props props', props, 'deviceProps', deviceProps);
+  // ui_verbose('dbase_update_props groups', groups);
+  // console.log('dbase_update_props props', props, 'deviceProps', deviceProps);
+  // console.log('dbase_update_props groups', groups);
 
   let updates = {};
 
@@ -66,19 +76,21 @@ function dbase_update_props(props, options) {
       updates[dpath] = value;
     }
   }
-  ui_logv('dbase_update_props updates', updates);
+  ui_verbose('dbase_update_props updates', updates);
 
   // refPath = [SITE-URL]/${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}
   update(refPath, updates);
 
-  dbase_site_event_update();
-}
-globalThis.dbase_update_props = dbase_update_props;
+  this.site_event_update();
+};
 
 //
-function dbase_update_value(value, apps) {
+// my.dbase.update_value(value, apps)
+//
+mo_dbase.prototype.update_value = function (value, apps) {
   // apps = { app, tag, suffix }
   //
+  let my = this.my;
   let app = my.mo_app;
   let tag = 'dbase_update_value';
   let suffix = '';
@@ -92,26 +104,30 @@ function dbase_update_value(value, apps) {
     return;
   }
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}/${my.uid}${suffix}`;
-  let { getRefPath, update } = fireb_.fbase;
+  let { getRefPath, update } = my.fireb_.fbase;
   let refPath = getRefPath(path);
 
   update(refPath, value);
 
-  dbase_site_event_update();
-}
-globalThis.dbase_update_value = dbase_update_value;
-
-function dbase_increment(value) {
-  let { increment } = fireb_.fbase;
-  return increment(value);
-}
-globalThis.dbase_increment = dbase_increment;
+  this.site_event_update();
+};
 
 //
-function dbase_remove_room() {
+// my.dbase.increment(value)
+//
+mo_dbase.prototype.increment = function (value) {
+  let { increment } = my.fireb_.fbase;
+  return increment(value);
+};
+
+//
+// my.dbase.remove_room()
+//
+mo_dbase.prototype.remove_room = function () {
   //
+  let my = this.my;
   let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
-  let { getRefPath, set } = fireb_.fbase;
+  let { getRefPath, set } = my.fireb_.fbase;
   let refPath = getRefPath(path);
   set(refPath, {})
     .then(() => {
@@ -122,14 +138,15 @@ function dbase_remove_room() {
       // The write failed...
       ui_log('dbase_remove_room error', error);
     });
-}
-globalThis.dbase_remove_room = dbase_remove_room;
+};
 
 //
-function dbase_remove_mo_app() {
+// my.dbase.remove_mo_app()
+//
+mo_dbase.prototype.remove_mo_app = function () {
   //
   let path = `${my.dbase_rootPath}/${my.mo_app}`;
-  let { getRefPath, set } = fireb_.fbase;
+  let { getRefPath, set } = my.fireb_.fbase;
   let refPath = getRefPath(path);
   set(refPath, {})
     .then(() => {
@@ -140,5 +157,4 @@ function dbase_remove_mo_app() {
       // The write failed...
       ui_log('dbase_remove_mo_app error', error);
     });
-}
-globalThis.dbase_remove_mo_app = dbase_remove_mo_app;
+};

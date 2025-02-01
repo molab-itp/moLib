@@ -16,13 +16,14 @@
 
 ```
 
-# node test
+# src/doc
+# documentation of the lib api
 
-node src/test/main.js
+# test in node
+node src/doc/main.js
 
-# browser test
-
-src/test/index.html
+# test in browser
+src/doc/index.html
 
 
 # publish lib to npm
