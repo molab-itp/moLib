@@ -17,8 +17,8 @@ async function test_start() {
   my.fireb_config = 'jht9629';
   // my.fireb_config = 'jhtitp';
   my.dbase_rootPath = 'm0-@r-@w-';
-  my.mo_room = 'm1-test';
   my.mo_app = 'mo-test';
+  my.mo_room = 'm0-test';
   my.nameDevice = 'mo-test-device';
   if (!globalThis.window) my.nameDevice += '-node';
 
