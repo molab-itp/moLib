@@ -1,8 +1,8 @@
 # TODO: UPDATE or retire
 
-# [p5moLibrary](https://github.com/molab-itp/p5moLibrary) ?v=50
+# [p5moLibrary](https://github.com/molab-itp/p5moLibrary) ?v=51
 
-# [github.io](https://molab-itp.github.io/p5moLibrary/src?v=50)
+# [github.io](https://molab-itp.github.io/p5moLibrary/src?v=51)
 
 - a p5js Library for multi screen experiences - mobile devices paired with large screens
 
@@ -14,14 +14,14 @@
 
 demos using p5moLibrary internally. plan is to move them to p5moExamples
 
-- [demo/Astronomical](demo/Astronomical?v=50)
-- [demo/BlackFacts](demo/BlackFacts?v=50)
-- [demo/DrawPoints](demo/DrawPoints?v=50)
-- [demo/FourierPoints](demo/FourierPoints?v=50)
-- [demo/Heavenly3D](demo/Heavenly3D?v=50)
-- [demo/mo-astro](demo/mo-astro?v=50)
-- [demo/mo-blackfacts](demo/mo-blackfacts?v=50)
-- [demo/mo-storage-dashboard](demo/mo-storage-dashboard?v=50)
+- [demo/Astronomical](demo/Astronomical?v=51)
+- [demo/BlackFacts](demo/BlackFacts?v=51)
+- [demo/DrawPoints](demo/DrawPoints?v=51)
+- [demo/FourierPoints](demo/FourierPoints?v=51)
+- [demo/Heavenly3D](demo/Heavenly3D?v=51)
+- [demo/mo-astro](demo/mo-astro?v=51)
+- [demo/mo-blackfacts](demo/mo-blackfacts?v=51)
+- [demo/mo-storage-dashboard](demo/mo-storage-dashboard?v=51)
 
 ## demos p5js editor versions
 
@@ -39,27 +39,27 @@ demos using p5moLibrary internally. plan is to move them to p5moExamples
 
   - ["POWER TO THE PEOPLE!" tisch web article](https://tisch.nyu.edu/itp/news/spring-2024/community-facing-interactive-installations-on-the-ground-floor-o)
 
-  - [demo/mo-blackfacts remote](demo/mo-blackfacts?v=50)
-  - [demo/mo-blackfacts s1](demo/mo-blackfacts?v=50&group=s1&qrcode=mo-blackfacts-qrcode-1.png) [-remote-](demo/mo-blackfacts?v=50&group=s1)
-  - [demo/mo-blackfacts s2](demo/mo-blackfacts?v=50&group=s2&qrcode=mo-blackfacts-qrcode-2.png) [-remote-](demo/mo-blackfacts?v=50&group=s2)
-  - [demo/mo-blackfacts s3](demo/mo-blackfacts?v=50&group=s3&qrcode=mo-blackfacts-qrcode-3.png) [-remote-](demo/mo-blackfacts?v=50&group=s3)
-  - [demo/mo-blackfacts s4](demo/mo-blackfacts?v=50&group=s4&qrcode=mo-blackfacts-qrcode-4.png) [-remote-](demo/mo-blackfacts?v=50&group=s4)
-  - [demo/mo-blackfacts s5](demo/mo-blackfacts?v=50&group=s5&qrcode=mo-blackfacts-qrcode-5.png) [-remote-](demo/mo-blackfacts?v=50&group=s5)
-  - [demo/mo-blackfacts s6](demo/mo-blackfacts?v=50&group=s6&qrcode=mo-blackfacts-qrcode-6.png) [-remote-](demo/mo-blackfacts?v=50&group=s6)
-  - [demo/mo-blackfacts s1-s6](demo/mo-blackfacts?v=50&group=s1,s2,s3,s4,s5,s6&qrcode=mo-blackfacts-qrcode-1-6.png) [-remote-](demo/mo-blackfacts?v=50&group=s1,s2,s3,s4,s5,s6)
+  - [demo/mo-blackfacts remote](demo/mo-blackfacts?v=51)
+  - [demo/mo-blackfacts s1](demo/mo-blackfacts?v=51&group=s1&qrcode=mo-blackfacts-qrcode-1.png) [-remote-](demo/mo-blackfacts?v=51&group=s1)
+  - [demo/mo-blackfacts s2](demo/mo-blackfacts?v=51&group=s2&qrcode=mo-blackfacts-qrcode-2.png) [-remote-](demo/mo-blackfacts?v=51&group=s2)
+  - [demo/mo-blackfacts s3](demo/mo-blackfacts?v=51&group=s3&qrcode=mo-blackfacts-qrcode-3.png) [-remote-](demo/mo-blackfacts?v=51&group=s3)
+  - [demo/mo-blackfacts s4](demo/mo-blackfacts?v=51&group=s4&qrcode=mo-blackfacts-qrcode-4.png) [-remote-](demo/mo-blackfacts?v=51&group=s4)
+  - [demo/mo-blackfacts s5](demo/mo-blackfacts?v=51&group=s5&qrcode=mo-blackfacts-qrcode-5.png) [-remote-](demo/mo-blackfacts?v=51&group=s5)
+  - [demo/mo-blackfacts s6](demo/mo-blackfacts?v=51&group=s6&qrcode=mo-blackfacts-qrcode-6.png) [-remote-](demo/mo-blackfacts?v=51&group=s6)
+  - [demo/mo-blackfacts s1-s6](demo/mo-blackfacts?v=51&group=s1,s2,s3,s4,s5,s6&qrcode=mo-blackfacts-qrcode-1-6.png) [-remote-](demo/mo-blackfacts?v=51&group=s1,s2,s3,s4,s5,s6)
 
 ## shout
 
-- [demo/mo-shout s1](demo/mo-shout?v=50&group=s1&qrcode=mo-shout-qrcode-1.png) [[remote](qrcode/mo-shout.html?v=50&group=s1)]
+- [demo/mo-shout s1](demo/mo-shout?v=51&group=s1&qrcode=mo-shout-qrcode-1.png) [[remote](qrcode/mo-shout.html?v=51&group=s1)]
 <!-- https://molab-itp.github.io/p5moLibrary/src/qrcode/mo-shout.html?group=s1 -->
 
 ## garage play list
 
 - garage play list using mo-videplayer
-  - [demo/mo-videoplayer s1](demo/mo-videoplayer?v=50&group=s1&qrcode=mo-videoplayer-qrcode-1.png)
-    [[remote](qrcode/mo-videoplayer.html?v=50&group=s1)]
-  - [demo/mo-videoplayer s2](demo/mo-videoplayer?v=50&group=s2&qrcode=mo-videoplayer-qrcode-2.png)
-    [[remote](qrcode/mo-videoplayer.html?v=50&group=s2)]
+  - [demo/mo-videoplayer s1](demo/mo-videoplayer?v=51&group=s1&qrcode=mo-videoplayer-qrcode-1.png)
+    [[remote](qrcode/mo-videoplayer.html?v=51&group=s1)]
+  - [demo/mo-videoplayer s2](demo/mo-videoplayer?v=51&group=s2&qrcode=mo-videoplayer-qrcode-2.png)
+    [[remote](qrcode/mo-videoplayer.html?v=51&group=s2)]
 
 ## NatimeTime play list
 
@@ -93,21 +93,21 @@ demos using p5moLibrary internally. plan is to move them to p5moExamples
 
 - dev console
 
-  - [demo/js-image-viewer](demo/js-image-viewer?v=50)
-  - [demo/mo-gallery-1](demo/mo-gallery-1?v=50)
-  - [demo/mo-gallery-2](demo/mo-gallery-2?v=50)
-  - [demo/mo-storage-console](demo/mo-storage-console?v=50)
+  - [demo/js-image-viewer](demo/js-image-viewer?v=51)
+  - [demo/mo-gallery-1](demo/mo-gallery-1?v=51)
+  - [demo/mo-gallery-2](demo/mo-gallery-2?v=51)
+  - [demo/mo-storage-console](demo/mo-storage-console?v=51)
 
 <!--
 
 - retired
-  - [demo/mo-astro-host-0](demo/mo-astro-host-0?v=50)
-  - [demo/mo-astro-host-1](demo/mo-astro-host-1?v=50)
-  - [demo/mo-astro-remote-0](demo/mo-astro-remote-0?v=50)
-  - [demo/mo-astro-remote-1](demo/mo-astro-remote-1?v=50)
+  - [demo/mo-astro-host-0](demo/mo-astro-host-0?v=51)
+  - [demo/mo-astro-host-1](demo/mo-astro-host-1?v=51)
+  - [demo/mo-astro-remote-0](demo/mo-astro-remote-0?v=51)
+  - [demo/mo-astro-remote-1](demo/mo-astro-remote-1?v=51)
 
-  - [demo/mo-blackfacts-host](demo/mo-blackfacts-host?v=50)
-  - [demo/mo-blackfacts-remote](demo/mo-blackfacts-remote?v=50)
+  - [demo/mo-blackfacts-host](demo/mo-blackfacts-host?v=51)
+  - [demo/mo-blackfacts-remote](demo/mo-blackfacts-remote?v=51)
 
 # https://www.youtube.com/watch?v=hpjNGTYvpxw
 # The Land Carries Our Ancestors: Contemporary Art by Native Americans Exhibition Trailer
