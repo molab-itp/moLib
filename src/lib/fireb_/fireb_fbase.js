@@ -47,7 +47,6 @@ export function fbase_init(my) {
 
 https://firebase.google.com/docs/database/web/start?hl=en&authuser=0
 
-// !!@
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(app);
 

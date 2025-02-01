@@ -37,7 +37,6 @@ export function fstorage_init(my) {
 
 https://firebase.google.com/docs/storage/web/start
 
-// !!@
 // Initialize Cloud Storage and get a reference to the service
 const storage = getStorage(app);
 
