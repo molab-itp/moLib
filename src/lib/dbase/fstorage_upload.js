@@ -104,6 +104,8 @@ mo_dbase.prototype.fstorage_remove = async function ({ path }) {
   }
   let imagePath = `${my.mo_dbroot}/${my.mo_app}/${my.mo_room}/${path}`;
 
+  ui_log('fstorage_remove imagePath', imagePath);
+
   let { getStorageRefPath, deleteObject } = my.fireb_.fstorage;
   const deleteRef = getStorageRefPath(imagePath);
 
