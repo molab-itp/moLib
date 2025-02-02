@@ -24,7 +24,7 @@ function document_loaded() {
 
 function app_init_completed() {
   //
-  dbase_app_observe({ observed_item });
+  dbase.observe({ observed_item });
 
   my.animLoop = new Anim({ target: my, time: my.animTime });
 

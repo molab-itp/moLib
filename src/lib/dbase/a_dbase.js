@@ -9,7 +9,7 @@ import './report_status.js';
 import './site_devices.js';
 import './site_event.js';
 import './site_observe.js';
-import './update_props.js';
+import './update_device.js';
 import './updateTimeGap.js';
 import '../Anim.js';
 // import '../fireb_/fireb_config.js';

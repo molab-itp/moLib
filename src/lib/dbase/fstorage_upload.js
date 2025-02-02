@@ -5,7 +5,7 @@ import { mo_dbase } from './a_mo_dbase.js';
 // mo_dbase.prototype.
 
 //
-// await my.dbase.fstoreage_render({ url, layer });
+// await dbase.fstoreage_render({ url, layer });
 //
 // !!@ DOC fstorage_render({ url, layer })
 //
@@ -42,7 +42,7 @@ mo_dbase.prototype.fstoreage_render = function (args) {
 };
 
 //
-// my.dbase.fstorage_upload({ layer, path, imageQuality })
+// dbase.fstorage_upload({ layer, path, imageQuality })
 //
 mo_dbase.prototype.fstorage_upload = async function ({ layer, path, imageQuality }) {
   // console.log('fstorage_img_upload');
@@ -62,7 +62,7 @@ mo_dbase.prototype.fstorage_upload = async function ({ layer, path, imageQuality
   }
   // console.log('last4', last4, 'imageType', imageType);
 
-  let imagePath = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}/${path}`;
+  let imagePath = `${my.mo_dbroot}/${my.mo_app}/${my.mo_room}/${path}`;
 
   let blob = await getBlob(layer.elt, imageType, imageQuality);
 
@@ -81,7 +81,7 @@ mo_dbase.prototype.fstorage_upload = async function ({ layer, path, imageQuality
 };
 
 //
-// my.dbase.fstorage_upload_blob(blob, imagePath)
+// dbase.fstorage_upload_blob(blob, imagePath)
 //
 mo_dbase.prototype.fstorage_upload_blob = async function (blob, imagePath) {
   // console.log('fstorage_upload', blob);
@@ -94,7 +94,7 @@ mo_dbase.prototype.fstorage_upload_blob = async function (blob, imagePath) {
 };
 
 //
-// my.dbase.fstorage_remove({ path })
+// dbase.fstorage_remove({ path })
 //
 mo_dbase.prototype.fstorage_remove = async function ({ path }) {
   let my = this.my;
@@ -102,7 +102,7 @@ mo_dbase.prototype.fstorage_remove = async function ({ path }) {
     ui_error('fstorage_remove missing path', path);
     return;
   }
-  let imagePath = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}/${path}`;
+  let imagePath = `${my.mo_dbroot}/${my.mo_app}/${my.mo_room}/${path}`;
 
   let { getStorageRefPath, deleteObject } = my.fireb_.fstorage;
   const deleteRef = getStorageRefPath(imagePath);
@@ -111,12 +111,12 @@ mo_dbase.prototype.fstorage_remove = async function ({ path }) {
 };
 
 //
-// my.dbase.fstorage_download_url({ path })
+// dbase.fstorage_download_url({ path })
 //
 mo_dbase.prototype.fstorage_download_url = async function ({ path }) {
   // console.log('fstorage_img_download ');
 
-  let imagePath = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}/${path}`;
+  let imagePath = `${my.mo_dbroot}/${my.mo_app}/${my.mo_room}/${path}`;
 
   let { getStorageRefPath, getDownloadURL } = my.fireb_.fstorage;
 

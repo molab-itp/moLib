@@ -7,7 +7,9 @@ console.log('in index.js');
 
 // global variable my in browser and node
 //
-globalThis.my = {};
+// globalThis.my = {};
+let my = {};
+let dbase;
 
 // starting point for testing moLib database functions
 //
@@ -16,7 +18,6 @@ async function test_start() {
 
   my.fireb_config = 'jht9629';
   // my.fireb_config = 'jhtitp';
-  my.dbase_rootPath = 'm0-@r-@w-';
   my.mo_app = 'mo-test';
   my.mo_room = 'm0-test';
   my.nameDevice = 'mo-test-device';
@@ -24,27 +25,41 @@ async function test_start() {
 
   await setup_dbase();
 
-  my.dbase.update_item('item', { test_count: my.dbase.increment(1) });
+  // mo-test / m0-test / a_device / ${uid} / test_prop
+  //
+  dbase.update_device({ per_device_str: 'hello device!' });
 
-  my.dbase.update_item('item', { test_step: 1 });
+  dbase.update_device({ per_device_num: dbase.increment(1) });
+
+  // mo-test / m0-test / a_group / s0 / item / test_count
+  //
+  dbase.update_item('item', { test_count: dbase.increment(1) });
+
+  // mo-test / m0-test / a_group / s0 / item / test_step
+  //
+  dbase.update_item('item', { test_step: 1 });
 
   setup_animationFrame();
 }
 
 async function setup_dbase() {
   //
-  // await my.dbase.app_init(my);
-  my.dbase = await mo_dbase_init(my);
+  // await dbase.app_init(my);
+  dbase = await mo_dbase_init(my);
 
   observe_item();
 
   observe_comment_store();
 
+  observe_devices();
+
   console.log('setup_dbase done');
 }
 
 function observe_item() {
-  my.dbase.app_observe('item', { observed_item });
+  //
+  dbase.observe('item', { observed_item });
+  //
   function observed_item(item) {
     console.log('observed_item item', item);
     if (item.test_count != undefined) {
@@ -59,7 +74,11 @@ function observe_item() {
 }
 
 function observe_comment_store() {
-  my.dbase.app_observe('comment_store', { observed_event });
+  //
+  // mo-test / m0-test / a_group / s0 / comment_store
+  //
+  dbase.observe('comment_store', { observed_event });
+  //
   my.comment_store = {};
   function observed_event(event, key, item) {
     console.log('observed_event ', event, key, item);
@@ -72,6 +91,25 @@ function observe_comment_store() {
         delete my.comment_store[key];
         break;
     }
+  }
+}
+
+function observe_devices() {
+  //
+  dbase.devices_observe({ observed_key, observed_item });
+  //
+  // mo-test / m0-test / a_device / ${uid}
+  // item info for all devices in the room
+  //
+  function observed_key(key, item) {
+    console.log('observe_devices observed_key key', key, 'item', item);
+  }
+  //
+  // mo-test / m0-test / a_device / ${my.uid}
+  // item info for my device
+  //
+  function observed_item(item) {
+    console.log('observe_devices observed_item', item);
   }
 }
 
@@ -95,14 +133,14 @@ function animationFrame_callback(timeStamp) {
     switch (my.test_step) {
       case 1:
         test_step1();
-        my.dbase.update_item('item', { test_step: my.dbase.increment(1) });
+        dbase.update_item('item', { test_step: dbase.increment(1) });
         break;
       case 2:
-        my.dbase.update_item('item', { test_step: my.dbase.increment(1) });
+        dbase.update_item('item', { test_step: dbase.increment(1) });
         break;
       default:
         trim_comments();
-        my.dbase.update_item('item', { test_step: 0 });
+        dbase.update_item('item', { test_step: 0 });
         break;
     }
   }
@@ -119,7 +157,7 @@ async function trim_comments() {
       continue;
     }
     console.log('trim_comments removing key', key);
-    await my.dbase.remove_key('comment_store', key);
+    await dbase.remove_key('comment_store', key);
   }
 }
 
@@ -127,30 +165,28 @@ async function test_step1() {
   //
   console.log('test_step1');
 
-  my.dbase.update_item('item', { num_test: 1959 });
+  // mo-test / m0-test / a_group / s0 / item / num_test
+  //
+  dbase.update_item('item', { num_test: 1959 });
 
-  my.dbase.update_item('item', { num_test: my.dbase.increment(1) });
+  dbase.update_item('item', { num_test: dbase.increment(1) });
 
   let comment = 'love now';
   let name = 'nameX1';
   let uid = my.uid;
   let test_count = my.test_count;
-  let date = new Date().toISOString();
-  let entry = { test_count, name, comment, date, uid };
+  let createdAt = new Date().toISOString();
+  let entry = { test_count, name, comment, createdAt, uid };
 
-  let key = await my.dbase.add_key('comment_store', entry);
+  // mo-test / m0-test / a_group / s0 / comment_store / ${key} / { ...entry }
+  //
+  let key = await dbase.add_key('comment_store', entry);
   console.log('added key', key);
 
   entry.comment = new Date().toISOString();
   entry.name = 'nameX2';
-  let key2 = await my.dbase.add_key('comment_store', entry);
+  let key2 = await dbase.add_key('comment_store', entry);
   console.log('added key2', key2);
-
-  my.dbase.update_props({ test_prop: 'test_prop' });
-
-  my.dbase.update_props({ test_num: my.dbase.increment(1) });
-
-  my.dbase.info_update({ info_count: my.dbase.increment(1), item2: 'info-item2' });
 }
 
 // id_console_ul
@@ -167,5 +203,6 @@ globalThis.ui_log = ui_log;
 function ui_verbose(...args) {
   // console.log(...args);
 }
+globalThis.ui_verbose = ui_verbose;
 
 test_start();

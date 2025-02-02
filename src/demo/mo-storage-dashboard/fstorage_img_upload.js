@@ -37,5 +37,5 @@ function fstorage_img_upload_blob(blob, count) {
 function next_imagePath(count) {
   // console.log('next_imagePath');
   let str = (count + my.count_base + 1).toString().padStart(my.image_seq_pad, '0');
-  return `${my.dbase_rootPath}/${my.clipsName}/${str}${my.imagExt}`;
+  return `${my.mo_dbroot}/${my.clipsName}/${str}${my.imagExt}`;
 }

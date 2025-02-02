@@ -5,7 +5,7 @@ import { mo_dbase } from './a_mo_dbase.js';
 // mo_dbase.prototype.
 
 //
-// my.dbase.updateTimeGap()
+// dbase.updateTimeGap()
 //
 mo_dbase.prototype.updateTimeGap = function (events) {
   for (let index = 1; index < events.length; index++) {
@@ -19,7 +19,7 @@ mo_dbase.prototype.updateTimeGap = function (events) {
 };
 
 //
-// let t = my.dbase.timeToSeconds(time);
+// let t = dbase.timeToSeconds(time);
 //
 mo_dbase.prototype.timeToSeconds = function (time) {
   let str = '';

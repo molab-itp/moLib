@@ -4,7 +4,7 @@ function my_init() {
   my.fireb_config = 'jht9629';
   // my.fireb_config = 'jht1493';
   // my.fireb_config = 'jhtitp';
-  my.dbase_rootPath = 'm0-@r-@w-';
+  my.mo_dbroot = 'm0-@r-@w-';
   my.mo_app = 'mo-videoplayer';
   my.mo_room = 'room0';
   // my.mo_room = 'room1';

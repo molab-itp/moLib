@@ -11,15 +11,15 @@ if (globalThis.window) {
       ui_log('report_status no my');
       return;
     }
-    my.dbase.report_status({});
+    dbase.report_status({});
   });
 }
 
 mo_dbase.prototype.report_status = function (props) {
   let my = this.my;
-  ui_verbose('dbase_report_status props', props);
+  ui_verbose('dbase.report_status props', props);
   if (!my.statusElement) {
-    createStatusElement();
+    this.createStatusElement();
     if (!my.statusElement) return;
   }
   let options = {};
@@ -41,7 +41,8 @@ mo_dbase.prototype.report_status = function (props) {
   my.statusElement.textContent = msg;
 };
 
-function createStatusElement() {
+mo_dbase.prototype.createStatusElement = function () {
+  let my = this.my;
   if (!globalThis.window) return;
   if (!my.statusElement) {
     my.statusElement = document.createElement('div');
@@ -64,10 +65,10 @@ function createStatusElement() {
   my.statusElement.style.color = 'white';
   my.statusElement.style.fontSize = `${h}px`;
   my.statusElement.style.padding = '1px 2px';
-}
-// globalThis.dbase_positionStatus = dbase_positionStatus;
+};
 
-function qrcode_url() {
+mo_dbase.prototype.qrcode_url = function () {
+  let my = this.my;
   let url;
   if (my.qrcode_url) {
     url = my.qrcode_url();
@@ -77,16 +78,17 @@ function qrcode_url() {
   }
   ui_log('qrcode_url', url);
   return url;
-}
+};
 
-function init_qrcode_url() {
-  if (my.qrcodeElement) {
-    my.qrcodeElement.src = qrcode_url();
-  }
-}
-globalThis.init_qrcode_url = init_qrcode_url;
+// function init_qrcode_url() {
+//   if (my.qrcodeElement) {
+//     my.qrcodeElement.src = qrcode_url();
+//   }
+// }
+// globalThis.init_qrcode_url = init_qrcode_url;
 
-function footerText() {
+mo_dbase.prototype.footerText = function () {
+  let my = this.my;
   return `
   <div >
     <h1>POWER TO THE PEOPLE!</h1> 
@@ -95,9 +97,10 @@ function footerText() {
     <h3>${my.appTitle} ${my.mo_group} ${my.version}</h2>
   </div>
 `;
-}
+};
 
-function createQRCode(options) {
+mo_dbase.prototype.createQRCode = function (options) {
+  let my = this.my;
   // console.log('createQRCode document', document, 'my.qrcodeElement', my.qrcodeElement);
   if (!globalThis.window) return;
   if (my.footerElement) {
@@ -119,7 +122,7 @@ function createQRCode(options) {
     my.footerElement.style.height = my.footerHeight; // '192px';
     my.footerElement.style.backgroundColor = 'black';
     my.footerElement.style.color = 'white';
-    my.footerElement.innerHTML = footerText(); // 'HELLO';
+    my.footerElement.innerHTML = this.footerText(); // 'HELLO';
   }
   // let w = Math.floor(window.innerWidth * 0.25);
   // let x = window.innerWidth - w;
@@ -137,4 +140,4 @@ function createQRCode(options) {
   }
 
   ui_log('createQRCode my.qrcodeElement', my.qrcodeElement);
-}
+};

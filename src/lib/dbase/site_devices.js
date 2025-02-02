@@ -6,7 +6,7 @@ import { mo_dbase } from './a_mo_dbase.js';
 
 // return array of devices, most recently active first
 //
-// let devices = my.dbase.site_devices(show);
+// let devices = dbase.site_devices(show);
 //
 mo_dbase.prototype.site_devices = function (show) {
   let my = this.my;
@@ -31,7 +31,7 @@ mo_dbase.prototype.site_devices = function (show) {
       lines.push(uid + ' ' + userAgent);
       // console.log('');
     }
-    lines.push('dbase_site_devices n ' + arr.length);
+    lines.push('dbase.site_devices n ' + arr.length);
     ui_log(lines.join('\n'));
   }
   return arr;

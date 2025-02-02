@@ -22,7 +22,7 @@ function my_setup() {
   my.fireb_config = 'jht9629';
   // my.fireb_config = 'jht1493';
   // my.fireb_config = 'jhtitp';
-  my.dbase_rootPath = 'm0-@r-@w-';
+  my.mo_dbroot = 'm0-@r-@w-';
   my.mo_room = 'room0';
   my.mo_app = 'mo-shout';
   my.nameDevice = '';
@@ -75,7 +75,7 @@ function startup_completed() {
   console.log('startup_completed');
 
   // dbase_devices_observe({ observed_item, all: 1 });
-  dbase_app_observe({ observed_item });
+  dbase.observe({ observed_item });
 
   function observed_item(device) {
     console.log('observed_item device', device);

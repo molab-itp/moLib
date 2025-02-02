@@ -9,12 +9,14 @@ import { mo_dbase } from './a_mo_dbase.js';
 // options.count
 // options.all
 //
-// my.dbase.update_props(props, options);
+// dbase.update_device(props, options);
+// dbase.update_props(props, options); // !!@ renamed
+// this.update_props( // !!@ renamed
 //
-mo_dbase.prototype.update_props = function (props, options) {
-  // console.log('update_item props', props, 'options', options);
-  // console.log('update_item this.my', this.my);
-  // console.log('update_item this.my.uid', this.my.uid);
+mo_dbase.prototype.update_device = function (props, options) {
+  // console.log('update_device props', props, 'options', options);
+  // console.log('update_device this.my', this.my);
+  // console.log('update_device this.my.uid', this.my.uid);
   let my = this.my;
   let deviceProps = props;
   let groupProps = {};
@@ -26,13 +28,14 @@ mo_dbase.prototype.update_props = function (props, options) {
   let group = options.group;
   if (group) {
     groupProps = props;
+    // group selected -- not per device prop update
     deviceProps = {};
   }
   // ui_log('update_item my.uid', my.uid);
   if (!my.uid) {
     return;
   }
-  let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
+  let path = `${my.mo_dbroot}/${my.mo_app}/${my.mo_room}`;
   if (options.path && !group) {
     path += '/' + options.path;
   }
@@ -43,10 +46,10 @@ mo_dbase.prototype.update_props = function (props, options) {
   if (!groups) groups = 's0';
   groups = groups.split(',');
 
-  // ui_verbose('dbase_update_props props', props, 'deviceProps', deviceProps);
-  // ui_verbose('dbase_update_props groups', groups);
-  // console.log('dbase_update_props props', props, 'deviceProps', deviceProps);
-  // console.log('dbase_update_props groups', groups);
+  // ui_verbose('dbase.update_props props', props, 'deviceProps', deviceProps);
+  // ui_verbose('dbase.update_props groups', groups);
+  // console.log('dbase.update_props props', props, 'deviceProps', deviceProps);
+  // console.log('dbase.update_props groups', groups);
 
   let updates = {};
 
@@ -65,7 +68,7 @@ mo_dbase.prototype.update_props = function (props, options) {
   }
 
   // group=s1,s2,s3,s4 to broadcast
-  // console.log('dbase_update_props groups', groups);
+  // console.log('dbase.update_props groups', groups);
   for (let group of groups) {
     for (let prop in groupProps) {
       let value = groupProps[prop];
@@ -76,23 +79,23 @@ mo_dbase.prototype.update_props = function (props, options) {
       updates[dpath] = value;
     }
   }
-  ui_verbose('dbase_update_props updates', updates);
+  ui_verbose('dbase.update_props updates', updates);
 
-  // refPath = [SITE-URL]/${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}
+  // refPath = [SITE-URL]/${my.mo_dbroot}/${my.mo_app}/${my.mo_room}
   update(refPath, updates);
 
   this.site_event_update();
 };
 
 //
-// my.dbase.update_value(value, apps)
+// dbase.update_value(value, apps)
 //
 mo_dbase.prototype.update_value = function (value, apps) {
   // apps = { app, tag, suffix }
   //
   let my = this.my;
   let app = my.mo_app;
-  let tag = 'dbase_update_value';
+  let tag = 'dbase.update_value';
   let suffix = '';
   if (apps) {
     app = apps.app || app;
@@ -103,7 +106,7 @@ mo_dbase.prototype.update_value = function (value, apps) {
     ui_log(tag + ' no uid', my.uid);
     return;
   }
-  let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}/${my.uid}${suffix}`;
+  let path = `${my.mo_dbroot}/${my.mo_app}/${my.mo_room}/${my.uid}${suffix}`;
   let { getRefPath, update } = my.fireb_.fbase;
   let refPath = getRefPath(path);
 
@@ -113,48 +116,49 @@ mo_dbase.prototype.update_value = function (value, apps) {
 };
 
 //
-// my.dbase.increment(value)
+// dbase.increment(value)
 //
 mo_dbase.prototype.increment = function (value) {
+  let my = this.my;
   let { increment } = my.fireb_.fbase;
   return increment(value);
 };
 
 //
-// my.dbase.remove_room()
+// dbase.remove_room()
 //
 mo_dbase.prototype.remove_room = function () {
   //
   let my = this.my;
-  let path = `${my.dbase_rootPath}/${my.mo_app}/${my.mo_room}`;
+  let path = `${my.mo_dbroot}/${my.mo_app}/${my.mo_room}`;
   let { getRefPath, set } = my.fireb_.fbase;
   let refPath = getRefPath(path);
   set(refPath, {})
     .then(() => {
       // Data saved successfully!
-      ui_log('dbase_remove_room OK');
+      ui_log('dbase.remove_room OK');
     })
     .catch((error) => {
       // The write failed...
-      ui_log('dbase_remove_room error', error);
+      ui_log('dbase.remove_room error', error);
     });
 };
 
 //
-// my.dbase.remove_mo_app()
+// dbase.remove_mo_app()
 //
 mo_dbase.prototype.remove_mo_app = function () {
   //
-  let path = `${my.dbase_rootPath}/${my.mo_app}`;
+  let path = `${my.mo_dbroot}/${my.mo_app}`;
   let { getRefPath, set } = my.fireb_.fbase;
   let refPath = getRefPath(path);
   set(refPath, {})
     .then(() => {
       // Data saved successfully!
-      ui_log('dbase_remove_mo_app OK');
+      ui_log('dbase.remove_mo_app OK');
     })
     .catch((error) => {
       // The write failed...
-      ui_log('dbase_remove_mo_app error', error);
+      ui_log('dbase.remove_mo_app error', error);
     });
 };

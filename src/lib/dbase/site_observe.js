@@ -5,33 +5,33 @@ import { mo_dbase } from './a_mo_dbase.js';
 // mo_dbase.prototype.
 
 //
-// my.dbase.site_observe()
+// dbase.site_observe()
 //
 mo_dbase.prototype.site_observe = function () {
   //
   let my = this.my;
   // Setup listener for changes to firebase db device
   let { getRefPath, onChildAdded, onChildChanged, onChildRemoved } = my.fireb_.fbase;
-  let path = `${my.dbase_rootPath}/${my.mo_app}/a_app`;
+  let path = `${my.mo_dbroot}/${my.mo_app}/a_app`;
   let refPath = getRefPath(path);
 
-  ui_log('dbase_site_observe path', path);
+  ui_log('dbase.site_observe path', path);
 
   if (!my.fireb_devices) {
     my.fireb_devices = {};
   }
   onChildAdded(refPath, (data) => {
-    // console.log('dbase_site_observe Added this', this);
-    receivedDeviceKey('dbase_site_observe Added', data);
+    // console.log('dbase.site_observe Added this', this);
+    receivedDeviceKey('dbase.site_observe Added', data);
   });
 
   onChildChanged(refPath, (data) => {
-    // console.log('dbase_site_observe Changed', data);
-    receivedDeviceKey('dbase_site_observe Changed', data);
+    // console.log('dbase.site_observe Changed', data);
+    receivedDeviceKey('dbase.site_observe Changed', data);
   });
 
   onChildRemoved(refPath, (data) => {
-    receivedDeviceKey('dbase_site_observe Removed', data, { remove: 1 });
+    receivedDeviceKey('dbase.site_observe Removed', data, { remove: 1 });
   });
 
   let receivedDeviceKey = (msg, data, remove) => {
@@ -61,7 +61,7 @@ mo_dbase.prototype.site_observe = function () {
 //  device = { uid, index, dbase }
 //    device.dbase are values from the server
 //
-// my.dbase.fireb_device(uid,val)
+// dbase.fireb_device(uid,val)
 //
 mo_dbase.prototype.fireb_device = function (uid, val) {
   let my = this.my;
@@ -92,6 +92,7 @@ mo_dbase.prototype.fireb_device = function (uid, val) {
 //
 mo_dbase.prototype.count_client_devices = function () {
   // Object.keys(my.fireb_devices).length;
+  let my = this.my;
   let count = 0;
   Object.entries(my.fireb_devices).map((ent) => {
     let dev = ent[1];
@@ -136,16 +137,16 @@ mo_dbase.prototype.dbase_site_remove = function () {
   //
   let my = this.my;
   let { getRefPath, set } = my.fireb_.fbase;
-  let path = `${my.dbase_rootPath}/${my.mo_app}/a_device/${my.uid}`;
+  let path = `${my.mo_dbroot}/${my.mo_app}/a_device/${my.uid}`;
   let refPath = getRefPath(path);
   set(refPath, {})
     .then(() => {
       // Data saved successfully!
-      // ui_log('dbase_site_remove OK');
+      // ui_log('dbase.site_remove OK');
     })
     .catch((error) => {
       // The write failed...
-      ui_log('dbase_site_remove error', error);
+      ui_log('dbase.site_remove error', error);
     });
 };
 

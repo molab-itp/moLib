@@ -2,7 +2,7 @@
 function fstorage_listAll(bucket) {
   // console.log('fstorage_listAll bucket', bucket);
   let { getStorage, ref, listAll } = fireb_.fstorage;
-  bucket = bucket || my.dbase_rootPath;
+  bucket = bucket || my.mo_dbroot;
   console.log('fstorage_listAll bucket', bucket);
   // Create a reference under which you want to list
   const listRef = ref(getStorage(), bucket);
@@ -34,7 +34,7 @@ function fstorage_listAll(bucket) {
 function fstorage_list(bucket) {
   console.log('fstorage_list bucket', bucket);
   let { getStorage, ref, list } = fireb_.fstorage;
-  bucket = bucket || my.dbase_rootPath;
+  bucket = bucket || my.mo_dbroot;
   // Create a reference under which you want to list
   const listRef = ref(getStorage(), bucket);
   console.log('listRef', listRef);

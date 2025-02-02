@@ -23,9 +23,12 @@ export class mo_dbase {
     let my = this.my;
     let config = fireb_init(my, my.fireb_config);
     //
+    if (!my.mo_dbroot) my.mo_dbroot = 'm0-@r-@w-';
+    //
     ui_log('configVersion', config.configVersion);
     ui_log('config.projectId', config.projectId);
     ui_log('configLabel', config.configLabel);
+    ui_log('mo_dbroot', my.mo_dbroot);
     ui_log('mo_app', my.mo_app);
     ui_log('mo_room', my.mo_room);
     ui_log('mo_group', my.mo_group);
@@ -37,13 +40,13 @@ export class mo_dbase {
     await signInAnonymously(auth);
 
     my.uid = auth.currentUser.uid;
-    ui_log('dbase_app_init my.uid', my.uid);
+    ui_log('dbase.app_init my.uid', my.uid);
 
     this.report_status({});
 
     this.site_observe();
 
     // Send initial ping
-    this.update_props({}, { count: 1 });
+    this.update_device({}, { count: 1 });
   }
 }

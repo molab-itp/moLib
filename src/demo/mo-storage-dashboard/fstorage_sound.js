@@ -28,7 +28,7 @@ function fstorage_sound_upload_blob(blob, count) {
 function next_soundPath(count) {
   // console.log('next_soundPath');
   let str = (count + my.count_base + 1).toString().padStart(my.image_seq_pad, '0');
-  return `${my.dbase_rootPath}/${my.clipsName}/${str}.wav`;
+  return `${my.mo_dbroot}/${my.clipsName}/${str}.wav`;
 }
 
 function fstorage_sound_download() {

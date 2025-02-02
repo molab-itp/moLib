@@ -20,7 +20,7 @@ mo_dbase.prototype.site_event_visit = function () {
 };
 
 mo_dbase.prototype.site_event_update = function () {
-  // ui_log('dbase_site_event_update');
+  // ui_log('dbase.site_event_update');
   this.site_event({ event: 'update', count: 'update_count' });
 };
 
@@ -33,17 +33,17 @@ mo_dbase.prototype.info_update = function (updates) {
 };
 
 mo_dbase.prototype.app_update = function (updates, keys) {
-  ui_verbose('dbase_app_update updates', updates, 'keys', keys);
-  // console.log('dbase_site_event my.uid', my.uid);
-  // ui_log('dbase_site_event my.uid', my.uid);
+  ui_verbose('dbase.app_update updates', updates, 'keys', keys);
+  // console.log('dbase.site_event my.uid', my.uid);
+  // ui_log('dbase.site_event my.uid', my.uid);
   let my = this.my;
   if (!my.uid) {
     return;
   }
-  let path = `${my.dbase_rootPath}/${my.mo_app}/a_app/${my.uid}`;
+  let path = `${my.mo_dbroot}/${my.mo_app}/a_app/${my.uid}`;
   let { getRefPath, update, increment } = my.fireb_.fbase;
   let refPath = getRefPath(path);
-  // ui_log('dbase_site_event', path);
+  // ui_log('dbase.site_event', path);
 
   let date_s = new Date().toISOString();
   let count = increment(1);
@@ -70,7 +70,7 @@ mo_dbase.prototype.app_update = function (updates, keys) {
 };
 
 mo_dbase.prototype.site_events = function (keys, uid, date_s) {
-  // ui_log('dbase_site_events uid', uid, date_s);
+  // ui_log('dbase.site_events uid', uid, date_s);
   let my = this.my;
   let events = this.app_init_events(keys, uid, date_s);
   if (!events) return null;
@@ -123,8 +123,9 @@ mo_dbase.prototype.app_init_events = function (keys, uid, date_s) {
 };
 
 mo_dbase.prototype.site_isActive = function (device) {
+  let my = this.my;
   let gapTime = this.site_eventGapTime(device);
-  // console.log('dbase_site_isActive device.index', device.index, 'gapTime', lapgapTimese, my.eventLogTimeMax);
+  // console.log('dbase.site_isActive device.index', device.index, 'gapTime', lapgapTimese, my.eventLogTimeMax);
   return gapTime < my.eventLogTimeMax;
 };
 
@@ -135,7 +136,7 @@ mo_dbase.prototype.site_eventGapTime = function (device) {
   }
   let event = events[0];
   let gapTime = Date.now() - new Date(event.date_s);
-  // console.log('dbase_site_eventGapTime device.index', device.index, 'gapTime', gapTime);
+  // console.log('dbase.site_eventGapTime device.index', device.index, 'gapTime', gapTime);
   return gapTime;
 };
 
@@ -147,7 +148,7 @@ mo_dbase.prototype.site_device_for_uid = function (uid) {
 
 //
 // fdevice.dbase.remote
-// let active = my.dbase.device_uid_isActive(uid)
+// let active = dbase.device_uid_isActive(uid)
 //
 mo_dbase.prototype.device_uid_isActive = function (uid) {
   //
