@@ -11,7 +11,7 @@
 let my = {};
 function my_setup() {
   // update to verify change on mobile
-  my.version = '?v=57';
+  my.version = '?v=58';
   // Aspect ratio of video capture/
   // will be scaled by rezScale
   my.width = 480;
