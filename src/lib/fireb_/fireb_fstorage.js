@@ -28,7 +28,7 @@ export function fstorage_init(my) {
     uploadBytes,
   };
   let storageRoot = getStorage(my.fireb_.app);
-  my.fireb_.fstorage.getRefPath = function (path) {
+  my.fireb_.fstorage.getStorageRefPath = function (path) {
     return ref(storageRoot, path);
   };
 }

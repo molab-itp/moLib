@@ -6,7 +6,7 @@ function ui_logDetailFlag_changed(newValue) {
 globalThis.ui_logDetailFlag_changed = ui_logDetailFlag_changed;
 
 // Updates my.logDetail_div with running log
-function ui_log(...args) {
+function ui_log_div(...args) {
   if (!my.logLines) {
     ui_log_init();
   }
@@ -25,9 +25,9 @@ function ui_log(...args) {
   str = my.logLines.join('<br/>');
   my.logDetail_div.html(str);
 }
-globalThis.ui_log = ui_log;
+globalThis.ui_log_div = ui_log_div;
 
-globalThis.ui_verbose = () => {};
+globalThis.ui_log_silent = () => {};
 
 function ui_log_add(lines, str) {
   lines.push(str);
@@ -97,25 +97,27 @@ function ui_check_scroll() {
 globalThis.ui_check_scroll = ui_check_scroll;
 
 //
-function no_p5js_ui_log_stubs() {
-  function ui_log(...args) {
-    // console.log(...args);
-  }
-  globalThis.ui_log = ui_log;
+// function no_p5js_ui_log_stubs() {
+//   function ui_log(...args) {
+//     // console.log(...args);
+//   }
+//   globalThis.ui_log = ui_log;
 
-  function ui_verbose(...args) {
-    // console.log(...args);
-  }
-  globalThis.ui_verbose = ui_verbose;
+//   function ui_verbose(...args) {
+//     // console.log(...args);
+//   }
+//   globalThis.ui_verbose = ui_verbose;
 
-  function ui_error(...args) {
-    ui_log(...args);
-    alert(...args);
-  }
-  globalThis.ui_error = ui_error;
-}
+//   function ui_error(...args) {
+//     ui_log(...args);
+//     alert(...args);
+//   }
+//   globalThis.ui_error = ui_error;
+// }
 
-// console.log('if globalThis.createDiv');
-if (!globalThis.createDiv) {
-  no_p5js_ui_log_stubs();
-}
+// console.log('if globalThis.createDiv globalThis.createDiv', globalThis.createDiv);
+
+// console.log('globalThis.ui_log', globalThis.ui_log);
+// if (!globalThis.createDiv) {
+//   no_p5js_ui_log_stubs();
+// }
