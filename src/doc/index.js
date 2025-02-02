@@ -5,9 +5,6 @@
 
 console.log('in index.js');
 
-// global variable my in browser and node
-//
-// globalThis.my = {};
 let my = {};
 let dbase;
 
@@ -15,13 +12,6 @@ let dbase;
 //
 async function test_start() {
   console.log('in test');
-
-  my.fireb_config = 'jht9629';
-  // my.fireb_config = 'jhtitp';
-  my.mo_app = 'mo-test';
-  my.mo_room = 'm0-test';
-  my.nameDevice = 'mo-test-device';
-  if (!globalThis.window) my.nameDevice += '-node';
 
   await setup_dbase();
 
@@ -48,7 +38,13 @@ async function test_start() {
 
 async function setup_dbase() {
   //
-  // await dbase.app_init(my);
+  my.fireb_config = 'jht9629';
+  // my.fireb_config = 'jhtitp';
+  my.mo_app = 'mo-test';
+  my.mo_room = 'm0-test';
+  my.nameDevice = 'mo-test-device';
+  if (!globalThis.window) my.nameDevice += '-node';
+
   dbase = await mo_dbase_init(my);
 
   observe_item();
