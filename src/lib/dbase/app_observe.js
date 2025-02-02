@@ -65,7 +65,7 @@ mo_dbase.prototype.observe = function (options, { observed_key, removed_key, obs
     let key = data.key;
     let value = data.val();
     // ui_log(msg, key, 'n=', Object.keys(val).length);
-    ui_log(msg, 'key', key, 'value', value);
+    ui_verbose(msg, 'key', key, 'value', value);
     if (remove) {
       if (removed_key) {
         removed_key(key, value);
