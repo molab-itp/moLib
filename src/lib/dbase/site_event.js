@@ -28,8 +28,12 @@ mo_dbase.prototype.site_event = function (keys) {
   this.app_update({}, keys);
 };
 
-mo_dbase.prototype.info_update = function (updates) {
-  this.app_update({ a_info: updates });
+//
+// dbase.update_info(a_info)
+// dbase.app_update() // !!@ Rename
+//
+mo_dbase.prototype.update_info = function (a_info) {
+  this.app_update({ a_info });
 };
 
 mo_dbase.prototype.app_update = function (updates, keys) {

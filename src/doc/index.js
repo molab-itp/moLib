@@ -25,7 +25,11 @@ async function test_start() {
 
   await setup_dbase();
 
-  // mo-test / m0-test / a_device / ${uid} / test_prop
+  // mo-test / a_app / ${uid} / a_info
+  //
+  dbase.update_info({ atDate: 'on device at ' + new Date().toDateString() });
+
+  // mo-test / m0-test / a_device / ${uid} / per_device_str
   //
   dbase.update_device({ per_device_str: 'hello device!' });
 
