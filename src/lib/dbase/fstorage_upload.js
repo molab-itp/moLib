@@ -115,6 +115,7 @@ mo_dbase.prototype.fstorage_remove = async function ({ path }) {
 //
 mo_dbase.prototype.fstorage_download_url = async function ({ path }) {
   // console.log('fstorage_img_download ');
+  let my = this.my;
 
   let imagePath = `${my.mo_dbroot}/${my.mo_app}/${my.mo_room}/${path}`;
 
