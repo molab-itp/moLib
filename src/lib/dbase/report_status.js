@@ -15,7 +15,7 @@ if (globalThis.window) {
       }
       return;
     }
-    dbase.report_status({});
+    my.dbase.report_status({});
   });
 }
 
