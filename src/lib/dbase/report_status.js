@@ -6,9 +6,13 @@ import { mo_dbase } from './a_mo_dbase.js';
 
 if (globalThis.window) {
   window.addEventListener('resize', () => {
-    ui_log('report_status resize');
-    if (!globalThis.my) {
-      ui_log('report_status no my');
+    // ui_log('report_status resize globalThis.my', globalThis.my);
+    let my = globalThis.my;
+    if (!my || !my.dbase) {
+      if (!globalThis.report_status_reported) {
+        globalThis.report_status_reported = 1;
+        ui_log('report_status no my || my.dbase');
+      }
       return;
     }
     dbase.report_status({});
