@@ -17,7 +17,7 @@ function run() {
   }
   mlog('incrementFlag', my.incrementFlag);
   mlog('writeFlag', my.writeFlag);
-  mlog('mode_dev', my.mode_dev);
+  // mlog('mode_dev', my.mode_dev);
 
   // retired -- replaced by test / importmap
   // if (my.libFlag) {

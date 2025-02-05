@@ -22,14 +22,14 @@ export function init(my) {
   my.root_path = join(__dirname, '..');
   // my.mode_files = ['./lib/fireb_'];
   my.mode_files = [];
-  my.mode_dev = 0;
+  // my.mode_dev = 0;
   // my.buildnum_files = ['../README.md', './README.md', './demo/', './lib/'];
   // process all files in src
   my.buildnum_files = ['../README.md', './'];
   my.buildnum_path = 'gen/build_ver.txt';
   my.a_src = 'src';
-  my.incrementFlag = 0;
-  my.writeFlag = 0;
+  my.incrementFlag = 1;
+  my.writeFlag = 1;
   my.libFlag = 0;
 
   for (let index = 0; index < process.argv.length; index++) {
@@ -48,11 +48,11 @@ export function init(my) {
         my.a_mode_files = './lib/fireb_'; // !!@ adjust for --lib
       }
     } else if (val == '--prod') {
-      my.mode_dev = 0;
+      // my.mode_dev = 0;
       my.writeFlag = 1;
       my.incrementFlag = 1;
     } else if (val == '--dev') {
-      my.mode_dev = 1;
+      // my.mode_dev = 1;
       my.writeFlag = 1;
       my.incrementFlag = 0;
     } else if (val == '--quiet') {
