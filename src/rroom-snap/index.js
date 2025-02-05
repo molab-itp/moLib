@@ -1,6 +1,6 @@
 // index.js
 //
-// take period snap shot of firebase database and storage
+// take periodic snap shot of firebase database and storage
 //
 
 console.log('in index.js');
