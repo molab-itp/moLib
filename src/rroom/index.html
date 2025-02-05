@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/addons/p5.sound.min.js"></script>
+
+    <script src="https://p5livemedia.itp.io/simplepeer.min.js"></script>
+    <script src="https://p5livemedia.itp.io/socket.io.js"></script>
+    <script src="https://p5livemedia.itp.io/p5livemedia.js"></script>
+    <!-- <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script> -->
+    <!-- Need to make ml5 explicit to avoid fetch failure in p5js editor -->
+    <script src="https://unpkg.com/ml5@0.12.2/dist/ml5.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+  </head>
+
+  <body>
+    <script type="module" src="https://molab-itp.github.io/p5moRelease/videoKit/413/a/a_lib.js"></script>
+    <!-- <script type="module" src="../../p5videoKit/src/videoKit/a_lib.js?v=110"></script> -->
+
+    <script type="module" src="https://unpkg.com/itp-molib@0.2.16/dist/moLib.esm.js?v=37"></script>
+
+    <script src="setup_dbase.js?v=110"></script>
+    <script src="a_sketch.js?v=110"></script>
+    <!-- must remove ?v=110 in p5js editor to get correct version of script -->
+  </body>
+</html>
