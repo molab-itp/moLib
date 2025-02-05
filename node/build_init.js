@@ -23,7 +23,9 @@ export function init(my) {
   // my.mode_files = ['./lib/fireb_'];
   my.mode_files = [];
   my.mode_dev = 0;
-  my.buildnum_files = ['../README.md', './README.md', './demo/', './lib/'];
+  // my.buildnum_files = ['../README.md', './README.md', './demo/', './lib/'];
+  // process all files in src
+  my.buildnum_files = ['../README.md', './'];
   my.buildnum_path = 'gen/build_ver.txt';
   my.a_src = 'src';
   my.incrementFlag = 0;
