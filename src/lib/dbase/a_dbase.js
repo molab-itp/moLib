@@ -12,5 +12,4 @@ import './site_observe.js';
 import './update_device.js';
 import './updateTimeGap.js';
 import '../Anim.js';
-// import '../fireb_/fireb_config.js';
 import '../get_url_params.js';
