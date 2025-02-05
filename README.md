@@ -14,6 +14,11 @@
 
 # --
 
+[src/doc](src/doc)
+[src/rroom](src/rroom)
+
+# --
+
 ```
 
 # src/doc
@@ -25,7 +30,6 @@ node src/doc/main.js
 # test in browser
 src/doc/index.html
 
-
 # publish lib to npm
 #
 bin/lib-publish.sh
@@ -34,12 +38,11 @@ bin/lib-publish.sh
 #
 bin/git-release.sh
 
-
 # example reference
 #
 # [github moSalon](https://github.com/molab-itp/moSalon) ?v=64
 # https://github.com/molab-itp/moSalon/blob/main/src/vote/index.html
-    <script src="https://unpkg.com/itp-molib@0.1.14/dist/moLib.umd.js?v=@lib"></script>
+    <script src="https://unpkg.com/itp-molib@0.1.14/dist/moLib.umd.js"></script>
 
 
 ```
