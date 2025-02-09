@@ -11,7 +11,7 @@ if (globalThis.window) {
     if (!my || !my.dbase) {
       if (!globalThis.report_status_reported) {
         globalThis.report_status_reported = 1;
-        ui_log('report_status no my || my.dbase');
+        // ui_log('report_status no my || my.dbase');
       }
       return;
     }
