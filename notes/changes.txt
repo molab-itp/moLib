@@ -1,0 +1,38 @@
+changes.txt
+# --
+
+
+# --
+2025-02-10 09:01:59
+
+function observe_comment_store() {
+  dbase.observe('comment_store', { observed_event });
+  my.comment_store = {};
+  function observed_event(event, key, item) {
+    console.log('observed_event ', event, key, item);
+    switch (event) {
+      case 'add':
+      case 'change':
+        my.comment_store[key] = item;
+        break;
+      case 'remove':
+        delete my.comment_store[key];
+        break;
+    }
+  }
+
+function observe_comment_store() {
+  my.comment_store = {};
+  dbase.observe('comment_store', {
+    event_update,
+    event_remove,
+  });
+  function event_update(key, item, event) {
+    // event = add | change -- optional
+    my.comment_store[key] = item;
+  }
+  function event_remove(key, item) {
+    delete my.comment_store[key];
+  }
+}
+

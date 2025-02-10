@@ -2,7 +2,9 @@
 //
 // documentation and unit testing of moLib
 //
-
+// m0-test should end with one entry in comment_store
+//  and test_count incremented
+//
 console.log('in index.js');
 
 let my = {};
@@ -77,20 +79,20 @@ function observe_comment_store() {
   //
   // mo-test / m0-test / a_group / s0 / comment_store
   //
-  dbase.observe('comment_store', { observed_event });
-  //
   my.comment_store = {};
-  function observed_event(event, key, item) {
-    console.log('observed_event ', event, key, item);
-    switch (event) {
-      case 'add':
-      case 'change':
-        my.comment_store[key] = item;
-        break;
-      case 'remove':
-        delete my.comment_store[key];
-        break;
-    }
+  //
+  dbase.observe('comment_store', {
+    event_update,
+    event_remove,
+  });
+  function event_update(key, item, event) {
+    console.log('event_update key', key, 'item', item, 'event', event);
+    // event = add | change -- optional
+    my.comment_store[key] = item;
+  }
+  function event_remove(key, item) {
+    console.log('event_remove', key, item);
+    delete my.comment_store[key];
   }
 }
 
@@ -121,6 +123,11 @@ function setup_animationFrame() {
   }
 }
 
+// my.test_step drives state machine to run
+// test_step1()
+// increment item.test_step
+// trim_comments()
+//
 function animationFrame_callback(timeStamp) {
   let timeSecs = timeStamp / 1000;
   // console.log('step_animation timeStamp', timeStamp);
@@ -146,12 +153,16 @@ function animationFrame_callback(timeStamp) {
   }
 }
 
+//
+// remove all but the first comment
+//
 async function trim_comments() {
   let items = Object.entries(my.comment_store);
   console.log('trim_comments items', items);
-  // remove all but the first
+  // start at index 1 to skip over first entry
   for (let index = 1; index < items.length; index++) {
     let [key, entry] = items[index];
+    // only remove entries that are mine
     if (entry.uid != my.uid) {
       console.log('trim_comments skipping ', entry.uid);
       continue;

@@ -1,5 +1,13 @@
 // https://editor.p5js.org/jht9629-gmail/sketches/xxx
 // moSalon room-record
+//
+// videoKit integration with firebase
+//
+// run test_settings_restore in console
+// setups up: 'bestill_mo to be here - 4k 2x2'
+// that is recorded periodically to
+// triggered by eff_bestill_mo_activitySum in eff_bestill_mo
+//
 
 let videoKit; // home for library routines
 let my = {};

@@ -11,7 +11,18 @@ import { mo_dbase } from './a_mo_dbase.js';
 // dbase.app_observe('item', { observed_item });
 // dbase.app_observe('comment_store', { observed_event } );
 //
-mo_dbase.prototype.observe = function (options, { observed_key, removed_key, observed_item, observed_event }) {
+mo_dbase.prototype.observe = function (
+  options,
+  {
+    //
+    observed_key,
+    removed_key,
+    observed_item,
+    observed_event,
+    event_update, // replaces observed_event
+    event_remove,
+  }
+) {
   // options = { app, tag, path }
   let my = this.my;
   let tag = 'dbase.observe';
@@ -73,19 +84,26 @@ mo_dbase.prototype.observe = function (options, { observed_key, removed_key, obs
       if (observed_event) {
         observed_event(op, key, value);
       }
-      return;
-    }
-    if (observed_key) {
-      observed_key(key, value);
-    }
-    if (observed_item) {
-      my.a_group_item = value;
-      if (value != undefined) {
-        observed_item({ [key]: value });
+      if (event_remove) {
+        event_remove(key, value);
       }
-    }
-    if (observed_event) {
-      observed_event(op, key, value);
+    } else {
+      // ! remove
+      if (observed_key) {
+        observed_key(key, value);
+      }
+      if (observed_item) {
+        my.a_group_item = value;
+        if (value != undefined) {
+          observed_item({ [key]: value });
+        }
+      }
+      if (observed_event) {
+        observed_event(op, key, value);
+      }
+      if (event_update) {
+        event_update(key, value, op);
+      }
     }
   };
 };
