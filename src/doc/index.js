@@ -41,7 +41,7 @@ async function test_start() {
   // updates dbase item.timer_count
   let period = 5.0;
   function timer_event() {
-    ui_log('my.timer.check my.timer_count', my.timer_count);
+    ui_log('timer_event my.timer_count', my.timer_count);
     dbase.update_item('item', { timer_count: dbase.increment(1) });
   }
   my.timer = new PeriodTimer({ period, timer_event });
