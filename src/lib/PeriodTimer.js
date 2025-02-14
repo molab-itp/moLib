@@ -28,22 +28,22 @@ export class PeriodTimer {
     this.intervalID = 0;
   }
   restart() {
-    this.period_time = Date().now;
+    this.period_time = Date.now();
     let timer_event = this.timer_event;
     if (timer_event) {
       let delay = this.period * 1000;
       this.intervalID = setInterval(() => {
-        this.period_time = Date().now;
         timer_event();
+        this.period_time = Date.now();
       }, delay);
     }
   }
   lapse() {
-    let ntime = Date().now;
+    let ntime = Date.now();
     return (ntime - this.period_time) / 1000;
   }
   check(period_next) {
-    let ntime = Date().now;
+    let ntime = Date.now();
     let lapse = (ntime - this.period_time) / 1000;
     if (this.period >= 0 && lapse > this.period) {
       this.period_time = ntime;
