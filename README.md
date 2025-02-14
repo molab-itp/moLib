@@ -8,7 +8,7 @@
 
 # [repo](https://github.com/molab-itp/moLib)
 
-# [github.io src ?v=75](https://molab-itp.github.io/moLib/?v=75)
+# [github.io src ?v=76](https://molab-itp.github.io/moLib/?v=76)
 
 # [moSalon usage examples](https://github.com/molab-itp/moSalon)
 
@@ -40,7 +40,7 @@ bin/git-release.sh
 
 # example reference
 #
-# [github moSalon](https://github.com/molab-itp/moSalon) ?v=75
+# [github moSalon](https://github.com/molab-itp/moSalon) ?v=76
 # https://github.com/molab-itp/moSalon/blob/main/src/vote/index.html
     <script src="https://unpkg.com/itp-molib@0.1.14/dist/moLib.umd.js"></script>
 

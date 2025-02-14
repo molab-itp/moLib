@@ -4,6 +4,7 @@
 
 import './dbase/a_dbase.js';
 import './Pane.js';
+import './PeriodTimer.js';
 import './Rect.js';
 import './RefBox.js';
 import './ui_/ui_logDetail.js';
