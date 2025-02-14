@@ -37,10 +37,14 @@ async function test_start() {
 
   setup_animationFrame();
 
-  // trigger timer every n seconds
+  // trigger timer every period seconds
   // updates dbase item.timer_count
-  let nsecs = 5.0;
-  my.timer = new PeriodTimer(nsecs);
+  let period = 5.0;
+  function timer_event() {
+    ui_log('my.timer.check my.timer_count', my.timer_count);
+    dbase.update_item('item', { timer_count: dbase.increment(1) });
+  }
+  my.timer = new PeriodTimer({ period, timer_event });
 }
 
 async function setup_dbase() {
@@ -142,10 +146,10 @@ function animationFrame_callback(timeStamp) {
   // window.requestAnimationFrame(animationFrame_callback);
   setup_animationFrame();
 
-  if (my.timer.check()) {
-    ui_log('my.timer.check my.timer_count', my.timer_count);
-    dbase.update_item('item', { timer_count: dbase.increment(1) });
-  }
+  // if (my.timer.check()) {
+  //   ui_log('my.timer.check my.timer_count', my.timer_count);
+  //   dbase.update_item('item', { timer_count: dbase.increment(1) });
+  // }
 
   if (my.test_step_changed) {
     my.test_step_changed = 0;
