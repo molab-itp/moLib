@@ -113,7 +113,7 @@ mo_dbase.prototype.observe = function (
 // dbase.update_item(item, path)
 //
 mo_dbase.prototype.update_item = function (path, item) {
-  console.log('update_item item', item, 'path', path);
+  ui_verbose('mo_dbase update_item item', item, 'path', path);
   let options = this.default_options(path);
   this.update_device(item, options);
 };
