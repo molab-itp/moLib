@@ -78,6 +78,10 @@ function observe_item() {
     }
     if (item.timer_count != undefined) {
       my.timer_count = item.timer_count;
+      if (my.timer_count > 10) {
+        my.timer.restart();
+        dbase.update_item('item', { timer_count: 0 });
+      }
     }
     if (item.test_step != undefined) {
       my.test_step_changed = my.test_step != item.test_step;

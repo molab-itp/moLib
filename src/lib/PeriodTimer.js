@@ -22,7 +22,7 @@ export class PeriodTimer {
     this.restart();
   }
   clear() {
-    if (this.timer_event && this.intervalID) {
+    if (this.intervalID) {
       clearInterval(this.intervalID);
     }
     this.intervalID = 0;
@@ -32,6 +32,7 @@ export class PeriodTimer {
     let timer_event = this.timer_event;
     if (timer_event) {
       let delay = this.period * 1000;
+      this.clear();
       this.intervalID = setInterval(() => {
         timer_event();
         this.period_time = Date.now();
