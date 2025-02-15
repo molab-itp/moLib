@@ -41,7 +41,8 @@ mo_dbase.prototype.report_status = function (props) {
     let uid = props.uid || '';
     let visit_count = props.visit_count || '';
     let ndevice = props.ndevice || '';
-    msg = `${version} ${muid} ${uid} (nvisit=${visit_count}) (ndevice=${ndevice})`;
+    msg = `${version} ${muid} (nvisit=${visit_count}) (ndevice=${ndevice})`;
+    // msg = `${version} ${muid} ${uid} (nvisit=${visit_count}) (ndevice=${ndevice})`;
   }
   my.statusElement.textContent = msg;
 };
