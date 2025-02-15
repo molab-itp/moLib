@@ -36,11 +36,12 @@ mo_dbase.prototype.report_status = function (props) {
 
   let msg = props.msg;
   if (!msg) {
+    let version = my.version || '';
     let muid = my.uid || '';
     let uid = props.uid || '';
     let visit_count = props.visit_count || '';
     let ndevice = props.ndevice || '';
-    msg = `${muid} ${uid} (nvisit=${visit_count}) (ndevice=${ndevice})`;
+    msg = `${version} ${muid} ${uid} (nvisit=${visit_count}) (ndevice=${ndevice})`;
   }
   my.statusElement.textContent = msg;
 };

@@ -55,6 +55,7 @@ async function setup_dbase() {
   my.mo_room = 'm0-test';
   my.nameDevice = 'mo-test-device';
   if (!globalThis.window) my.nameDevice += '-node';
+  my.version = '?=v99';
 
   dbase = await mo_dbase_init(my);
 
