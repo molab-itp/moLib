@@ -89,7 +89,13 @@ function observe_item() {
       console.log('test_step diff', my.test_step, item.test_step);
       my.test_step = item.test_step;
     }
+
+    dbase.if_action({ item, prop: 'action_rewind', actionFunc: rewind_action });
   }
+}
+
+function rewind_action() {
+  ui_log('rewind_action');
 }
 
 function observe_comment_store() {
@@ -220,6 +226,8 @@ async function test_step1() {
   entry.name = 'nameX2';
   let key2 = await dbase.add_key('comment_store', entry);
   console.log('added key2', key2);
+
+  dbase.issue_action('item', 'action_rewind');
 }
 
 // id_console_ul

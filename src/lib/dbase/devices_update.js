@@ -163,11 +163,11 @@ mo_dbase.prototype.devices_issue_actions = function (actions, options) {
 // dbase_issue_action('action_next');
 //
 // dbase.issue_action is complement by dbase_if_action
-// dbase.issue_action(prop, path)
+// dbase.issue_action(path, prop)
 //
-mo_dbase.prototype.issue_action = function (prop, path) {
+mo_dbase.prototype.issue_action = function (path, prop) {
   ui_log('dbase.issue_action', prop);
-  this.update_item({ [prop]: dbase.increment(1) }, path);
+  this.update_item(path, { [prop]: dbase.increment(1) });
 };
 
 //
