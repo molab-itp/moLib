@@ -145,7 +145,7 @@ mo_dbase.prototype.createQRCode = function (options) {
   my.qrcodeElement.style.right = '0';
   my.qrcodeElement.style.zIndex = 1000;
   my.qrcodeElement.style.width = my.qrCodeWidth; // `${Math.floor(100 * my.qrCodeWidth)}%`;
-  my.qrcodeElement.src = qrcode_url();
+  my.qrcodeElement.src = this.qrcode_url();
 
   if (my.qrCodeClickAction) {
     my.qrcodeElement.addEventListener('click', my.qrCodeClickAction);
