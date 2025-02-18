@@ -28,7 +28,7 @@ mo_dbase.prototype.report_status = function (props) {
   }
   let options = {};
   if (my.showQRCode && my.showQRCode(options)) {
-    createQRCode(options);
+    this.createQRCode(options);
   } else if (my.footerElement) {
     my.footerElement.style.display = 'none';
     my.qrcodeElement.style.display = 'none';
