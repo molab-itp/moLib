@@ -41,7 +41,12 @@ mo_dbase.prototype.report_status = function (props) {
     let uid = props.uid || '';
     let visit_count = props.visit_count || '';
     let ndevice = props.ndevice || '';
-    msg = `${version} ${muid}  (ndevice=${ndevice}) (nvisit=${visit_count}) ${uid}`;
+    if (my.report_status_formatter) {
+      msg = my.report_status_formatter({ version, muid, nvisit, ndevice, uid });
+    } else {
+      msg = `${version} ${muid} (ndevice=${ndevice}) (nvisit=${visit_count})`;
+      // msg = `${version} ${muid} (ndevice=${ndevice}) (nvisit=${visit_count}) ${uid}`;
+    }
     // msg = `${version} ${muid} (nvisit=${visit_count}) (ndevice=${ndevice})`;
     // msg = `${version} ${muid} ${uid} (nvisit=${visit_count}) (ndevice=${ndevice})`;
   }
