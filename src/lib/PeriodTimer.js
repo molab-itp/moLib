@@ -33,10 +33,12 @@ export class PeriodTimer {
     if (timer_event) {
       let delay = this.period * 1000;
       this.clear();
-      this.intervalID = setInterval(() => {
-        timer_event();
-        this.period_time = Date.now();
-      }, delay);
+      if (delay >= 0) {
+        this.intervalID = setInterval(() => {
+          timer_event();
+          this.period_time = Date.now();
+        }, delay);
+      }
     }
   }
   lapse() {
