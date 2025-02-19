@@ -167,7 +167,7 @@ mo_dbase.prototype.devices_issue_actions = function (actions, options) {
 //
 mo_dbase.prototype.issue_action = function (path, prop) {
   ui_log('dbase.issue_action', prop);
-  this.update_item(path, { [prop]: dbase.increment(1) });
+  this.update_item(path, { [prop]: this.increment(1) });
 };
 
 //
