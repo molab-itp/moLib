@@ -74,7 +74,7 @@ function select_config(config) {
   // if config object not found, default to firebaseConfig_jht9629
   nconfig = nconfig || firebaseConfig_jht9629;
   nconfig.configLabel = configLabel;
-  nconfig.configVersion = '?v=91';
+  nconfig.configVersion = '?v=92';
   // console.log('fireb_config config', config);
   // console.log('fireb_config config.projectId', config.projectId);
 
