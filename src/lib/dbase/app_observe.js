@@ -31,7 +31,7 @@ mo_dbase.prototype.observe = function (
     options = {};
   } else if (typeof options === 'string') {
     options = { path: options };
-    options.group = this.mo_group || 's0';
+    options.group = my.mo_group || 's0';
   }
   tag = options.tag || tag;
   // Setup listener for changes to firebase db device
