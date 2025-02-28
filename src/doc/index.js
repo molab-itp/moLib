@@ -104,10 +104,7 @@ function observe_comment_store() {
   //
   my.comment_store = {};
   //
-  dbase.observe('comment_store', {
-    event_update,
-    event_remove,
-  });
+  dbase.observe('comment_store', { event_update, event_remove });
   function event_update(key, item, event) {
     console.log('event_update key', key, 'item', item, 'event', event);
     // event = add | change -- optional
