@@ -23,6 +23,23 @@ export class RefBox {
     this.restore_localStorage();
   }
 
+  mapToImage(image) {
+    console.log('RefBox mapToImage', image);
+    if (image.width == this.width) {
+      return;
+    }
+    let fmap = image.width / this.width;
+    console.log('RefBox fmap', fmap);
+    for (let ent of this.refs) {
+      for (let rg of ent.regions) {
+        rg.h = Math.floor(rg.h * fmap);
+        rg.w = Math.floor(rg.w * fmap);
+        rg.x = Math.floor(rg.x * fmap);
+        rg.y = Math.floor(rg.y * fmap);
+      }
+    }
+  }
+
   restore_refBox(refBox) {
     Object.assign(this, refBox);
     // this.patchRefbox();
