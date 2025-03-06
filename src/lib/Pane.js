@@ -71,11 +71,13 @@ export class Pane {
   }
 
   focus_pan() {
+    if (this.centered_focus) {
+      return this.focus_pan_centered();
+    }
     let rg = this.region();
     this.zoomIndex = rg.z;
     let cm = this.canvasMap();
     let crg = this.rgToCanvas(rg);
-
     // Centering on Y does not work
     // set to top Y for now
     // console.log('\nfocus_pan rg', rg);
@@ -94,25 +96,18 @@ export class Pane {
     // this.panY = floor(rg.y - (rg.h - cm.zHeightClipped) * 0.5);
   }
 
-  focus_pan_cut() {
+  focus_pan_centered() {
     let rg = this.region();
     this.zoomIndex = rg.z;
     let cm = this.canvasMap();
+    // console.log('focus cm', JSON.stringify(cm));
+    // let x = rg.x + rg.w * 0.5 - cm.zWidth * 0.5;
+    // let y = rg.y + rg.h * 0.5 - cm.zHeight * 0.5;
+    // this.panX = floor(x);
+    // this.panY = floor(y);
     this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
-    if (this.panX < 0) this.panX = 0;
-    // this.panX = rg.x;
-    this.panY = rg.y;
-    ui_log('\nfocus_pan_cut panX', this.panX, this.panY);
-  }
-
-  focus_animated_cut(cut_time) {
-    if (!cut_time) {
-      cut_time = 1;
-    }
-    this.anim.initValues({ panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
-    this.focus_pan_cut();
-    this.focus_focusRect();
-    this.anim.addChange(cut_time, { panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
+    this.panY = floor(rg.y + (rg.h - cm.zHeight) * 0.5);
+    // console.log('focus rg', JSON.stringify(rg));
   }
 
   anim_init() {
@@ -140,10 +135,16 @@ export class Pane {
     let sx = this.panX;
     let sy = this.panY;
     // Use backBuffer to clip render to width and height
-    let bf = this.backBuffer;
-    bf.clear();
-    bf.image(backImage, 0, 0, cm.cWidth, cm.cHeight, sx, sy, cm.zWidth, cm.zHeight);
-    image(bf, dx, dy, bf.width, bf.height, 0, 0, bf.width, bf.height);
+    // !!@ backBuffer
+    {
+      let bf = this.backBuffer;
+      bf.clear();
+      bf.image(backImage, 0, 0, cm.cWidth, cm.cHeight, sx, sy, cm.zWidth, cm.zHeight);
+      image(bf, dx, dy, bf.width, bf.height, 0, 0, bf.width, bf.height);
+    }
+    // {
+    //   image(backImage, dx, dy, cm.cWidth, cm.cHeight, sx, sy, cm.zWidth, cm.zHeight);
+    // }
   }
 
   // image(img, x, y, [width], [height])
@@ -223,7 +224,7 @@ export class Pane {
 
     this.panX = this.panX + oW - nW;
     this.panY = this.panY + oH - nH;
-    ui_log('pan_updateZoom panX', this.panX, this.panY);
+    // ui_log('pan_updateZoom panX', this.panX, this.panY);
   }
 
   pan_init() {
@@ -254,12 +255,9 @@ export class Pane {
     let im = this.mouse0;
     let nm = { x: mouseX, y: mouseY };
     let df = { x: nm.x - im.x, y: nm.y - im.y };
-
     let cm = this.canvasMap();
-
     this.panX -= df.x * cm.scale;
     this.panY -= df.y * cm.scale;
-
     // console.log('mouseDragged df', df.x);
     // console.log('mouseDragged panX', this.panX, this.panY);
     this.mouse0 = nm;
@@ -267,18 +265,6 @@ export class Pane {
 
   mouseReleased() {
     // console.log('Pane mouseReleased', this.label);
-  }
-
-  copyRefEntry(index, props) {
-    let ent = this.refEntry();
-    let rg = ent.regions[this.regionIndex];
-    let rgFrom = ent.regions[index];
-
-    // console.log('copyRefEntry rg', rg, 'props', props);
-    // console.log('copyRefEntry rgFrom', rgFrom);
-
-    Object.assign(rg, rgFrom, props);
-    this.refBox.save_localStorage();
   }
 
   // props = { z: 4 }
@@ -296,23 +282,6 @@ export class Pane {
       Object.assign(rg, props);
     }
     this.refBox.save_localStorage();
-  }
-
-  mapToImage(canvasPts) {
-    // console.log('mapToImage canvasPts', canvasPts);
-    let cm = this.canvasMap();
-    let rw = cm.zWidth / cm.cWidth;
-    let rh = cm.zHeight / cm.cHeight;
-    let points = [];
-    // Map from canvas/screen coordindates to image
-    // console.log('mapToImage x0', this.x0, this.y0, this.panX, this.panY);
-    for (let ment of canvasPts) {
-      let x = floor((ment.x - this.x0) * rw) + this.panX;
-      let y = floor((ment.y - this.y0) * rh) + this.panY;
-      points.push({ x, y });
-    }
-    // console.log('mapToImage points', points);
-    return points;
   }
 
   updateEnt(ent, canvasPts) {
@@ -351,15 +320,12 @@ export class Pane {
 
   rgToCanvas(rg) {
     // map from screen to image coordinates
-
     let cm = this.canvasMap();
     let wr = cm.cWidth / cm.zWidth;
     let hr = cm.cHeight / cm.zHeight;
-
     // solve for ment.x
     // let x = floor((ment.x - this.x0) * rw) + this.panX;
     // let y = floor((ment.y - this.y0) * rh) + this.panY;
-
     // Map from image coordinates to canvas
     //
     let x = floor((rg.x - this.panX) * wr + this.x0);
@@ -376,16 +342,75 @@ export class Pane {
     let iWidth = backImage.width;
     let iHeight = backImage.height;
     let rr = iHeight / iWidth;
-
     let cWidth = this.width;
     let cHeight = floor(cWidth * rr);
-
     let zWidth = floor(iWidth * this.zoomRatio);
     let zHeight = floor(iHeight * this.zoomRatio);
-
     let scale = zWidth / cWidth;
-
+    //
+    // Center the pane view
+    if (this.centered_focus) {
+      if (cHeight < this.height) {
+        cHeight = this.height;
+        cWidth = floor(cHeight / rr);
+      }
+      if (this.width < cWidth) {
+        let dr = this.width / cWidth;
+        cWidth = this.width;
+        zWidth = floor(zWidth * dr);
+      }
+    }
     return { cWidth, cHeight, zWidth, zHeight, iWidth, iHeight, scale };
+  }
+
+  focus_pan_cut() {
+    let rg = this.region();
+    this.zoomIndex = rg.z;
+    let cm = this.canvasMap();
+    this.panX = floor(rg.x + (rg.w - cm.zWidth) * 0.5);
+    if (this.panX < 0) this.panX = 0;
+    // this.panX = rg.x;
+    this.panY = rg.y;
+    ui_log('\nfocus_pan_cut panX', this.panX, this.panY);
+  }
+
+  focus_animated_cut(cut_time) {
+    if (!cut_time) {
+      cut_time = 1;
+    }
+    this.anim.initValues({ panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
+    this.focus_pan_cut();
+    this.focus_focusRect();
+    this.anim.addChange(cut_time, { panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
+  }
+
+  copyRefEntry(index, props) {
+    let ent = this.refEntry();
+    let rg = ent.regions[this.regionIndex];
+    let rgFrom = ent.regions[index];
+
+    // console.log('copyRefEntry rg', rg, 'props', props);
+    // console.log('copyRefEntry rgFrom', rgFrom);
+
+    Object.assign(rg, rgFrom, props);
+    this.refBox.save_localStorage();
+  }
+
+  mapToImage(canvasPts) {
+    // console.log('mapToImage canvasPts', canvasPts);
+    let cm = this.canvasMap();
+    let rw = cm.zWidth / cm.cWidth;
+    let rh = cm.zHeight / cm.cHeight;
+    let points = [];
+    // Map from canvas/screen coordindates to image
+    // console.log('mapToImage x0', this.x0, this.y0, this.panX, this.panY);
+    for (let ment of canvasPts) {
+      let x = floor((ment.x - this.x0) * rw) + this.panX;
+      let y = floor((ment.y - this.y0) * rh) + this.panY;
+      points.push({ x, y });
+    }
+    // console.log('mapToImage points', points);
+    return points;
   }
 }
 
