@@ -258,6 +258,10 @@ export class Pane {
 
   mouseDragged() {
     let im = this.mouse0;
+    if (!im) {
+      console.log('Pane mouseDragged no mouse0');
+      return;
+    }
     let nm = { x: mouseX, y: mouseY };
     let df = { x: nm.x - im.x, y: nm.y - im.y };
     let cm = this.canvasMap();
