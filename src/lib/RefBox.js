@@ -10,7 +10,6 @@ export class RefBox {
   constructor(props) {
     //
     Object.assign(this, props);
-
     if (!this.storageLabel) {
       // width and height needed if no storageLabel
       // this.width = this.backImage.width;
@@ -19,8 +18,8 @@ export class RefBox {
       this.refIndex = 0;
       this.refs = [];
     }
-
     this.restore_localStorage();
+    this.restore_refIndex();
   }
 
   mapToImage(image) {
@@ -44,6 +43,7 @@ export class RefBox {
     Object.assign(this, refBox);
     // this.patchRefbox();
   }
+
   refEntry() {
     let refIndex = this.refIndex;
     let ent = this.refs[refIndex];
@@ -63,6 +63,32 @@ export class RefBox {
   set refLabel(label) {
     let ent = this.refEntry();
     ent.label = label;
+  }
+
+  save_refIndex() {
+    let key = this.storageLabel + '_refIndex';
+    let refIndex = this.refIndex;
+    let refObj = { refIndex };
+    let str = JSON.stringify(refObj);
+    localStorage.setItem(key, str);
+  }
+
+  restore_refIndex() {
+    let key = this.storageLabel + '_refIndex';
+    let str = localStorage.getItem(key);
+    if (!str) {
+      ui_log('restore_refIndex no str', key);
+      return;
+    }
+    ui_log('restore_refIndex key', key, 'str', str);
+    let refObj;
+    try {
+      refObj = JSON.parse(str);
+    } catch (err) {
+      ui_log('restore_refIndex parse err', err);
+      return;
+    }
+    this.refIndex = refObj.refIndex;
   }
 
   restore_localStorage() {
