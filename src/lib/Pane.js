@@ -1,30 +1,45 @@
 //
+// Manage an image that can be panned and zoomed
+
+//
+// panX
+// panY
+// zoomIndex
+// zoomRatio
+//
 
 export class Pane {
   // { backImage, x0, y0, z0, width, height, initCentered, refBox, regionIndex }
   constructor(props) {
     //
     Object.assign(this, props);
+    this.init();
+  }
 
-    if (!this.regionIndex) this.regionIndex = 0;
-
+  init() {
+    if (this.backBuffer) {
+      this.backBuffer.remove();
+    }
+    this.backBuffer = createGraphics(this.width, this.height);
+    console.log('Pane backBuffer', this.backBuffer);
+    if (!this.regionIndex) {
+      this.regionIndex = 0;
+    }
     // console.log('Pane', this.label, 'width', this.width, 'height', this.height);
-
-    // panX
-    // panY
-    // zoomIndex
-    // zoomRatio
-
     this.pan_init();
-
     // console.log('Pane initCentered', this.initCentered);
     if (this.initCentered) {
       this.pan_center();
     }
-
     this.focusRect_init();
-
     this.anim_init();
+  }
+
+  deinit() {
+    if (this.backBuffer) {
+      this.backBuffer.remove();
+      this.backBuffer = 0;
+    }
   }
 
   render() {
@@ -42,9 +57,6 @@ export class Pane {
       this.focusRect.render();
     }
   }
-
-  // let targetProps = { panX: 1, panY: 1, zoomIndex: 1 };
-  // pan_updateZoom(newValue) {
 
   focus() {
     this.focus_pan();
@@ -135,16 +147,12 @@ export class Pane {
     let sx = this.panX;
     let sy = this.panY;
     // Use backBuffer to clip render to width and height
-    // !!@ backBuffer
     {
       let bf = this.backBuffer;
       bf.clear();
       bf.image(backImage, 0, 0, cm.cWidth, cm.cHeight, sx, sy, cm.zWidth, cm.zHeight);
       image(bf, dx, dy, bf.width, bf.height, 0, 0, bf.width, bf.height);
     }
-    // {
-    //   image(backImage, dx, dy, cm.cWidth, cm.cHeight, sx, sy, cm.zWidth, cm.zHeight);
-    // }
   }
 
   // image(img, x, y, [width], [height])
@@ -232,9 +240,6 @@ export class Pane {
     this.panY = 0;
     this.zoomIndex = this.z0;
     // this.zoomRatio = 1 / this.zoomIndex;
-    if (!this.backBuffer) {
-      this.backBuffer = createGraphics(this.width, this.height);
-    }
   }
 
   pan_center() {
