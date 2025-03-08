@@ -126,7 +126,6 @@ function ui_fresh_element(element) {
   }
 }
 
-// !!@ to lib ui_toggleFullScreen
 //
 function ui_toggleFullScreen() {
   if (!document.documentElement.requestFullscreen) {
@@ -147,7 +146,6 @@ function ui_toggleFullScreen() {
 }
 globalThis.ui_toggleFullScreen = ui_toggleFullScreen;
 
-// !!@ to lib ui_remove_all
 //
 function ui_remove_all(except) {
   if (!except) {

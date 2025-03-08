@@ -25,7 +25,7 @@ export class RefBox {
   }
 
   mapToImage(image) {
-    console.log('RefBox mapToImage', image);
+    // console.log('RefBox mapToImage', image);
     if (image.width == this.width) {
       return;
     }

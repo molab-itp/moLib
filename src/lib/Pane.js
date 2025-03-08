@@ -21,7 +21,7 @@ export class Pane {
       this.backBuffer.remove();
     }
     this.backBuffer = createGraphics(this.width, this.height);
-    console.log('Pane backBuffer', this.backBuffer);
+    // console.log('Pane backBuffer', this.backBuffer);
     if (!this.regionIndex) {
       this.regionIndex = 0;
     }
@@ -380,7 +380,7 @@ export class Pane {
     if (this.panX < 0) this.panX = 0;
     // this.panX = rg.x;
     this.panY = rg.y;
-    ui_log('\nfocus_pan_cut panX', this.panX, this.panY);
+    ui_log('focus_pan_cut panX', this.panX, this.panY);
   }
 
   focus_animated_cut(cut_time) {
@@ -388,7 +388,8 @@ export class Pane {
       cut_time = 1;
     }
     this.anim.initValues({ panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
-    this.focus_pan_cut();
+    this.focus_pan();
+    // this.focus_pan_cut();
     this.focus_focusRect();
     this.anim.addChange(cut_time, { panX: this.panX, panY: this.panY, zoomIndex: this.zoomIndex });
   }
