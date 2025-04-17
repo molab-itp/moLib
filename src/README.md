@@ -12,6 +12,12 @@
 
 # [moSalon usage examples](https://github.com/molab-itp/moSalon)
 
+# Build instructions
+
+```
+bin/git-release.sh
+```
+
 # --
 
 - [src/doc](src/doc)
@@ -21,14 +27,14 @@
 
 ```
 
-# src/doc
-# documentation of the lib api
+# src/doc-vitals
+# documentation and unit testing the lib api
 
 # test in node
-node src/doc/main.js
+node src/doc-vitals/main.js
 
 # test in browser
-src/doc/index.html
+src/doc-vitals/index.html
 
 # publish lib to npm
 #
