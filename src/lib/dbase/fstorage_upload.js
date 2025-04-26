@@ -7,9 +7,11 @@ import { mo_dbase } from './a_mo_dbase.js';
 //
 // await dbase.fstoreage_render({ url, layer });
 //
-// !!@ DOC fstorage_render({ url, layer })
+// !!@ DOC-TEST fstorage_render({ url, layer })
+// ref: projects/2024-p5moExamples/p5moLibrary/src/
+//          demo/mo-storage-dashboard/a_sketch.js
 //
-mo_dbase.prototype.fstoreage_render = function (args) {
+mo_dbase.prototype.fstoreage_render_XML = function (args) {
   return new Promise(function (resolve, reject) {
     promise_render(args, resolve, reject);
   });
@@ -33,6 +35,41 @@ mo_dbase.prototype.fstoreage_render = function (args) {
     var img = new Image();
     img.onload = function () {
       // console.log('renderBlobToLayer img', img);
+      ctx.drawImage(img, 0, 0, width, height);
+      URL.revokeObjectURL(img.src);
+      resolve();
+    };
+    img.src = URL.createObjectURL(blob);
+  }
+};
+
+// claude: convert to fetch
+// fstoreage_render_XML
+//
+mo_dbase.prototype.fstoreage_render = function (args) {
+  return new Promise(function (resolve, reject) {
+    promise_render(args, resolve, reject);
+  });
+  function promise_render(args, resolve, reject) {
+    fetch(args.url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        renderBlobToLayer(blob, args, resolve);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  }
+  function renderBlobToLayer(blob, args, resolve) {
+    let { width, height } = args.layer;
+    let ctx = args.layer.drawingContext;
+    var img = new Image();
+    img.onload = function () {
       ctx.drawImage(img, 0, 0, width, height);
       URL.revokeObjectURL(img.src);
       resolve();

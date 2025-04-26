@@ -21,6 +21,8 @@
 
 ```
 
+// !!@ DOC-TEST fstorage_render({ url, layer })
+
 # src/doc
 # documentation of the lib api
 
