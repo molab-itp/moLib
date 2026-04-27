@@ -48,3 +48,7 @@ bin/git-release.sh
 
 
 ```
+
+## Issues
+
+- latest 0.2.44 fails to load, then ok after wait
